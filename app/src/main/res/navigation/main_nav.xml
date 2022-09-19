@@ -9,7 +9,7 @@
         android:id="@+id/loginFragment"
         android:name="com.example.wahyustoryapp.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -21,20 +21,14 @@
         android:id="@+id/homeFragment"
         android:name="com.example.wahyustoryapp.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.wahyustoryapp.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:popUpTo="@id/main_nav"
-            app:popUpToInclusive="true"
-            app:destination="@id/loginFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_register" />
+    <action
+        android:id="@+id/action_global_loginFragment2"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/main_nav" />
 </navigation>

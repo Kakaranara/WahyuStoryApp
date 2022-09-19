@@ -28,8 +28,10 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnToLogin.setOnClickListener {
-            val toLogin = RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
-            findNavController().navigate(toLogin)
+            val global = MainNavDirections.actionGlobalLoginFragment2()
+            findNavController().navigate(global)
+//            val toLogin = RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
+//            findNavController().navigate(toLogin)
         }
     }
 
