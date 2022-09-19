@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp
+package com.example.wahyustoryapp.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

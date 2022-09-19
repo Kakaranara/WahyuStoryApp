@@ -1,12 +1,12 @@
-package com.example.wahyustoryapp
+package com.example.wahyustoryapp.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.example.wahyustoryapp.MainNavDirections
 import com.example.wahyustoryapp.databinding.FragmentRegisterBinding
 
 class RegisterFragment : Fragment() {
