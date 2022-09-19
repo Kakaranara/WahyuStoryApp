@@ -9,7 +9,7 @@ import com.example.wahyustoryapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    var isLogin = false
+    var isLogin = true
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
