@@ -8,6 +8,7 @@
     tools:context=".ui.LoginFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView"
         android:layout_width="130dp"
         android:layout_height="130dp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
@@ -100,6 +101,14 @@
         android:text="Yu Story"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/debugToken2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TOKEN DEBUGGING"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
