@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.ui
+package com.example.wahyustoryapp.ui.auth.register
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wahyustoryapp.MainNavDirections
-import com.example.wahyustoryapp.data.auth.register.RegisterViewModel
 import com.example.wahyustoryapp.data.retrofit.RegisterForm
 import com.example.wahyustoryapp.databinding.FragmentRegisterBinding
 import com.example.wahyustoryapp.showOverlayWhileLoading
@@ -19,6 +18,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!! //dari dokumentasinya begini, memakai double bang
     //( menghindari memory leaks )
+
 
     private val viewModel by viewModels<RegisterViewModel>()
 

@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.ui
+package com.example.wahyustoryapp.ui.auth.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.authDataStore
 import com.example.wahyustoryapp.data.auth.AuthPreference
-import com.example.wahyustoryapp.data.auth.AuthViewModel
+import com.example.wahyustoryapp.data.auth.LoginViewModel
 import com.example.wahyustoryapp.data.auth.AuthViewModelFactory
 import com.example.wahyustoryapp.data.retrofit.LoginForm
 import com.example.wahyustoryapp.databinding.FragmentLoginBinding
@@ -25,7 +25,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
     //( menghindari memory leaks )
 
     private lateinit var authPreference: AuthPreference
-    private val viewModel by viewModels<AuthViewModel> {
+    private val viewModel by viewModels<LoginViewModel> {
         AuthViewModelFactory.getInstance(
             AuthPreference.getInstance(requireActivity().authDataStore)
         )

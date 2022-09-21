@@ -6,13 +6,13 @@ import com.example.wahyustoryapp.data.retrofit.LoginForm
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class AuthViewModel(private val pref: AuthPreference) : ViewModel() {
+class LoginViewModel(private val pref: AuthPreference) : ViewModel() {
 
     private val _isLoginSuccess: MutableLiveData<Boolean> = MutableLiveData()
     val isLoginSuccess: LiveData<Boolean> = _isLoginSuccess
 
     private val _message: MutableLiveData<String> = MutableLiveData()
-    val message: LiveData<String> get() = _message
+    val message: LiveData<String> = _message
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -53,8 +53,8 @@ class AuthViewModelFactory private constructor(private val prefs: AuthPreference
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
-            return AuthViewModel(prefs) as T
+        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+            return LoginViewModel(prefs) as T
         }
         return super.create(modelClass)
     }

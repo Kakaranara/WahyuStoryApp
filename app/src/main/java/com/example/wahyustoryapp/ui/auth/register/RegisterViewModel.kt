@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.data.auth.register
+package com.example.wahyustoryapp.ui.auth.register
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
