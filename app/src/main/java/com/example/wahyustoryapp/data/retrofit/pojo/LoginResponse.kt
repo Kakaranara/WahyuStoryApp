@@ -1,16 +1,16 @@
-package com.example.wahyustoryapp.data.pojo
+package com.example.wahyustoryapp.data.retrofit.pojo
 
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
 
-	@field:SerializedName("loginResult")
+    @field:SerializedName("loginResult")
 	val loginResult: LoginResult,
 
-	@field:SerializedName("error")
+    @field:SerializedName("error")
 	val error: Boolean,
 
-	@field:SerializedName("message")
+    @field:SerializedName("message")
 	val message: String
 )
 

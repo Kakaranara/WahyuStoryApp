@@ -1,16 +1,16 @@
-package com.example.wahyustoryapp.data.pojo
+package com.example.wahyustoryapp.data.retrofit.pojo
 
 import com.google.gson.annotations.SerializedName
 
 data class Response(
 
-	@field:SerializedName("listStory")
+    @field:SerializedName("listStory")
 	val listStory: List<ListStoryItem?>? = null,
 
-	@field:SerializedName("error")
+    @field:SerializedName("error")
 	val error: Boolean? = null,
 
-	@field:SerializedName("message")
+    @field:SerializedName("message")
 	val message: String? = null
 )
 

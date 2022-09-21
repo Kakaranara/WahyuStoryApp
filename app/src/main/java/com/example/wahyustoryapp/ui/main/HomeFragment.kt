@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.ui
+package com.example.wahyustoryapp.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater

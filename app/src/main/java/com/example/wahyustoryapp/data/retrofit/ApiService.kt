@@ -1,7 +1,7 @@
 package com.example.wahyustoryapp.data.retrofit
 
-import com.example.wahyustoryapp.data.pojo.LoginResponse
-import com.example.wahyustoryapp.data.pojo.NormalResponse
+import com.example.wahyustoryapp.data.retrofit.pojo.LoginResponse
+import com.example.wahyustoryapp.data.retrofit.pojo.NormalResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Multipart
