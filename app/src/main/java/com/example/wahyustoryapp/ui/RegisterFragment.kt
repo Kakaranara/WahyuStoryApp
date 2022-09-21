@@ -20,7 +20,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     private val binding get() = _binding!! //dari dokumentasinya begini, memakai double bang
     //( menghindari memory leaks )
 
-    val viewModel by viewModels<RegisterViewModel>()
+    private val viewModel by viewModels<RegisterViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

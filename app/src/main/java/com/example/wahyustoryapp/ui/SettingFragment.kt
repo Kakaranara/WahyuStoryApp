@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.example.wahyustoryapp.databinding.FragmentHomeBinding
 import com.example.wahyustoryapp.databinding.FragmentSettingBinding
 
 
@@ -17,15 +16,12 @@ class SettingFragment : Fragment() {
     private val binding get() = _binding!! //dari dokumentasinya begini, memakai double bang
     //( menghindari memory leaks)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSettingBinding.inflate(inflater,container, false)
         return binding.root
     }
