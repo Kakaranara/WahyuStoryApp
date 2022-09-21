@@ -4,21 +4,40 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.WindowManager
+import android.widget.ProgressBar
+import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 
 //? Variable Extension
-val Context.authDataStore : DataStore<Preferences> by preferencesDataStore(name = "auth")
-
+val Context.authDataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
 
 //? Function Extension
-fun View.showLoading(activity : Activity, isLoading: Boolean){
-    if(isLoading){
+fun View.showOverlayWhileLoading(activity: Activity, root: View, progressBar: ProgressBar, isLoading: Boolean) {
+    //user can't interact with window.flags
+
+    val darkColor =
+        ContextCompat.getColor(activity, R.color.md_theme_dark_onSurface)
+    val lightColor =
+        ContextCompat.getColor(activity, R.color.md_theme_light_background)
+    if (isLoading) {
         this.isEnabled = false
+        root.setBackgroundColor(darkColor)
+        progressBar.visible()
         activity.window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-    }else{
+    } else {
         this.isEnabled = true
+        root.setBackgroundColor(lightColor)
+        progressBar.gone()
         activity.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
+}
+
+fun View.gone(){
+    this.visibility = View.GONE
+}
+
+fun View.visible(){
+    this.visibility = View.VISIBLE
 }

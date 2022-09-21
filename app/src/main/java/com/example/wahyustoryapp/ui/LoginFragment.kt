@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.core.view.ContentInfoCompat.Flags
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,10 +16,7 @@ import com.example.wahyustoryapp.data.auth.AuthViewModel
 import com.example.wahyustoryapp.data.auth.AuthViewModelFactory
 import com.example.wahyustoryapp.data.retrofit.LoginForm
 import com.example.wahyustoryapp.databinding.FragmentLoginBinding
-import com.example.wahyustoryapp.showLoading
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
+import com.example.wahyustoryapp.showOverlayWhileLoading
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
@@ -56,12 +50,36 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
             }
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
-            activity?.let {
-                binding.btnLogin.showLoading(it, loading)
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            activity?.let { activity ->
+//                binding.btnLogin.showLoading(it, binding.loginProgress, isLoading)
+
+                binding.btnLogin.showOverlayWhileLoading(
+                    activity,
+                    binding.root,
+                    binding.loginProgress,
+                    isLoading
+                )
+
+//                val darkColor =
+//                    ContextCompat.getColor(requireContext(), R.color.md_theme_dark_onSurface)
+//                val lightColor =
+//                    ContextCompat.getColor(requireContext(), R.color.md_theme_light_background)
+//                if (isLoading) {
+//                    binding.btnLogin.isEnabled = false
+//                    binding.root.setBackgroundColor(darkColor)
+//                    binding.loginProgress.visibility = View.VISIBLE
+//                    activity.window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+//                } else {
+//                    binding.btnLogin.isEnabled = true
+//                    binding.root.setBackgroundColor(lightColor)
+//                    binding.loginProgress.visibility = View.GONE
+//                    activity.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+//                }
             }
         }
 
+//        binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_light_background))
         binding.btnLogin.setOnClickListener(this)
         binding.btnToRegister.setOnClickListener(this)
     }
@@ -89,12 +107,11 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
         }
     }
 
-    private fun getLoginForm() : LoginForm{
+    private fun getLoginForm(): LoginForm {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
-        return LoginForm(email,password)
+        return LoginForm(email, password)
     }
-
 
 
     override fun onDestroy() {

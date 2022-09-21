@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.wahyustoryapp.MainNavDirections
 import com.example.wahyustoryapp.data.auth.register.RegisterViewModel
 import com.example.wahyustoryapp.databinding.FragmentRegisterBinding
+import com.example.wahyustoryapp.showOverlayWhileLoading
 
 class RegisterFragment : Fragment(), View.OnClickListener {
 
@@ -36,7 +37,9 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         binding.btnRegister.setOnClickListener(this)
 
         viewModel.isLoading.observe(viewLifecycleOwner){
-            binding.btnRegister.isEnabled = !it
+            activity?.let {
+//                binding.btnRegister.showOverlayWhileLoading(it, binding.root, binding)
+            }
         }
 
         viewModel.message.observe(viewLifecycleOwner){
