@@ -2,6 +2,7 @@ package com.example.wahyustoryapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import com.example.wahyustoryapp.data.auth.AuthPreference
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
