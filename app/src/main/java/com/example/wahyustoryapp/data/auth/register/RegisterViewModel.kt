@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.retrofit.ApiConfig
 import com.example.wahyustoryapp.data.retrofit.RegisterForm
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
@@ -21,12 +20,12 @@ class RegisterViewModel : ViewModel() {
     private var _isRegisterSuccess: MutableLiveData<Boolean> = MutableLiveData()
     val isRegisterSucces: LiveData<Boolean> get() = _isRegisterSuccess
 
-    fun registerAccount(name: String, email: String, password: String) {
+    fun registerAccount(form: RegisterForm) {
         viewModelScope.launch {
             _isLoading.value = true
             val response = ApiConfig
                 .getApiService()
-                .registerUser(RegisterForm(name, email, password))
+                .registerUser(form)
 
             if (response.isSuccessful) {
                 _isLoading.value = false

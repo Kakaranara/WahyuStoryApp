@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wahyustoryapp.MainNavDirections
 import com.example.wahyustoryapp.data.auth.register.RegisterViewModel
+import com.example.wahyustoryapp.data.retrofit.RegisterForm
 import com.example.wahyustoryapp.databinding.FragmentRegisterBinding
 import com.example.wahyustoryapp.showOverlayWhileLoading
 
@@ -36,9 +37,9 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         binding.btnToLogin.setOnClickListener(this)
         binding.btnRegister.setOnClickListener(this)
 
-        viewModel.isLoading.observe(viewLifecycleOwner){
+        viewModel.isLoading.observe(viewLifecycleOwner){ isloading ->
             activity?.let {
-//                binding.btnRegister.showOverlayWhileLoading(it, binding.root, binding)
+                binding.btnRegister.showOverlayWhileLoading(it, binding.root, binding.registerProgressBar, isloading )
             }
         }
 
@@ -68,8 +69,21 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                 findNavController().navigate(global)
             }
             binding.btnRegister -> {
-                viewModel.registerAccount("debug","degK@gmail.com","123456")
+//                val pass = binding.etRegisterPassword.text.toString()
+//                val confPass = binding.etRegisterConfirmPassword.text.toString()
+//                if(pass != confPass)
+                val form = getRegisterForm()
+                viewModel.registerAccount(form)
             }
+        }
+    }
+
+    private fun getRegisterForm() : RegisterForm{
+        binding.apply {
+            val name = etRegisterName.text.toString()
+            val email = etRegisterEmail.text.toString()
+            val password = etRegisterPassword.text.toString()
+            return RegisterForm(name, email, password)
         }
     }
 }

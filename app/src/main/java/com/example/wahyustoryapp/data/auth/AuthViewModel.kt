@@ -6,20 +6,16 @@ import com.example.wahyustoryapp.data.retrofit.LoginForm
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class AuthViewModel(val pref: AuthPreference) : ViewModel() {
+class AuthViewModel(private val pref: AuthPreference) : ViewModel() {
 
     private val _isLoginSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val isLoginSuccess: LiveData<Boolean> get() = _isLoginSuccess
+    val isLoginSuccess: LiveData<Boolean> = _isLoginSuccess
 
     private val _message: MutableLiveData<String> = MutableLiveData()
     val message: LiveData<String> get() = _message
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean> = _isLoading
-
-    fun isLogin(): LiveData<Boolean> {
-        return pref.isLogin().asLiveData()
-    }
 
     fun login(data: LoginForm) {
         _isLoading.value = true
@@ -34,7 +30,7 @@ class AuthViewModel(val pref: AuthPreference) : ViewModel() {
                 body?.let {
                     pref.writeToken(it.loginResult.token)
                     pref.login()
-                    _isLoginSuccess.value = true
+                    _isLoginSuccess.postValue(true)
                     _message.value = it.message
                 }
             } else {
@@ -47,7 +43,7 @@ class AuthViewModel(val pref: AuthPreference) : ViewModel() {
                 } catch (e: Exception) {
                     _message.value = "Terjadi Kesalahan Pada Server"
                 }
-                _isLoginSuccess.value = false
+                _isLoginSuccess.postValue(false)
             }
         }
     }

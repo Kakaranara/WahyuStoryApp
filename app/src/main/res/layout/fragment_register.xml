@@ -10,11 +10,10 @@
         android:id="@+id/registerProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:visibility="gone" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="40dp"
@@ -26,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Register"
+            android:text="@string/register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
@@ -37,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Let's Make an Account!"
+            android:text="@string/let_s_make_an_account"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -45,13 +44,14 @@
             android:id="@+id/textInputLayout2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Name"
+            android:hint="@string/name"
             app:layout_constraintBottom_toTopOf="@id/guideline2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:placeholderText="sidiq permana">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegisterName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -62,13 +62,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Email"
+            android:hint="@string/email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
             app:placeholderText="mymail@gmail.com">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegisterEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -79,13 +80,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Password"
+            android:hint="@string/password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
             app:placeholderText="mymail@gmail.com">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegisterPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -96,13 +98,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Confirm Password"
+            android:hint="@string/confirm_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
             app:placeholderText="mymail@gmail.com">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegisterConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -119,7 +122,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Already have an account?"
+            android:text="@string/already_have_an_account"
             app:layout_constraintBottom_toBottomOf="@+id/btnToLogin"
             app:layout_constraintEnd_toStartOf="@+id/btnToLogin"
             app:layout_constraintHorizontal_bias="0.5"
@@ -132,7 +135,7 @@
             style="@style/CustomTextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView4"

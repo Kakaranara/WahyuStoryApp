@@ -13,9 +13,7 @@
         android:layout_gravity="center"
         android:visibility="gone"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="40dp"
@@ -38,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Your email"
+            android:hint="@string/email"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +55,7 @@
             android:id="@+id/paswrod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Your Password"
+            android:hint="@string/password"
 
             app:layout_constraintTop_toBottomOf="@id/guideline3">
 
@@ -82,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Login"
+            android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/paswrod" />
@@ -91,7 +89,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Didn't Have Account? "
+            android:text="@string/didn_t_have_account"
             app:layout_constraintBottom_toBottomOf="@+id/btnToRegister"
             app:layout_constraintEnd_toStartOf="@+id/btnToRegister"
             app:layout_constraintHorizontal_bias="0.5"
@@ -104,7 +102,7 @@
             style="@style/CustomTextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register"
+            android:text="@string/register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView"
@@ -116,17 +114,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Yu Story"
+            android:text="@string/yu_story"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/debugToken2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TOKEN DEBUGGING"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+<!--        <TextView-->
+<!--            android:id="@+id/debugToken2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="TOKEN DEBUGGING"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/textView2"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/circleImageView" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
