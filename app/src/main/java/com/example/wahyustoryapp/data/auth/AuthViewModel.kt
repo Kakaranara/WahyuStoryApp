@@ -1,46 +1,50 @@
 package com.example.wahyustoryapp.data.auth
 
 import androidx.lifecycle.*
-import com.example.wahyustoryapp.data.pojo.LoginResponse
-import retrofit2.Callback
 import com.example.wahyustoryapp.data.retrofit.ApiConfig
 import com.example.wahyustoryapp.data.retrofit.LoginForm
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Response
+import org.json.JSONObject
 
 class AuthViewModel(val pref: AuthPreference) : ViewModel() {
 
-    val _isLoginSuccess: MutableLiveData<Boolean> = MutableLiveData()
+    private val _isLoginSuccess: MutableLiveData<Boolean> = MutableLiveData()
     val isLoginSuccess: LiveData<Boolean> get() = _isLoginSuccess
+
+    private val _message: MutableLiveData<String> = MutableLiveData()
+    val message: LiveData<String> get() = _message
 
     fun isLogin(): LiveData<Boolean> {
         return pref.isLogin().asLiveData()
     }
 
-    fun login(){
-        val client = ApiConfig.getApiService().getLoginData(LoginForm("debugk@gmail.com","123456"))
+    fun login() {
+        viewModelScope.launch {
+            val response = ApiConfig
+                .getApiService()
+                .getLoginData(LoginForm("debugk@gmail.com", "123456"))
 
-        client.enqueue(object : Callback<LoginResponse> {
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    body?.let {
-                        viewModelScope.launch {
-                            pref.writeToken(it.loginResult.token)
-                            pref.login()
-                            _isLoginSuccess.value = true
-                        }
-                    }
-                } else {
-                    _isLoginSuccess.value = false
+            if (response.isSuccessful) {
+                val body = response.body()
+                body?.let {
+                    pref.writeToken(it.loginResult.token)
+                    pref.login()
+                    _isLoginSuccess.value = true
+                    _message.value = it.message
                 }
+            } else {
+                try {
+                    val responseBody = response.errorBody()
+                    responseBody?.let {
+                        val obj = JSONObject(it.string())
+                        _message.value = obj.getString("message")
+                    }
+                } catch (e: Exception) {
+                    _message.value = "Terjadi Kesalahan Pada Server"
+                }
+                _isLoginSuccess.value = false
             }
-
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                throw Exception("Failed fetch!")
-            }
-        })
+        }
     }
 }
 
@@ -56,8 +60,8 @@ class AuthViewModelFactory private constructor(private val prefs: AuthPreference
 
     companion object {
         private var INSTANCE: AuthViewModelFactory? = null
-        fun getInstance(prefs: AuthPreference) : AuthViewModelFactory{
-            return INSTANCE ?: synchronized(this){
+        fun getInstance(prefs: AuthPreference): AuthViewModelFactory {
+            return INSTANCE ?: synchronized(this) {
                 val instance = AuthViewModelFactory(prefs)
                 INSTANCE = instance
                 instance
