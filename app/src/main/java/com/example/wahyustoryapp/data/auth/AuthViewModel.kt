@@ -14,15 +14,20 @@ class AuthViewModel(val pref: AuthPreference) : ViewModel() {
     private val _message: MutableLiveData<String> = MutableLiveData()
     val message: LiveData<String> get() = _message
 
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun isLogin(): LiveData<Boolean> {
         return pref.isLogin().asLiveData()
     }
 
-    fun login() {
+    fun login(data: LoginForm) {
+        _isLoading.value = true
         viewModelScope.launch {
-            val response = ApiConfig
-                .getApiService()
-                .getLoginData(LoginForm("debugk@gmail.com", "123456"))
+            val response =
+                ApiConfig.getApiService().getLoginData(data)
+
+            _isLoading.value = false
 
             if (response.isSuccessful) {
                 val body = response.body()

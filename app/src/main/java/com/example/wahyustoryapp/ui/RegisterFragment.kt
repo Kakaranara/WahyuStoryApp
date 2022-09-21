@@ -35,6 +35,10 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         binding.btnToLogin.setOnClickListener(this)
         binding.btnRegister.setOnClickListener(this)
 
+        viewModel.isLoading.observe(viewLifecycleOwner){
+            binding.btnRegister.isEnabled = !it
+        }
+
         viewModel.message.observe(viewLifecycleOwner){
             Toast.makeText(requireActivity(), "$it ???", Toast.LENGTH_SHORT).show()
         }

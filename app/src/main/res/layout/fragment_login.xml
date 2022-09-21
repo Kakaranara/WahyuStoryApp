@@ -31,8 +31,10 @@
         app:placeholderText="esmeralda@gmail.com">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="debugk@gmail.com" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -46,8 +48,10 @@
         app:layout_constraintTop_toBottomOf="@id/guideline3">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="123456" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,10 +78,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Didn't Have Account? "
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintBottom_toBottomOf="@+id/btnToRegister"
         app:layout_constraintEnd_toStartOf="@+id/btnToRegister"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnToRegister" />
 

@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.ContentInfoCompat.Flags
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -14,7 +17,9 @@ import com.example.wahyustoryapp.authDataStore
 import com.example.wahyustoryapp.data.auth.AuthPreference
 import com.example.wahyustoryapp.data.auth.AuthViewModel
 import com.example.wahyustoryapp.data.auth.AuthViewModelFactory
+import com.example.wahyustoryapp.data.retrofit.LoginForm
 import com.example.wahyustoryapp.databinding.FragmentLoginBinding
+import com.example.wahyustoryapp.showLoading
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -51,6 +56,12 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
             }
         }
 
+        viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
+            activity?.let {
+                binding.btnLogin.showLoading(it, loading)
+            }
+        }
+
         binding.btnLogin.setOnClickListener(this)
         binding.btnToRegister.setOnClickListener(this)
     }
@@ -58,8 +69,10 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
     override fun onClick(v: View) {
         when (v) {
             binding.btnLogin -> {
-                viewModel.login()
-                viewModel.message.observe(this){
+                val form = getLoginForm()
+                viewModel.login(form)
+
+                viewModel.message.observe(this) {
                     Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
                 }
                 viewModel.isLoginSuccess.observe(requireActivity()) {
@@ -75,6 +88,13 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
             }
         }
     }
+
+    private fun getLoginForm() : LoginForm{
+        val email = binding.etEmail.text.toString()
+        val password = binding.etPassword.text.toString()
+        return LoginForm(email,password)
+    }
+
 
 
     override fun onDestroy() {
