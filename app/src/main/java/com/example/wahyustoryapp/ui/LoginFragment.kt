@@ -16,6 +16,8 @@ import com.example.wahyustoryapp.data.auth.AuthViewModelFactory
 import com.example.wahyustoryapp.data.retrofit.LoginForm
 import com.example.wahyustoryapp.databinding.FragmentLoginBinding
 import com.example.wahyustoryapp.showOverlayWhileLoading
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
     private var _binding: FragmentLoginBinding? = null
@@ -27,6 +29,21 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
         AuthViewModelFactory.getInstance(
             AuthPreference.getInstance(requireActivity().authDataStore)
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val prefs = AuthPreference.getInstance(requireActivity().authDataStore)
+        //sengaja menggunakan runblocking
+        //agar dapat dicek dahulu sebelum view dibuat
+        runBlocking {
+            val a = prefs.isLogin().first()
+            if (a) {
+                val goto = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                findNavController().navigate(goto)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -73,8 +90,6 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
             binding.btnLogin -> {
                 val form = getLoginForm()
                 viewModel.login(form)
-
-
             }
             binding.btnToRegister -> {
                 val toRegister = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
