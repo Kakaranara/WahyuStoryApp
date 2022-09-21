@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wahyustoryapp.data.retrofit.ApiConfig
-import com.example.wahyustoryapp.data.retrofit.RegisterForm
+import com.example.wahyustoryapp.data.network.ApiConfig
+import com.example.wahyustoryapp.data.network.RegisterForm
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 

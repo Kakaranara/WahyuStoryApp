@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.data.retrofit
+package com.example.wahyustoryapp.data.network
 
 
 //below is for POST related argument's

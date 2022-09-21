@@ -1,8 +1,8 @@
 package com.example.wahyustoryapp.data.auth
 
 import androidx.lifecycle.*
-import com.example.wahyustoryapp.data.retrofit.ApiConfig
-import com.example.wahyustoryapp.data.retrofit.LoginForm
+import com.example.wahyustoryapp.data.network.ApiConfig
+import com.example.wahyustoryapp.data.network.LoginForm
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 

@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.data.retrofit.pojo
+package com.example.wahyustoryapp.data.network.response
 
 import com.google.gson.annotations.SerializedName
 

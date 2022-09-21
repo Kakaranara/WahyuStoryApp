@@ -1,6 +1,5 @@
-package com.example.wahyustoryapp.data.retrofit
+package com.example.wahyustoryapp.data.network
 
-import android.os.Build
 import com.example.wahyustoryapp.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

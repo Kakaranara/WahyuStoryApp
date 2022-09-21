@@ -13,7 +13,7 @@ import com.example.wahyustoryapp.authDataStore
 import com.example.wahyustoryapp.data.auth.AuthPreference
 import com.example.wahyustoryapp.data.auth.LoginViewModel
 import com.example.wahyustoryapp.data.auth.AuthViewModelFactory
-import com.example.wahyustoryapp.data.retrofit.LoginForm
+import com.example.wahyustoryapp.data.network.LoginForm
 import com.example.wahyustoryapp.databinding.FragmentLoginBinding
 import com.example.wahyustoryapp.showOverlayWhileLoading
 import kotlinx.coroutines.flow.first
@@ -80,6 +80,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
                 findNavController().navigate(toHome)
             }
         }
+
 
         binding.btnLogin.setOnClickListener(this)
         binding.btnToRegister.setOnClickListener(this)
