@@ -62,7 +62,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         val go = MainNavDirections.actionGlobalLoginFragment2()
                         findNavController().navigate(go)
                     }
-
                     true
                 }
                 else -> false
