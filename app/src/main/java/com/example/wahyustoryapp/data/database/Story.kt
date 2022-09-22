@@ -1,30 +1,20 @@
 package com.example.wahyustoryapp.data.database
 
-import androidx.room.ColumnInfo
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 
 @Entity
+@Parcelize
 data class Story(
     @PrimaryKey(autoGenerate = true)
-    val idOrder: Int,
-
-    @ColumnInfo
+    val idOrder: Int = 0,
     val id: String,
-
-    @ColumnInfo
     val name: String,
-
-    @ColumnInfo
     val description: String,
-
-    @ColumnInfo
     val photoUrl: String,
-
-    @ColumnInfo
     val lat: Double? = null,
-
-    @ColumnInfo
-    val long: Double? = null
-)
+    val lon: Double? = null
+) : Parcelable
