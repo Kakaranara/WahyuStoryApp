@@ -14,4 +14,6 @@
     <string name="yu_story">Yu Story</string>
     <string name="add_story">Add Story</string>
     <string name="image_story">Image Story</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
 </resources>

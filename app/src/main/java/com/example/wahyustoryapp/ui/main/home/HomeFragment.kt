@@ -1,10 +1,14 @@
 package com.example.wahyustoryapp.ui.main.home
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -40,7 +44,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
-        binding.rvHome.setHasFixedSize(true)
+
+        binding.fab.setOnClickListener {
+            val go = HomeFragmentDirections.actionHomeFragmentToAddStoryFragment()
+            findNavController().navigate(go)
+        }
 
         viewModel.message.observe(viewLifecycleOwner){
             Toast.makeText(requireActivity(), "is $it", Toast.LENGTH_SHORT).show()
@@ -50,6 +58,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.rvHome.adapter = HomeAdapter(it)
         }
 
+        binding.rvHome.setHasFixedSize(true)
         val manager = LinearLayoutManager(requireActivity())
         binding.rvHome.layoutManager = manager
     }
@@ -65,6 +74,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 R.id.action_setting -> {
                     val go = HomeFragmentDirections.actionHomeFragmentToSettingFragment()
                     findNavController().navigate(go)
+                    true
+                }
+                R.id.action_refresh -> {
+                    viewModel.refreshDatabase()
+                    true
+                }
+                R.id.action_search -> {
                     true
                 }
                 R.id.action_logout -> {

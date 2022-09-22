@@ -49,7 +49,7 @@
         tools:layout="@layout/fragment_setting" />
     <fragment
         android:id="@+id/addStoryFragment"
-        android:name="com.example.wahyustoryapp.ui.main.AddStoryFragment"
+        android:name="com.example.wahyustoryapp.ui.main.addStory.AddStoryFragment"
         android:label="fragment_add_story"
         tools:layout="@layout/fragment_add_story" />
 </navigation>
