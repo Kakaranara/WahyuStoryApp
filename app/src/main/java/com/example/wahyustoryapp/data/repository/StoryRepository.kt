@@ -49,7 +49,6 @@ class StoryRepository(application: Application) {
             true -> 1
         }
         withContext(Dispatchers.IO) {
-            dao.deleteAll()
             _isFetching.postValue(true)
             val networkData = ApiConfig.getApiService()
                 .getAllStory(
@@ -60,6 +59,7 @@ class StoryRepository(application: Application) {
                 )
             _isFetching.postValue(true)
             if (networkData.isSuccessful) {
+                dao.deleteAll()
                 _isError.postValue(false)
                 networkData.body()?.let { response ->
                     _message.postValue(response.message)

@@ -1,5 +1,6 @@
 package com.example.wahyustoryapp.ui.main.home
 
+import android.accounts.NetworkErrorException
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +18,9 @@ class HomeViewModel(application: Application) : ViewModel() {
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    private val _isNetworkError: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isNetworkError: LiveData<Boolean> get() = _isNetworkError
+
     init {
         refreshDatabase()
     }
@@ -28,12 +32,20 @@ class HomeViewModel(application: Application) : ViewModel() {
     ) {
         _isLoading.value = false
         viewModelScope.launch {
-            repository.refreshRepositoryData(
-                page = page,
-                size = size,
-                withLocation = location
-            )
-            _isLoading.value = true
+            try {
+                repository.refreshRepositoryData(
+                    page = page,
+                    size = size,
+                    withLocation = location
+                )
+                _isNetworkError.value = false
+                _isLoading.value = true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _isNetworkError.value = true
+                _isLoading.value = false
+            }
+
         }
     }
 

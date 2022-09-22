@@ -58,6 +58,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.rvHome.adapter = HomeAdapter(it)
         }
 
+        viewModel.isNetworkError.observe(viewLifecycleOwner){
+            if(!it){
+                Toast.makeText(requireActivity(), "Network error", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         binding.rvHome.setHasFixedSize(true)
         val manager = LinearLayoutManager(requireActivity())
         binding.rvHome.layoutManager = manager
