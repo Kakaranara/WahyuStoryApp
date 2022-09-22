@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wahyustoryapp.MainNavDirections
 import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.authDataStore
@@ -39,11 +40,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
+        binding.rvHome.setHasFixedSize(true)
 
         viewModel.message.observe(viewLifecycleOwner){
             Toast.makeText(requireActivity(), "is $it", Toast.LENGTH_SHORT).show()
         }
 
+        viewModel.story.observe(viewLifecycleOwner){
+            binding.rvHome.adapter = HomeAdapter(it)
+        }
+
+        val manager = LinearLayoutManager(requireActivity())
+        binding.rvHome.layoutManager = manager
     }
 
     private fun setupToolbar() {
@@ -76,6 +84,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    fun refreshData(){
+        viewModel.refreshDatabase()
     }
 
     companion object{
