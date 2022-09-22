@@ -51,5 +51,14 @@
         android:id="@+id/addStoryFragment"
         android:name="com.example.wahyustoryapp.ui.main.addStory.AddStoryFragment"
         android:label="fragment_add_story"
-        tools:layout="@layout/fragment_add_story" />
+        tools:layout="@layout/fragment_add_story" >
+        <action
+            android:id="@+id/action_addStoryFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.example.wahyustoryapp.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
 </navigation>

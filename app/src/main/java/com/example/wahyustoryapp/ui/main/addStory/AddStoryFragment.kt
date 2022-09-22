@@ -1,20 +1,47 @@
 package com.example.wahyustoryapp.ui.main.addStory
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
 
 
-class AddStoryFragment : Fragment(R.layout.fragment_add_story) {
+class AddStoryFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentAddStoryBinding? = null
     private val binding get() = _binding!!
+
+    private val requestPermission = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ){isGranted ->
+        if(isGranted){
+            val go = AddStoryFragmentDirections.actionAddStoryFragmentToCameraFragment()
+            findNavController().navigate(go)
+        }else{
+            Toast.makeText(requireActivity(), "Permission tidak diberikan", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
+
+        binding.btnCamera.setOnClickListener(this)
+        binding.btnGallery.setOnClickListener(this)
+
+
+    }
+
+    private fun setupToolbar() {
+        binding.toolbar3.setupWithNavController(findNavController())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,17 +52,27 @@ class AddStoryFragment : Fragment(R.layout.fragment_add_story) {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupToolbar()
-    }
-
-    private fun setupToolbar() {
-        binding.toolbar3.setupWithNavController(findNavController())
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
+    override fun onClick(view: View) {
+        when (view) {
+            binding.btnCamera -> {
+                requestPermission.launch(Manifest.permission.CAMERA)
+            }
+            binding.btnGallery -> {
+
+            }
+        }
+    }
+
+    companion object {
+        const val CAMERA_X_RESULT = 200
+
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private const val REQUEST_CODE_PERMISSIONS = 10
+    }
+
 }

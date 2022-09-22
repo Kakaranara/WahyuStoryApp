@@ -15,25 +15,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <ImageView
+        android:contentDescription="@string/image_placeholder"
         android:id="@+id/imageView"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginTop="24dp"
+        android:src="@drawable/ic_place_holder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar3"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar3" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/camera" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnGallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/gallery" />
@@ -42,7 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:constraint_referenced_ids="button4,button5"
+        app:constraint_referenced_ids="btnCamera,btnGallery"
         app:flow_horizontalGap="12dp"
         app:flow_horizontalStyle="packed"
         app:layout_constraintEnd_toEndOf="parent"
