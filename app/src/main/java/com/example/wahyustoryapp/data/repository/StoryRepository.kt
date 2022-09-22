@@ -39,11 +39,25 @@ class StoryRepository(application: Application) {
     private val _isFetching: MutableLiveData<Boolean> = MutableLiveData()
     val isFetching: LiveData<Boolean> get() = _isFetching
 
-    suspend fun refreshRepositoryData() {
+    suspend fun refreshRepositoryData(
+        page: Int? = null,
+        size: Int? = null,
+        withLocation: Boolean = false
+    ) {
+        val location = when (withLocation) {
+            false -> 0
+            true -> 1
+        }
         withContext(Dispatchers.IO) {
             dao.deleteAll()
             _isFetching.postValue(true)
-            val networkData = ApiConfig.getApiService().getAllStory("Bearer $token", size = 10)
+            val networkData = ApiConfig.getApiService()
+                .getAllStory(
+                    "Bearer $token",
+                    page = page,
+                    size = size,
+                    location = location
+                )
             _isFetching.postValue(true)
             if (networkData.isSuccessful) {
                 _isError.postValue(false)

@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.ui.main
+package com.example.wahyustoryapp.ui.main.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,8 +16,6 @@ import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.authDataStore
 import com.example.wahyustoryapp.data.auth.AuthPreference
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
-import com.example.wahyustoryapp.ui.main.home.ApplicationFactory
-import com.example.wahyustoryapp.ui.main.home.HomeViewModel
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(R.layout.fragment_home) {

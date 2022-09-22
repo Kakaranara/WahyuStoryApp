@@ -21,10 +21,18 @@ class HomeViewModel(application: Application) : ViewModel() {
         refreshDatabase()
     }
 
-    fun refreshDatabase() {
+    fun refreshDatabase(
+        page: Int? = null,
+        size: Int? = null,
+        location: Boolean = false
+    ) {
         _isLoading.value = false
         viewModelScope.launch {
-            repository.refreshRepositoryData()
+            repository.refreshRepositoryData(
+                page = page,
+                size = size,
+                withLocation = location
+            )
             _isLoading.value = true
         }
     }
