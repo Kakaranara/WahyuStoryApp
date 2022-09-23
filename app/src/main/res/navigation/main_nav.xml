@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.example.wahyustoryapp.CameraFragment"
+        android:name="com.example.wahyustoryapp.ui.main.addStory.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera" />
 </navigation>

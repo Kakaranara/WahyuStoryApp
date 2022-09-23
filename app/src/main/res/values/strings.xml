@@ -16,4 +16,6 @@
     <string name="image_story">Image Story</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="image_placeholder">Image Placeholder</string>
+    <string name="take_picture">take picture</string>
 </resources>

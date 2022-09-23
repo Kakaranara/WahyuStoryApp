@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
@@ -17,6 +18,9 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentAddStoryBinding? = null
     private val binding get() = _binding!!
+
+    //shared view model
+    private val viewModel by activityViewModels<AddStoryViewModel>()
 
     private val requestPermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -36,7 +40,9 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
         binding.btnCamera.setOnClickListener(this)
         binding.btnGallery.setOnClickListener(this)
 
-
+        viewModel.photo.observe(viewLifecycleOwner){
+            binding.imageView.setImageBitmap(it)
+        }
     }
 
     private fun setupToolbar() {
@@ -55,6 +61,9 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+
+        //removing all shared view model
+        requireActivity().viewModelStore.clear()
     }
 
     override fun onClick(view: View) {
