@@ -106,12 +106,12 @@ class StoryRepository(application: Application) {
                 )
                 if (network.isSuccessful) {
                     network.body()?.let {
-//                        _message.postValue(it.message)
+                        _message.postValue(it.message)
                     }
                 } else {
                     network.errorBody()?.let {
                         val obj = JSONObject(it.string())
-//                        _message.postValue(obj.getString("message"))
+                        _message.postValue(obj.getString("message"))
                     }
                 }
             } catch (e: Exception) {

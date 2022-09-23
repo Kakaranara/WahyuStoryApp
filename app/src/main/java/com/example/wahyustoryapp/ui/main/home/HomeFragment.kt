@@ -47,7 +47,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         viewModel.message.observe(viewLifecycleOwner){
-            Toast.makeText(requireActivity(), "is $it", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), "$it", Toast.LENGTH_SHORT).show()
         }
 
         viewModel.story.observe(viewLifecycleOwner){
