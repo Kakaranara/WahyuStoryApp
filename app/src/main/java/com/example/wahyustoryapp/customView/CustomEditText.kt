@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.custom
+package com.example.wahyustoryapp.customView
 
 import android.content.Context
 import android.util.AttributeSet
