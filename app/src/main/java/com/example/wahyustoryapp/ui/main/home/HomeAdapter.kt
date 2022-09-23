@@ -5,9 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.ListItem2Binding
 import com.example.wahyustoryapp.databinding.ListItemBinding
+import com.example.wahyustoryapp.formatDate
 
 class HomeAdapter(private val listItem: List<Story>) :
     RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
@@ -24,6 +26,8 @@ class HomeAdapter(private val listItem: List<Story>) :
             binding.apply {
                 itemTitle2.text = data.name
                 itemDescription2.text = data.description
+                itemDate2.text =
+                    holder.itemView.resources.getString(R.string.date_format, data.createdAt)
             }
         }
         Glide.with(holder.binding.root.context)

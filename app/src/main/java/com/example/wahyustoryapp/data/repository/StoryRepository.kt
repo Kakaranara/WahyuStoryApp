@@ -117,6 +117,7 @@ class StoryRepository(application: Application) {
                 _isFetching.postValue(false)
             } catch (e: Exception) {
                 e.printStackTrace()
+                _message.postValue("Terjadi suatu error")
                 _isFetching.postValue(false)
                 Log.e("ERRSS", "uploadToServer: $e")
             }
