@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.network.ApiConfig
 import com.example.wahyustoryapp.data.repository.StoryRepository
+import com.example.wahyustoryapp.reduceFileImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -37,38 +38,13 @@ class AddStoryViewModel(application: Application) : ViewModel() {
 
     fun uploadToServer(file: File, description: String) {
         viewModelScope.launch {
-//            repository.addStory(image, description)
-
-            val requestDesc = description.toRequestBody("text/plain".toMediaType())
-            val requestImage = file.asRequestBody("image/jpg".toMediaTypeOrNull())
-            val imgPart = MultipartBody.Part.createFormData("mPhoto", file.name, requestImage)
-
-            withContext(Dispatchers.Main) {
-                try{
-                    val network = ApiConfig.getApiService().uploadImage(
-                        imgPart, requestDesc
-                    )
-                    if (network.isSuccessful) {
-                        network.body()?.let {
-//                        _message.postValue(it.message)
-                        }
-                    } else {
-                        network.errorBody()?.let {
-                            val obj = JSONObject(it.string())
-//                        _message.postValue(obj.getString("message"))
-                        }
-                    }
-                }
-                catch (e: Exception){
-                    e.printStackTrace()
-                    Log.e("ERRSS", "uploadToServer: $e", )
-                }
-            }
+            repository.addStory(file, description)
         }
     }
 
     fun insertFile(file: File) {
-        _file.value = file
+        val reducedFile = reduceFileImage(file)
+        _file.value = reducedFile
     }
 
     fun insertPhoto(bitmap: Bitmap) {

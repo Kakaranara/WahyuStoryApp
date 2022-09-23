@@ -1,6 +1,7 @@
 package com.example.wahyustoryapp.data.repository
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.wahyustoryapp.authDataStore
@@ -92,21 +93,27 @@ class StoryRepository(application: Application) {
 
         val requestDesc = description.toRequestBody("text/plain".toMediaType())
         val requestImage = file.asRequestBody("image/jpg".toMediaTypeOrNull())
-        val imgPart = MultipartBody.Part.createFormData("mPhoto", file.name)
+        val imgPart = MultipartBody.Part.createFormData("photo", file.name, requestImage)
 
         withContext(Dispatchers.Main) {
-            val network = ApiConfig.getApiService().uploadImage(
-                imgPart, requestDesc
-            )
-            if(network.isSuccessful){
-                network.body()?.let {
-                    _message.postValue(it.message)
+            try {
+                val network = ApiConfig.getApiService().uploadImage(
+                    "Bearer $token",
+                    imgPart, requestDesc
+                )
+                if (network.isSuccessful) {
+                    network.body()?.let {
+//                        _message.postValue(it.message)
+                    }
+                } else {
+                    network.errorBody()?.let {
+                        val obj = JSONObject(it.string())
+//                        _message.postValue(obj.getString("message"))
+                    }
                 }
-            }else{
-                network.errorBody()?.let {
-                    val obj = JSONObject(it.string())
-                    _message.postValue(obj.getString("message"))
-                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("ERRSS", "uploadToServer: $e")
             }
         }
     }

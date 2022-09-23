@@ -104,11 +104,8 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
                 file?.let {
                     val requestDesc = "halo".toRequestBody("text/plain".toMediaType())
                     val requestImage = it.asRequestBody("image/jpg".toMediaTypeOrNull())
-                    val imgPart = MultipartBody.Part.createFormData("mPhoto", it.name, requestImage)
+                    val imgPart = MultipartBody.Part.createFormData("photo", it.name, requestImage)
 
-//                    lifecycleScope.launch{
-//                        ApiConfig.getApiService().uploadImage(imgPart,requestDesc)
-//                    }
                     viewModel.uploadToServer(it, "TESTING STzzzz")
                 } ?: Toast.makeText(requireActivity(), "Please input the image", Toast.LENGTH_SHORT)
                     .show()
