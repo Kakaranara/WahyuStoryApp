@@ -12,6 +12,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
+import com.example.wahyustoryapp.disabled
+import com.example.wahyustoryapp.enabled
 import com.example.wahyustoryapp.ui.main.home.ApplicationFactory
 import java.io.File
 
@@ -59,6 +61,14 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
         viewModel.file.observe(viewLifecycleOwner) {
             file = it
         }
+
+        viewModel.isUploading.observe(viewLifecycleOwner){
+            if(it){
+                binding.btnUpload.disabled()
+            }else{
+                binding.btnUpload.enabled()
+            }
+        }
     }
 
     private fun setupToolbar() {
@@ -101,13 +111,6 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
                     .show()
             }
         }
-    }
-
-    companion object {
-        const val CAMERA_X_RESULT = 200
-
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-        private const val REQUEST_CODE_PERMISSIONS = 10
     }
 
 }

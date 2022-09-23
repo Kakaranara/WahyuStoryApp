@@ -44,6 +44,14 @@ fun View.visible(){
     this.visibility = View.VISIBLE
 }
 
+fun View.disabled(){
+    this.isEnabled = false
+}
+
+fun View.enabled(){
+    this.isEnabled = true
+}
+
 fun List<ListStoryItem>.toEntity() : List<Story>{
     return this.map {
         Story(

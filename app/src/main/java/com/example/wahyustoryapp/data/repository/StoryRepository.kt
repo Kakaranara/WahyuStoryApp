@@ -98,6 +98,7 @@ class StoryRepository(application: Application) {
 
         withContext(Dispatchers.Main) {
             try {
+                _isFetching.postValue(true)
                 val network = ApiConfig.getApiService().uploadImage(
                     "Bearer $token",
                     imgPart, requestDesc
@@ -113,8 +114,10 @@ class StoryRepository(application: Application) {
                         _message.postValue(obj.getString("message"))
                     }
                 }
+                _isFetching.postValue(false)
             } catch (e: Exception) {
                 e.printStackTrace()
+                _isFetching.postValue(false)
                 Log.e("ERRSS", "uploadToServer: $e")
             }
         }
