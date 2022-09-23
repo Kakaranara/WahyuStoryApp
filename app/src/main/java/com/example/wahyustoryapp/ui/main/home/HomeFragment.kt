@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,9 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.wahyustoryapp.MainNavDirections
-import com.example.wahyustoryapp.R
-import com.example.wahyustoryapp.authDataStore
+import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.data.auth.AuthPreference
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch
@@ -46,12 +45,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             findNavController().navigate(go)
         }
 
-        viewModel.message.observe(viewLifecycleOwner){
-            Toast.makeText(requireActivity(), "$it", Toast.LENGTH_SHORT).show()
-        }
-
         viewModel.story.observe(viewLifecycleOwner){
             binding.rvHome.adapter = HomeAdapter(it)
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner){
+            if(it){
+                binding.progressBar2.visible()
+            }else{
+                binding.progressBar2.gone()
+            }
         }
 
         viewModel.isNetworkError.observe(viewLifecycleOwner){

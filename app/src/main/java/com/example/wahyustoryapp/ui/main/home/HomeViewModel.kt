@@ -31,7 +31,7 @@ class HomeViewModel(application: Application) : ViewModel() {
         size: Int? = null,
         location: Boolean = false
     ) {
-        _isLoading.value = false
+        _isLoading.value = true
         viewModelScope.launch {
             try {
                 repository.refreshRepositoryData(
@@ -40,7 +40,7 @@ class HomeViewModel(application: Application) : ViewModel() {
                     withLocation = location
                 )
                 _isNetworkError.value = false
-                _isLoading.value = true
+                _isLoading.value = false
             } catch (e: Exception) {
                 e.printStackTrace()
                 _isNetworkError.value = true
