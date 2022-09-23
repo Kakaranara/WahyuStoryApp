@@ -1,7 +1,6 @@
 package com.example.wahyustoryapp.ui.main.addStory
 
 import android.Manifest
-import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,19 +9,10 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.wahyustoryapp.data.network.ApiConfig
-import com.example.wahyustoryapp.data.network.ApiService
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
 import com.example.wahyustoryapp.ui.main.home.ApplicationFactory
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 
@@ -101,8 +91,12 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
 
             }
             binding.btnUpload -> {
+                val et = binding.etDesc.text.toString()
+                val description = et.ifEmpty {
+                    "Tidak ada deskripsi"
+                }
                 file?.let {
-                    viewModel.uploadToServer(it, "TESTING STzzzz")
+                    viewModel.uploadToServer(it, description)
                 } ?: Toast.makeText(requireActivity(), "Please input the image", Toast.LENGTH_SHORT)
                     .show()
             }

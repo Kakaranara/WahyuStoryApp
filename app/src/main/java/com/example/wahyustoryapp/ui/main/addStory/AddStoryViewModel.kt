@@ -43,7 +43,8 @@ class AddStoryViewModel(application: Application) : ViewModel() {
     }
 
     fun insertFile(file: File) {
-        _file.value = file
+        val reduced = reduceFileImage(file)
+        _file.value = reduced
     }
 
     fun insertPhoto(bitmap: Bitmap) {

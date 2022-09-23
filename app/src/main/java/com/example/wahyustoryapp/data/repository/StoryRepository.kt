@@ -92,10 +92,8 @@ class StoryRepository(application: Application) {
 
     suspend fun addStory(file: File, description: String) {
 
-        val reduced = reduceFileImage(file)
-
         val requestDesc = description.toRequestBody("text/plain".toMediaType())
-        val requestImage = reduced.asRequestBody("image/jpg".toMediaTypeOrNull())
+        val requestImage = file.asRequestBody("image/jpg".toMediaTypeOrNull())
         val imgPart = MultipartBody.Part.createFormData("photo", file.name, requestImage)
 
         withContext(Dispatchers.Main) {
@@ -105,6 +103,7 @@ class StoryRepository(application: Application) {
                     imgPart, requestDesc
                 )
                 if (network.isSuccessful) {
+                    refreshRepositoryData()
                     network.body()?.let {
                         _message.postValue(it.message)
                     }
