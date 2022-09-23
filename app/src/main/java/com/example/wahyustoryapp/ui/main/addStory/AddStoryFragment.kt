@@ -74,6 +74,9 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
             binding.btnGallery -> {
 
             }
+            binding.btnUpload -> {
+
+            }
         }
     }
 
