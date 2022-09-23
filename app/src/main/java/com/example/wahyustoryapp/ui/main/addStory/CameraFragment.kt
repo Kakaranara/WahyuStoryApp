@@ -20,6 +20,7 @@ import com.example.wahyustoryapp.databinding.FragmentCameraBinding
 import com.example.wahyustoryapp.helper.MySystem
 import com.example.wahyustoryapp.makeFile
 import com.example.wahyustoryapp.rotateBitmap
+import com.example.wahyustoryapp.ui.main.home.ApplicationFactory
 import java.io.File
 
 class CameraFragment : Fragment(R.layout.fragment_camera) {
@@ -29,7 +30,9 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
     private var imageCapture: ImageCapture? = null
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-    private val viewModel by activityViewModels<AddStoryViewModel>()
+    private val viewModel by activityViewModels<AddStoryViewModel>{
+        ApplicationFactory(requireActivity().application)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +69,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                     val bitmap = BitmapFactory.decodeFile(photoFile.path)
                     val rotatedBitmap = rotateBitmap(bitmap, isBackCamera)
                     viewModel.insertPhoto(rotatedBitmap)
+                    viewModel.insertFile(photoFile)
                     findNavController().popBackStack()
                 }
 

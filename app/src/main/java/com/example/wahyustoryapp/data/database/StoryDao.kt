@@ -8,7 +8,7 @@ import androidx.room.Query
 
 @Dao
 interface StoryDao {
-    @Query("SELECT * FROM story ORDER BY idOrder DESC")
+    @Query("SELECT * FROM story ORDER BY idOrder ASC")
     fun getAllStories(): LiveData<List<Story>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

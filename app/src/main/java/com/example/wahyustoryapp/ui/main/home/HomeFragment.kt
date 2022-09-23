@@ -1,24 +1,20 @@
 package com.example.wahyustoryapp.ui.main.home
 
-import android.app.SearchManager
-import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.wahyustoryapp.MainNavDirections
-import com.example.wahyustoryapp.R
-import com.example.wahyustoryapp.authDataStore
+import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.data.auth.AuthPreference
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch
@@ -50,23 +46,31 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             findNavController().navigate(go)
         }
 
-        viewModel.message.observe(viewLifecycleOwner){
-            Toast.makeText(requireActivity(), "is $it", Toast.LENGTH_SHORT).show()
-        }
-
-        viewModel.story.observe(viewLifecycleOwner){
+        viewModel.story.observe(viewLifecycleOwner) {
             binding.rvHome.adapter = HomeAdapter(it)
         }
 
-        viewModel.isNetworkError.observe(viewLifecycleOwner){
-            if(!it){
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.progressBar2.visible()
+            } else {
+                binding.progressBar2.gone()
+            }
+        }
+
+        viewModel.isNetworkError.observe(viewLifecycleOwner) {
+            if (it) {
                 Toast.makeText(requireActivity(), "Network error", Toast.LENGTH_SHORT).show()
             }
         }
 
-        binding.rvHome.setHasFixedSize(true)
-        val manager = LinearLayoutManager(requireActivity())
+        val orientation = requireActivity().resources.configuration.orientation
+        val manager = when (orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> LinearLayoutManager(requireActivity())
+            else -> GridLayoutManager(requireActivity(), 2)
+        }
         binding.rvHome.layoutManager = manager
+        binding.rvHome.setHasFixedSize(true)
     }
 
     private fun setupToolbar() {
@@ -106,13 +110,5 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    fun refreshData(){
-        viewModel.refreshDatabase()
-    }
-
-    companion object{
-        const val TAG = "Home Fragment"
     }
 }

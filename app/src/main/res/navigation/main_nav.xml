@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.wahyustoryapp.ui.auth.login.LoginFragment"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.wahyustoryapp.ui.auth.register.RegisterFragment"
-        android:label="fragment_register"
+        android:label="Register"
         tools:layout="@layout/fragment_register" />
     <action
         android:id="@+id/action_global_loginFragment2"
@@ -50,7 +50,7 @@
     <fragment
         android:id="@+id/addStoryFragment"
         android:name="com.example.wahyustoryapp.ui.main.addStory.AddStoryFragment"
-        android:label="fragment_add_story"
+        android:label="Add Your Story"
         tools:layout="@layout/fragment_add_story" >
         <action
             android:id="@+id/action_addStoryFragment_to_cameraFragment"
@@ -59,6 +59,6 @@
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.wahyustoryapp.ui.main.addStory.CameraFragment"
-        android:label="fragment_camera"
+        android:label="Camera"
         tools:layout="@layout/fragment_camera" />
 </navigation>

@@ -20,31 +20,30 @@ class LoginViewModel(private val pref: AuthPreference) : ViewModel() {
     fun login(data: LoginForm) {
         _isLoading.value = true
         viewModelScope.launch {
-            val response =
-                ApiConfig.getApiService().getLoginData(data)
-
-            _isLoading.value = false
-
-            if (response.isSuccessful) {
-                val body = response.body()
-                body?.let {
-                    pref.writeToken(it.loginResult.token)
-                    pref.login()
-                    _isLoginSuccess.postValue(true)
-                    _message.value = it.message
-                }
-            } else {
-                try {
+            try {
+                val response = ApiConfig.getApiService().getLoginData(data)
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    body?.let {
+                        pref.writeToken(it.loginResult.token)
+                        pref.login()
+                        _isLoginSuccess.postValue(true)
+                        _message.value = it.message
+                    }
+                } else {
                     val responseBody = response.errorBody()
                     responseBody?.let {
                         val obj = JSONObject(it.string())
                         _message.value = obj.getString("message")
                     }
-                } catch (e: Exception) {
-                    _message.value = "Terjadi Kesalahan Pada Server"
+                    _isLoginSuccess.postValue(false)
                 }
+            } catch (e: Exception) {
+                _message.value = "Terjadi Kesalahan Pada Server"
                 _isLoginSuccess.postValue(false)
             }
+
         }
     }
 }

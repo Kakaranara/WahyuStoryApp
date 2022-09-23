@@ -18,4 +18,8 @@
     <string name="gallery">Gallery</string>
     <string name="image_placeholder">Image Placeholder</string>
     <string name="take_picture">take picture</string>
+    <string name="description">description</string>
+    <string name="upload">UPLOAD</string>
+    <string name="detail">Detail</string>
+    <string name="date_format">Created at %s</string>
 </resources>

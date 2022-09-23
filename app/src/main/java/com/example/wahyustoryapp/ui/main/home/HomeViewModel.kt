@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.repository.StoryRepository
+import com.example.wahyustoryapp.ui.main.addStory.AddStoryViewModel
 import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application) : ViewModel() {
@@ -18,7 +19,7 @@ class HomeViewModel(application: Application) : ViewModel() {
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _isNetworkError: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _isNetworkError: MutableLiveData<Boolean> = MutableLiveData()
     val isNetworkError: LiveData<Boolean> get() = _isNetworkError
 
     init {
@@ -30,7 +31,7 @@ class HomeViewModel(application: Application) : ViewModel() {
         size: Int? = null,
         location: Boolean = false
     ) {
-        _isLoading.value = false
+        _isLoading.value = true
         viewModelScope.launch {
             try {
                 repository.refreshRepositoryData(
@@ -39,7 +40,7 @@ class HomeViewModel(application: Application) : ViewModel() {
                     withLocation = location
                 )
                 _isNetworkError.value = false
-                _isLoading.value = true
+                _isLoading.value = false
             } catch (e: Exception) {
                 e.printStackTrace()
                 _isNetworkError.value = true
@@ -57,6 +58,9 @@ class ApplicationFactory(private val application: Application) :
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(application) as T
+        }
+        if(modelClass.isAssignableFrom(AddStoryViewModel::class.java)){
+            return AddStoryViewModel(application) as T
         }
         return super.create(modelClass)
     }

@@ -1,6 +1,7 @@
 package com.example.wahyustoryapp.data.repository
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.wahyustoryapp.authDataStore
@@ -8,12 +9,19 @@ import com.example.wahyustoryapp.data.auth.AuthPreference
 import com.example.wahyustoryapp.data.database.StoryDao
 import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiConfig
+import com.example.wahyustoryapp.reduceFileImage
 import com.example.wahyustoryapp.toEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import java.io.File
 
 class StoryRepository(application: Application) {
     private val dao: StoryDao
@@ -79,6 +87,40 @@ class StoryRepository(application: Application) {
                 _isError.value = true
             }
 
+        }
+    }
+
+    suspend fun addStory(file: File, description: String) {
+
+        val requestDesc = description.toRequestBody("text/plain".toMediaType())
+        val requestImage = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+        val imgPart = MultipartBody.Part.createFormData("photo", file.name, requestImage)
+
+        withContext(Dispatchers.Main) {
+            try {
+                _isFetching.postValue(true)
+                val network = ApiConfig.getApiService().uploadImage(
+                    "Bearer $token",
+                    imgPart, requestDesc
+                )
+                if (network.isSuccessful) {
+                    refreshRepositoryData()
+                    network.body()?.let {
+                        _message.postValue(it.message)
+                    }
+                } else {
+                    network.errorBody()?.let {
+                        val obj = JSONObject(it.string())
+                        _message.postValue(obj.getString("message"))
+                    }
+                }
+                _isFetching.postValue(false)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _message.postValue("Terjadi suatu error")
+                _isFetching.postValue(false)
+                Log.e("ERRSS", "uploadToServer: $e")
+            }
         }
     }
 }
