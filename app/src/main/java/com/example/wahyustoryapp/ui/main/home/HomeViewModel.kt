@@ -19,7 +19,7 @@ class HomeViewModel(application: Application) : ViewModel() {
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _isNetworkError: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _isNetworkError: MutableLiveData<Boolean> = MutableLiveData()
     val isNetworkError: LiveData<Boolean> get() = _isNetworkError
 
     init {
