@@ -40,21 +40,24 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
+        setupRecyclerView()
+        observeViewModel()
 
         binding.fab.setOnClickListener {
             val go = HomeFragmentDirections.actionHomeFragmentToAddStoryFragment()
             findNavController().navigate(go)
         }
+    }
 
+    private fun observeViewModel() {
         viewModel.story.observe(viewLifecycleOwner) {
             binding.rvHome.adapter = HomeAdapter(it)
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.progressBar2.visible()
-            } else {
-                binding.progressBar2.gone()
+        viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
+            when(loading){
+                true -> binding.progressBar2.visible()
+                false -> binding.progressBar2.gone()
             }
         }
 
@@ -63,7 +66,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 Toast.makeText(requireActivity(), "Network error", Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
+    private fun setupRecyclerView() {
         val orientation = requireActivity().resources.configuration.orientation
         val manager = when (orientation) {
             Configuration.ORIENTATION_PORTRAIT -> LinearLayoutManager(requireActivity())
