@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.repository.StoryRepository
+import com.example.wahyustoryapp.ui.main.addStory.AddStoryViewModel
 import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application) : ViewModel() {
@@ -57,6 +58,9 @@ class ApplicationFactory(private val application: Application) :
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(application) as T
+        }
+        if(modelClass.isAssignableFrom(AddStoryViewModel::class.java)){
+            return AddStoryViewModel(application) as T
         }
         return super.create(modelClass)
     }

@@ -4,7 +4,9 @@ import com.example.wahyustoryapp.BuildConfig
 import com.example.wahyustoryapp.data.network.response.LoginResponse
 import com.example.wahyustoryapp.data.network.response.NormalResponse
 import com.example.wahyustoryapp.data.network.response.StoryResponse
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -12,10 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface ApiService {
-
-    @Multipart
-    @POST
-    fun postData()
 
     @POST("login")
     suspend fun getLoginData(
@@ -34,6 +32,13 @@ interface ApiService {
         @Query("size") size: Int? = null,
         @Query("location") location: Int? = null
     ): Response<StoryResponse>
+
+    @Multipart
+    @POST("stories")
+    suspend fun uploadImage(
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody
+    ): Response<NormalResponse>
 }
 
 object ApiConfig {

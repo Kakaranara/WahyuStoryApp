@@ -13,7 +13,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import java.io.File
 
 class StoryRepository(application: Application) {
     private val dao: StoryDao
@@ -79,6 +85,29 @@ class StoryRepository(application: Application) {
                 _isError.value = true
             }
 
+        }
+    }
+
+    suspend fun addStory(file: File, description: String) {
+
+        val requestDesc = description.toRequestBody("text/plain".toMediaType())
+        val requestImage = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+        val imgPart = MultipartBody.Part.createFormData("mPhoto", file.name)
+
+        withContext(Dispatchers.Main) {
+            val network = ApiConfig.getApiService().uploadImage(
+                imgPart, requestDesc
+            )
+            if(network.isSuccessful){
+                network.body()?.let {
+                    _message.postValue(it.message)
+                }
+            }else{
+                network.errorBody()?.let {
+                    val obj = JSONObject(it.string())
+                    _message.postValue(obj.getString("message"))
+                }
+            }
         }
     }
 }
