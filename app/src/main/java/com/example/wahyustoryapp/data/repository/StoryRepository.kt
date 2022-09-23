@@ -9,6 +9,7 @@ import com.example.wahyustoryapp.data.auth.AuthPreference
 import com.example.wahyustoryapp.data.database.StoryDao
 import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiConfig
+import com.example.wahyustoryapp.reduceFileImage
 import com.example.wahyustoryapp.toEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -91,8 +92,10 @@ class StoryRepository(application: Application) {
 
     suspend fun addStory(file: File, description: String) {
 
+        val reduced = reduceFileImage(file)
+
         val requestDesc = description.toRequestBody("text/plain".toMediaType())
-        val requestImage = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+        val requestImage = reduced.asRequestBody("image/jpg".toMediaTypeOrNull())
         val imgPart = MultipartBody.Part.createFormData("photo", file.name, requestImage)
 
         withContext(Dispatchers.Main) {
