@@ -9,15 +9,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
 import com.example.wahyustoryapp.disabled
 import com.example.wahyustoryapp.enabled
 import com.example.wahyustoryapp.ui.main.home.ApplicationFactory
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.io.File
 
 
@@ -52,7 +49,11 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
         binding.btnCamera.setOnClickListener(this)
         binding.btnGallery.setOnClickListener(this)
         binding.btnUpload.setOnClickListener(this)
+        observeViewModel()
 
+    }
+
+    private fun observeViewModel() {
         viewModel.photo.observe(viewLifecycleOwner) {
             binding.imageView.setImageBitmap(it)
         }
@@ -65,11 +66,10 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
             file = it
         }
 
-        viewModel.isUploading.observe(viewLifecycleOwner){
-            if(it){
-                binding.btnUpload.disabled()
-            }else{
-                binding.btnUpload.enabled()
+        viewModel.isUploading.observe(viewLifecycleOwner) { uploading ->
+            when (uploading) {
+                true -> binding.btnUpload.disabled()
+                false -> binding.btnUpload.enabled()
             }
         }
     }
