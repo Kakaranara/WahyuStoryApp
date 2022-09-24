@@ -69,7 +69,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                     val bitmap = BitmapFactory.decodeFile(photoFile.path)
                     val rotatedBitmap = rotateBitmap(bitmap, isBackCamera)
                     viewModel.insertPhoto(rotatedBitmap)
-                    viewModel.insertFile(photoFile)
+//                    viewModel.insertFile(photoFile)
                     findNavController().popBackStack()
                 }
 

@@ -65,20 +65,42 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
             file = it
         }
 
-        viewModel.isUploading.observe(viewLifecycleOwner) { uploading ->
-            when (uploading) {
+        viewModel.isCompressing.observe(viewLifecycleOwner){ compressing ->
+            //compressing dilakukan dalam ranah IO
+            when(compressing){
                 true -> {
-                    binding.btnUpload.disabled()
-                    binding.btnUpload.text = ""
-                    binding.progressBar.visible()
+                    showLoading()
+                    Toast.makeText(requireActivity(), "Please wait (Compressing)", Toast.LENGTH_SHORT).show()
                 }
                 false -> {
-                    binding.progressBar.gone()
-                    binding.btnUpload.text = requireActivity().resources.getString(R.string.upload)
-                    binding.btnUpload.enabled()
+                    loadingEnds()
+                    Toast.makeText(requireActivity(), "Compressing Complete", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+
+        viewModel.isUploading.observe(viewLifecycleOwner) { uploading ->
+            when (uploading) {
+                true -> {
+                    showLoading()
+                }
+                false -> {
+                    loadingEnds()
+                }
+            }
+        }
+    }
+
+    private fun showLoading(){
+        binding.btnUpload.disabled()
+        binding.btnUpload.text = ""
+        binding.progressBar.visible()
+    }
+
+    private fun loadingEnds(){
+        binding.progressBar.gone()
+        binding.btnUpload.text = requireActivity().resources.getString(R.string.upload)
+        binding.btnUpload.enabled()
     }
 
     private fun setupToolbar() {

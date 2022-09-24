@@ -9,7 +9,6 @@ import com.example.wahyustoryapp.data.auth.AuthPreference
 import com.example.wahyustoryapp.data.database.StoryDao
 import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiConfig
-import com.example.wahyustoryapp.reduceFileImage
 import com.example.wahyustoryapp.toEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first

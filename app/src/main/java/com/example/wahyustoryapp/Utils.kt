@@ -17,7 +17,7 @@ val timeStamp: String = SimpleDateFormat(
     Locale.US
 ).format(System.currentTimeMillis())
 
-fun makeFile(application: Application) : File{
+fun makeFile(application: Application): File {
     val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
         File(it, application.resources.getString(R.string.app_name)).apply { mkdirs() }
     }
@@ -59,15 +59,45 @@ fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = false): Bitmap {
 
 fun reduceFileImage(file: File): File {
     val bitmap = BitmapFactory.decodeFile(file.path)
-    var compressQuality = 100
+    var quality = 100
     var streamLength: Int
     do {
-        val bmpStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
-        val bmpPicByteArray = bmpStream.toByteArray()
-        streamLength = bmpPicByteArray.size
-        compressQuality -= 5
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos)
+        val byteArray = baos.toByteArray()
+        streamLength = byteArray.size
+        quality -= 5
     } while (streamLength > 1000000)
-    bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
+    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, FileOutputStream(file))
+    return file
+}
+
+fun findGoodQuality(bitmap: Bitmap): Int {
+    var quality = 100
+    var streamLength: Int
+    do {
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos)
+        val byteArray = baos.toByteArray()
+        streamLength = byteArray.size
+        quality -= 5
+    } while (streamLength > 1000000)
+    return quality
+}
+
+fun reduceFileImage(bitmap: Bitmap, application: Application): File {
+    val quality = findGoodQuality(bitmap)
+    val file = makeFile(application)
+
+    val baos = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos)
+
+    val byteArray = baos.toByteArray()
+
+    val fos = FileOutputStream(file)
+    fos.write(byteArray)
+    fos.flush()
+    fos.close()
+
     return file
 }
