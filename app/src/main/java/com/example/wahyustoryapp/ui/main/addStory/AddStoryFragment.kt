@@ -11,9 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
-import com.example.wahyustoryapp.disabled
-import com.example.wahyustoryapp.enabled
 import com.example.wahyustoryapp.ui.main.home.ApplicationFactory
 import java.io.File
 
@@ -68,8 +67,16 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
 
         viewModel.isUploading.observe(viewLifecycleOwner) { uploading ->
             when (uploading) {
-                true -> binding.btnUpload.disabled()
-                false -> binding.btnUpload.enabled()
+                true -> {
+                    binding.btnUpload.disabled()
+                    binding.btnUpload.text = ""
+                    binding.progressBar.visible()
+                }
+                false -> {
+                    binding.progressBar.gone()
+                    binding.btnUpload.text = requireActivity().resources.getString(R.string.upload)
+                    binding.btnUpload.enabled()
+                }
             }
         }
     }
