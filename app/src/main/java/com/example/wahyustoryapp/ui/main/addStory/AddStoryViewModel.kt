@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.repository.StoryRepository
+import com.example.wahyustoryapp.decodeToBitmap
 import com.example.wahyustoryapp.reduceFileImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,10 +35,8 @@ class AddStoryViewModel(private val application: Application) : ViewModel() {
         }
     }
 
-    fun insertFile(file: File) {
-        val bitmap = BitmapFactory.decodeFile(file.path)
-        _photo.value = bitmap
-
+    fun processGalleryFile(file: File) {
+        _photo.value = file.decodeToBitmap()
         viewModelScope.launch(Dispatchers.IO) {
             _isCompressing.postValue(true)
             val reduced = reduceFileImage(file)
@@ -46,7 +45,7 @@ class AddStoryViewModel(private val application: Application) : ViewModel() {
         }
     }
 
-    fun insertPhoto(bitmap: Bitmap) {
+    fun processCameraFileFromBitmap(bitmap: Bitmap) {
         _photo.value = bitmap
         viewModelScope.launch(Dispatchers.IO) {
             _isCompressing.postValue(true)

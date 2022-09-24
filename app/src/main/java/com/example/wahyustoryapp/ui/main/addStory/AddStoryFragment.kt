@@ -50,7 +50,7 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
             val uri = result.data?.data
             uri?.let {
                 val myFile = uriToFile(it, requireActivity())
-                viewModel.insertFile(myFile)
+                viewModel.processGalleryFile(myFile)
             } ?: Toast.makeText(requireActivity(), "Tidak ada file yang dipilih", Toast.LENGTH_SHORT)
                 .show()
         }
