@@ -68,7 +68,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
             app:placeholderText="mymail@gmail.com">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.example.wahyustoryapp.customView.CustomEtEmail
                 android:id="@+id/etRegisterEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -86,9 +86,10 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
             app:placeholderText="mymail@gmail.com">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.example.wahyustoryapp.customView.CustomEtPassword
                 android:id="@+id/etRegisterPassword"
                 android:layout_width="match_parent"
+                android:inputType="textPassword"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>

@@ -74,6 +74,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
         viewModel.message.observe(requireActivity()) {
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
         }
+
         viewModel.isLoginSuccess.observe(requireActivity()) {
             if (it) {
                 val toHome = LoginFragmentDirections.actionLoginFragmentToHomeFragment()

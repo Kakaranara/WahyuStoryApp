@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:placeholderText="esmeralda@gmail.com">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.example.wahyustoryapp.customView.CustomEtEmail
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,10 +59,11 @@
 
             app:layout_constraintTop_toBottomOf="@id/guideline3">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.example.wahyustoryapp.customView.CustomEtPassword
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:text="123456" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -117,14 +118,6 @@
             android:text="@string/yu_story"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
             app:layout_constraintStart_toStartOf="parent" />
-
-<!--        <TextView-->
-<!--            android:id="@+id/debugToken2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="TOKEN DEBUGGING"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/textView2"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/circleImageView" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
