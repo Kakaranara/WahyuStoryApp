@@ -76,5 +76,9 @@
         android:id="@+id/detailFragment"
         android:name="com.example.wahyustoryapp.DetailFragment"
         android:label="Detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="dataStory"
+            app:argType="com.example.wahyustoryapp.data.database.Story" />
+    </fragment>
 </navigation>

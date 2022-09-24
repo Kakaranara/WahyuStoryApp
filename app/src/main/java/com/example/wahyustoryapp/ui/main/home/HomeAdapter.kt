@@ -8,12 +8,16 @@ import com.bumptech.glide.Glide
 import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.ListItem2Binding
-import com.example.wahyustoryapp.databinding.ListItemBinding
-import com.example.wahyustoryapp.formatDate
 
 class HomeAdapter(private val listItem: List<Story>) :
     RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
     class ListViewHolder(val binding: ListItem2Binding) : ViewHolder(binding.root)
+
+    private lateinit var listener: OnItemCallbackListener
+
+    fun setOnclick(listener: OnItemCallbackListener){
+        this.listener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val view = ListItem2Binding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,6 +32,9 @@ class HomeAdapter(private val listItem: List<Story>) :
                 itemDescription2.text = data.description
                 itemDate2.text =
                     holder.itemView.resources.getString(R.string.date_format, data.createdAt)
+                btnDetail.setOnClickListener{
+                    listener.setButtonClickListener(data)
+                }
             }
         }
         Glide.with(holder.binding.root.context)
@@ -36,5 +43,9 @@ class HomeAdapter(private val listItem: List<Story>) :
     }
 
     override fun getItemCount(): Int = listItem.size
+
+    interface OnItemCallbackListener{
+        fun setButtonClickListener(data: Story)
+    }
 
 }

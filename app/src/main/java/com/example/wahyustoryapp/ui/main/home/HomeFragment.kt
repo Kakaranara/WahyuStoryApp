@@ -16,10 +16,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.data.auth.AuthPreference
+import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!! //dari dokumentasinya begini, memakai double bang
     //( menghindari memory leaks)
@@ -43,19 +44,24 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         observeViewModel()
 
-        binding.fab.setOnClickListener {
-            val go = HomeFragmentDirections.actionHomeFragmentToAddStoryFragment()
-            findNavController().navigate(go)
-        }
+
     }
 
     private fun observeViewModel() {
         viewModel.story.observe(viewLifecycleOwner) {
-            binding.rvHome.adapter = HomeAdapter(it)
+            val adapter = HomeAdapter(it)
+            binding.rvHome.adapter = adapter
+            adapter.setOnclick(object : HomeAdapter.OnItemCallbackListener {
+                override fun setButtonClickListener(data: Story) {
+                    val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
+                    findNavController().navigate(go)
+                }
+            })
+
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
-            when(loading){
+            when (loading) {
                 true -> binding.progressBar2.visible()
                 false -> binding.progressBar2.gone()
             }
@@ -112,6 +118,15 @@ class HomeFragment : Fragment() {
                     true
                 }
                 else -> false
+            }
+        }
+    }
+
+    override fun onClick(view: View) {
+        when (view) {
+            binding.fab -> {
+                val go = HomeFragmentDirections.actionHomeFragmentToAddStoryFragment()
+                findNavController().navigate(go)
             }
         }
     }
