@@ -98,6 +98,10 @@ class HomeFragment : Fragment() {
                 R.id.action_search -> {
                     true
                 }
+                R.id.action_credit -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_creditFragment)
+                    true
+                }
                 R.id.action_logout -> {
                     lifecycleScope.launch {
                         val pref = AuthPreference.getInstance(requireActivity().authDataStore)

@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addStoryFragment"
             app:destination="@id/addStoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_creditFragment"
+            app:destination="@id/creditFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -61,4 +64,9 @@
         android:name="com.example.wahyustoryapp.ui.main.addStory.CameraFragment"
         android:label="Camera"
         tools:layout="@layout/fragment_camera" />
+    <fragment
+        android:id="@+id/creditFragment"
+        android:name="com.example.wahyustoryapp.CreditFragment"
+        android:label="fragment_credit"
+        tools:layout="@layout/fragment_credit" />
 </navigation>

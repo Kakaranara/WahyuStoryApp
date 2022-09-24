@@ -23,4 +23,11 @@
     <string name="detail">Detail</string>
     <string name="date_format">Created at %s</string>
     <string name="app_bar_image">App bar image</string>
+    <string name="credit">Credit</string>
+    <string name="logout">Logout</string>
+    <string name="settings">Settings</string>
+    <string name="profile">Profile</string>
+    <string name="refresh">Refresh</string>
+    <string name="search">Search</string>
+    <string name="all_image_is_provided_by">All image is provided by :</string>
 </resources>
