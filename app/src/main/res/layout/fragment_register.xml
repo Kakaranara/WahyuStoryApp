@@ -81,16 +81,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="@string/password"
+            app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-            app:placeholderText="mymail@gmail.com">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
             <com.example.wahyustoryapp.customView.CustomEtPassword
                 android:id="@+id/etRegisterPassword"
                 android:layout_width="match_parent"
-                android:inputType="textPassword"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,15 +100,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="@string/confirm_password"
+            app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
-            app:placeholderText="mymail@gmail.com">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etRegisterConfirmPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

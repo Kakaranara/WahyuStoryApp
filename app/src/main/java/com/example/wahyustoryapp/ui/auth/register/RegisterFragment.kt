@@ -78,7 +78,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                 val etPassword = binding.etRegisterPassword
                 val etConfirmPass = binding.etRegisterConfirmPassword
                 if (etEmail.error == null && etPassword.error == null) {
-                    if (etPassword.text == etConfirmPass) {
+                    if (etPassword.text.toString() == etConfirmPass.text.toString()) {
                         val form = getRegisterForm()
                         viewModel.registerAccount(form)
                     } else {

@@ -23,7 +23,7 @@
             android:id="@+id/circleImageView"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+            app:layout_constraintBottom_toTopOf="@+id/emailLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,7 @@
             tools:src="@tools:sample/avatars" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
+            android:id="@+id/emailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -52,11 +52,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/paswrod"
+            android:id="@+id/passwordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-
+            app:endIconMode="password_toggle"
             app:layout_constraintTop_toBottomOf="@id/guideline3">
 
             <com.example.wahyustoryapp.customView.CustomEtPassword
@@ -84,7 +84,7 @@
             android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/paswrod" />
+            app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
 
         <TextView
             android:id="@+id/textView"
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/yu_story"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+            app:layout_constraintBottom_toTopOf="@+id/emailLayout"
             app:layout_constraintStart_toStartOf="parent" />
 
 

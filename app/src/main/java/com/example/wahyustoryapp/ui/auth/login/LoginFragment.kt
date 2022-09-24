@@ -1,8 +1,6 @@
 package com.example.wahyustoryapp.ui.auth.login
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.authDataStore
 import com.example.wahyustoryapp.data.auth.AuthPreference
-import com.example.wahyustoryapp.data.auth.LoginViewModel
 import com.example.wahyustoryapp.data.auth.AuthViewModelFactory
+import com.example.wahyustoryapp.data.auth.LoginViewModel
 import com.example.wahyustoryapp.data.network.LoginForm
 import com.example.wahyustoryapp.databinding.FragmentLoginBinding
 import com.example.wahyustoryapp.showOverlayWhileLoading
@@ -94,11 +92,17 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
             binding.btnLogin -> {
                 val etEmail = binding.etEmail
                 val etPassword = binding.etPassword
+                val emailLayout = binding.emailLayout
+                val passwordLayout = binding.passwordLayout
 
                 if(etEmail.error == null && etPassword.error == null){
+                    emailLayout.error = null
+                    passwordLayout.error = null
                     val form = getLoginForm()
                     viewModel.login(form)
                 }else{
+                    emailLayout.error = etEmail.error
+                    passwordLayout.error = etPassword.error
                     Toast.makeText(requireActivity(), "harap baca ketentuan diatas", Toast.LENGTH_SHORT).show()
                 }
             }
