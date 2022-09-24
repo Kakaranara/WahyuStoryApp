@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_homeFragment_to_creditFragment"
             app:destination="@id/creditFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -69,4 +72,9 @@
         android:name="com.example.wahyustoryapp.CreditFragment"
         android:label="fragment_credit"
         tools:layout="@layout/fragment_credit" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.wahyustoryapp.DetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/fragment_detail" />
 </navigation>
