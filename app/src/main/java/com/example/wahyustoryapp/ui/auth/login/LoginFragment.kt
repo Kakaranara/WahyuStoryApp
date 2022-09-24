@@ -1,6 +1,8 @@
 package com.example.wahyustoryapp.ui.auth.login
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -90,8 +92,15 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
     override fun onClick(v: View) {
         when (v) {
             binding.btnLogin -> {
-                val form = getLoginForm()
-                viewModel.login(form)
+                val etEmail = binding.etEmail
+                val etPassword = binding.etPassword
+
+                if(etEmail.error == null && etPassword.error == null){
+                    val form = getLoginForm()
+                    viewModel.login(form)
+                }else{
+                    Toast.makeText(requireActivity(), "harap baca ketentuan diatas", Toast.LENGTH_SHORT).show()
+                }
             }
             binding.btnToRegister -> {
                 val toRegister = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()

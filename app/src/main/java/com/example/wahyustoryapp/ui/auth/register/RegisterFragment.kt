@@ -36,19 +36,25 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         binding.btnToLogin.setOnClickListener(this)
         binding.btnRegister.setOnClickListener(this)
 
-        viewModel.isLoading.observe(viewLifecycleOwner){ isloading ->
+        viewModel.isLoading.observe(viewLifecycleOwner) { isloading ->
             activity?.let {
-                binding.btnRegister.showOverlayWhileLoading(it, binding.root, binding.registerProgressBar, isloading )
+                binding.btnRegister.showOverlayWhileLoading(
+                    it,
+                    binding.root,
+                    binding.registerProgressBar,
+                    isloading
+                )
             }
         }
 
-        viewModel.message.observe(viewLifecycleOwner){
+        viewModel.message.observe(viewLifecycleOwner) {
             Toast.makeText(requireActivity(), "$it ???", Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.isRegisterSucces.observe(viewLifecycleOwner){ success ->
-            if(success){
-                Toast.makeText(requireActivity(), "berhasil membuat akun", Toast.LENGTH_SHORT).show()
+        viewModel.isRegisterSucces.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                Toast.makeText(requireActivity(), "berhasil membuat akun", Toast.LENGTH_SHORT)
+                    .show()
                 val action = RegisterFragmentDirections.actionGlobalLoginFragment2()
                 findNavController().navigate(action)
             }
@@ -62,22 +68,34 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(view: View) {
-        when(view){
+        when (view) {
             binding.btnToLogin -> {
                 val global = MainNavDirections.actionGlobalLoginFragment2()
                 findNavController().navigate(global)
             }
             binding.btnRegister -> {
-//                val pass = binding.etRegisterPassword.text.toString()
-//                val confPass = binding.etRegisterConfirmPassword.text.toString()
-//                if(pass != confPass)
-                val form = getRegisterForm()
-                viewModel.registerAccount(form)
+                val etEmail = binding.etRegisterEmail
+                val etPassword = binding.etRegisterPassword
+                val etConfirmPass = binding.etRegisterConfirmPassword
+                if (etEmail.error == null && etPassword.error == null) {
+                    if (etPassword.text == etConfirmPass) {
+                        val form = getRegisterForm()
+                        viewModel.registerAccount(form)
+                    } else {
+                        etConfirmPass.error = "Password tidak sama"
+                    }
+                } else {
+                    Toast.makeText(
+                        requireActivity(),
+                        "Harap baca ketentuan diatas",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
 
-    private fun getRegisterForm() : RegisterForm{
+    private fun getRegisterForm(): RegisterForm {
         binding.apply {
             val name = etRegisterName.text.toString()
             val email = etRegisterEmail.text.toString()
