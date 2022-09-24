@@ -2,12 +2,12 @@ package com.example.wahyustoryapp.ui.main.addStory
 
 import android.app.Application
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.repository.StoryRepository
-import com.example.wahyustoryapp.makeFile
 import com.example.wahyustoryapp.reduceFileImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,9 +35,14 @@ class AddStoryViewModel(private val application: Application) : ViewModel() {
     }
 
     fun insertFile(file: File) {
+        val bitmap = BitmapFactory.decodeFile(file.path)
+        _photo.value = bitmap
+
         viewModelScope.launch(Dispatchers.IO) {
+            _isCompressing.postValue(true)
             val reduced = reduceFileImage(file)
             _file.postValue(reduced)
+            _isCompressing.postValue(false)
         }
     }
 

@@ -1,6 +1,8 @@
 package com.example.wahyustoryapp.ui.main.addStory
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +39,19 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
             findNavController().navigate(go)
         } else {
             Toast.makeText(requireActivity(), "Permission tidak diberikan", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private var intentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){ result ->
+        if(result.resultCode == Activity.RESULT_OK){
+            val uri = result.data?.data
+            uri?.let {
+                val myFile = uriToFile(it, requireActivity())
+                viewModel.insertFile(myFile)
+            } ?: Toast.makeText(requireActivity(), "Tidak ada file yang dipilih", Toast.LENGTH_SHORT)
                 .show()
         }
     }
@@ -130,7 +145,11 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
                 requestPermission.launch(Manifest.permission.CAMERA)
             }
             binding.btnGallery -> {
-
+                Intent(Intent.ACTION_GET_CONTENT).also {
+                    it.type ="image/*"
+                    val chooser = Intent.createChooser(it,"Choose a picture")
+                    intentGallery.launch(chooser)
+                }
             }
             binding.btnUpload -> {
                 val et = binding.etDesc.text.toString()

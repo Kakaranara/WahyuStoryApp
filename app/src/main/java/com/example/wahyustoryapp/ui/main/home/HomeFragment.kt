@@ -43,8 +43,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         setupToolbar()
         setupRecyclerView()
         observeViewModel()
-
-
+        binding.fab.setOnClickListener(this)
     }
 
     private fun observeViewModel() {
