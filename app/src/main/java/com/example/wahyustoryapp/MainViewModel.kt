@@ -6,11 +6,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.wahyustoryapp.preferences.SettingPreferences
 import com.example.wahyustoryapp.ui.settings.SettingViewModel
+import kotlinx.coroutines.flow.first
 
 class MainViewModel(private val settingPreferences: SettingPreferences) : ViewModel() {
 
     fun getThemeSettings(): LiveData<Boolean> {
         return settingPreferences.getThemeSettings().asLiveData()
+    }
+
+    suspend fun getSingleThemeSettings() : Boolean{
+        return settingPreferences.getThemeSettings().first()
     }
 
 }

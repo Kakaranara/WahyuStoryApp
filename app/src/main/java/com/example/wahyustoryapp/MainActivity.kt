@@ -8,6 +8,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.wahyustoryapp.databinding.ActivityMainBinding
 import com.example.wahyustoryapp.helper.MySystem
 import com.example.wahyustoryapp.preferences.SettingPreferences
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,13 +47,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         MySystem.hideSystemUI(this)
 
-        viewModel.getThemeSettings().observe(this) { darkMode ->
-            if (darkMode) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        viewModel.getThemeSettings().value
+
+        if(savedInstanceState == null){
+            /**
+             * Hal ini berguna agar user tidak melihat pergantian tema
+             * Saat aplikasi baru pertama kali dijalankan
+             * (Karena terlihat aneh)
+             */
+            runBlocking {
+                val darkMode = viewModel.getSingleThemeSettings()
+                setupDarkMode(darkMode)
             }
         }
 
+        viewModel.getThemeSettings().observe(this) { darkMode ->
+            setupDarkMode(darkMode)
+        }
+    }
+    private fun setupDarkMode(isDarkMode: Boolean){
+        when (isDarkMode) {
+            true -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            false -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 }
