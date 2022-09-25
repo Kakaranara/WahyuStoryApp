@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     //!! PENTING
     /**
      * Aplikasijuga tersedia dalam bentuk landscape :D
-     * Meski hanya di home;
+     * Meski hanya di home dan beberapa tempat lain.!;
      */
 
     private val binding by lazy {
