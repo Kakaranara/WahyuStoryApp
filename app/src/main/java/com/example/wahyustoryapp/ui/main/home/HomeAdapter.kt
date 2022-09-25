@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.ListItem2Binding
+import java.util.*
 
 class HomeAdapter(private val listItem: List<Story>) :
     RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
@@ -16,7 +17,7 @@ class HomeAdapter(private val listItem: List<Story>) :
 
     private lateinit var listener: OnItemCallbackListener
 
-    fun setOnclick(listener: OnItemCallbackListener){
+    fun setOnclick(listener: OnItemCallbackListener) {
         this.listener = listener
     }
 
@@ -28,23 +29,48 @@ class HomeAdapter(private val listItem: List<Story>) :
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val data = listItem[position]
         holder.apply {
+            /**
+             * transisi move tidak bekerja jika transition name berada di xml
+             * (animasi lain seperti explode dapat bekerja)
+             * saya juga sebenarnya tidak tahu mengapa,
+             * hanya trial dan error meletakkan kode transition name disini (yang seharusnya di xml)
+             * dan berhasil !!
+             */
             binding.apply {
-                itemTitle2.text = data.name
-                itemDescription2.text = data.description
-                itemDate2.text =
-                    holder.itemView.resources.getString(R.string.date_format, data.createdAt)
+                itemTitle2.apply {
+                    /**
+                     * beberapa nama seperti "andy"
+                     * animasinya tidak dapat berjalan.
+                     * maka dari itu digunakan random uid
+                     */
+                    transitionName = UUID.randomUUID().toString()
+                    text = data.name
+                }
+                itemDescription2.apply {
+                    transitionName = data.description
+                    text = data.description
+                }
+                itemDate2.apply {
+                    transitionName = data.createdAt
+                    itemDate2.text =
+                        holder.itemView.resources.getString(R.string.date_format, data.createdAt)
+                }
+
                 storyImage2.apply {
-                    // transisi move tidak bekerja jika transition name berada di xml
-                    // saya juga sebenarnya tidak tahu mengapa, hanya trial dan error meletakkan kode disini
-                    // dan berhasil !!
                     transitionName = data.photoUrl
                     Glide.with(holder.binding.root.context)
                         .load(data.photoUrl)
                         .into(this)
                 }
 
-                btnDetail.setOnClickListener{
-                    listener.setButtonClickListener(data, storyImage2)
+                btnDetail.setOnClickListener {
+                    listener.setButtonClickListener(
+                        data,
+                        storyImage2,
+                        itemTitle2,
+                        itemDescription2,
+                        itemDate2
+                    )
                 }
             }
         }
@@ -53,8 +79,8 @@ class HomeAdapter(private val listItem: List<Story>) :
 
     override fun getItemCount(): Int = listItem.size
 
-    interface OnItemCallbackListener{
-        fun setButtonClickListener(data: Story, image: View)
+    interface OnItemCallbackListener {
+        fun setButtonClickListener(data: Story, image: View, name: View, desc: View, date: View)
     }
 
 }
