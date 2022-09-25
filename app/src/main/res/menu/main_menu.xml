@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="@string/search"
-        app:showAsAction="ifRoom" />
+<!--    <item-->
+<!--        android:id="@+id/action_search"-->
+<!--        android:icon="@drawable/ic_baseline_search_24"-->
+<!--        android:title="@string/search"-->
+<!--        app:showAsAction="ifRoom" />-->
 
     <item
         android:id="@+id/action_refresh"
@@ -14,11 +14,11 @@
         android:title="@string/refresh"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_profile"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/profile" />
+<!--    <item-->
+<!--        android:id="@+id/action_profile"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_baseline_home_24"-->
+<!--        android:title="@string/profile" />-->
 
     <item
         android:id="@+id/action_setting"
