@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -16,10 +17,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.data.auth.AuthPreference
+import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!! //dari dokumentasinya begini, memakai double bang
     //( menghindari memory leaks)
@@ -42,20 +44,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setupToolbar()
         setupRecyclerView()
         observeViewModel()
-
-        binding.fab.setOnClickListener {
-            val go = HomeFragmentDirections.actionHomeFragmentToAddStoryFragment()
-            findNavController().navigate(go)
-        }
+        binding.fab.setOnClickListener(this)
     }
 
     private fun observeViewModel() {
         viewModel.story.observe(viewLifecycleOwner) {
-            binding.rvHome.adapter = HomeAdapter(it)
+            val adapter = HomeAdapter(it)
+            binding.rvHome.adapter = adapter
+            adapter.setOnclick(object : HomeAdapter.OnItemCallbackListener {
+                override fun setButtonClickListener(data: Story, image: View) {
+                    val extras = FragmentNavigatorExtras(image to "imageTarget")
+                    val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
+                    findNavController().navigate(go, extras)
+                }
+            })
+
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
-            when(loading){
+            when (loading) {
                 true -> binding.progressBar2.visible()
                 false -> binding.progressBar2.gone()
             }
@@ -98,6 +105,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 R.id.action_search -> {
                     true
                 }
+                R.id.action_credit -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_creditFragment)
+                    true
+                }
                 R.id.action_logout -> {
                     lifecycleScope.launch {
                         val pref = AuthPreference.getInstance(requireActivity().authDataStore)
@@ -108,6 +119,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     true
                 }
                 else -> false
+            }
+        }
+    }
+
+    override fun onClick(view: View) {
+        when (view) {
+            binding.fab -> {
+                val go = HomeFragmentDirections.actionHomeFragmentToAddStoryFragment()
+                findNavController().navigate(go)
             }
         }
     }

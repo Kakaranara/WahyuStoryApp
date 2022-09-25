@@ -2,6 +2,8 @@ package com.example.wahyustoryapp
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.View
 import android.view.WindowManager
 import android.widget.ProgressBar
@@ -11,6 +13,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.data.network.response.ListStoryItem
+import java.io.File
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -73,6 +76,8 @@ fun List<ListStoryItem>.toEntity(): List<Story> {
         )
     }
 }
+
+fun File.decodeToBitmap(): Bitmap = BitmapFactory.decodeFile(this.path)
 
 fun String.formatDate(): String {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.ms'Z'", Locale.US)

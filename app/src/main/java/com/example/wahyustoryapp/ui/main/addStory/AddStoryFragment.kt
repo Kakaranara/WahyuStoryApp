@@ -1,6 +1,8 @@
 package com.example.wahyustoryapp.ui.main.addStory
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
-import com.example.wahyustoryapp.disabled
-import com.example.wahyustoryapp.enabled
 import com.example.wahyustoryapp.ui.main.home.ApplicationFactory
 import java.io.File
 
@@ -42,6 +43,19 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private var intentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){ result ->
+        if(result.resultCode == Activity.RESULT_OK){
+            val uri = result.data?.data
+            uri?.let {
+                val myFile = uriToFile(it, requireActivity())
+                viewModel.processGalleryFile(myFile)
+            } ?: Toast.makeText(requireActivity(), "Tidak ada file yang dipilih", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
@@ -66,12 +80,42 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
             file = it
         }
 
-        viewModel.isUploading.observe(viewLifecycleOwner) { uploading ->
-            when (uploading) {
-                true -> binding.btnUpload.disabled()
-                false -> binding.btnUpload.enabled()
+        viewModel.isCompressing.observe(viewLifecycleOwner){ compressing ->
+            //compressing dilakukan dalam ranah IO
+            when(compressing){
+                true -> {
+                    showLoading()
+                    Toast.makeText(requireActivity(), "Please wait (Compressing)", Toast.LENGTH_SHORT).show()
+                }
+                false -> {
+                    loadingEnds()
+                    Toast.makeText(requireActivity(), "Compressing Complete", Toast.LENGTH_SHORT).show()
+                }
             }
         }
+
+        viewModel.isUploading.observe(viewLifecycleOwner) { uploading ->
+            when (uploading) {
+                true -> {
+                    showLoading()
+                }
+                false -> {
+                    loadingEnds()
+                }
+            }
+        }
+    }
+
+    private fun showLoading(){
+        binding.btnUpload.disabled()
+        binding.btnUpload.text = ""
+        binding.progressBar.visible()
+    }
+
+    private fun loadingEnds(){
+        binding.progressBar.gone()
+        binding.btnUpload.text = requireActivity().resources.getString(R.string.upload)
+        binding.btnUpload.enabled()
     }
 
     private fun setupToolbar() {
@@ -101,7 +145,11 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
                 requestPermission.launch(Manifest.permission.CAMERA)
             }
             binding.btnGallery -> {
-
+                Intent(Intent.ACTION_GET_CONTENT).also {
+                    it.type ="image/*"
+                    val chooser = Intent.createChooser(it,"Choose a picture")
+                    intentGallery.launch(chooser)
+                }
             }
             binding.btnUpload -> {
                 val et = binding.etDesc.text.toString()
