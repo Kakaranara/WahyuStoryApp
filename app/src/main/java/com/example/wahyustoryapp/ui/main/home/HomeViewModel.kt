@@ -23,7 +23,7 @@ class HomeViewModel(application: Application) : ViewModel() {
     val isNetworkError: LiveData<Boolean> get() = _isNetworkError
 
     init {
-        refreshDatabase()
+        refreshDatabase(size = 40)
     }
 
     fun refreshDatabase(

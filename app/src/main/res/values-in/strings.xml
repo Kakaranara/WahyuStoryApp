@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WahyuStoryApp</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Masuk</string>
+    <string name="already_have_an_account">Sudah punya akun?</string>
+    <string name="confirm_password">Konfirmasi Password</string>
+    <string name="password">Kata Sandi</string>
+    <string name="email">Alamat Email</string>
+    <string name="name">Nama</string>
+    <string name="let_s_make_an_account">Mari bikin akun!</string>
+    <string name="register">Buat Akun</string>
+    <string name="didn_t_have_account">Tidak punya akun?</string>
+    <string name="yu_story">Cerita Wahyu</string>
+    <string name="add_story">Tambah Cerita</string>
+    <string name="image_story">Gambar Cerita</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="image_placeholder">Image Placeholder</string>
+    <string name="take_picture">ambil gambar</string>
+    <string name="description">deskripsi</string>
+    <string name="upload">UPLOAD</string>
+    <string name="detail">Detail</string>
+    <string name="date_format">Dibuat saat %s</string>
+    <string name="app_bar_image">Gambar Appbar</string>
+    <string name="credit">Credit</string>
+    <string name="logout">Keluar</string>
+    <string name="settings">Pengaturan</string>
+    <string name="profile">Profil</string>
+    <string name="refresh">Muat Ulang</string>
+    <string name="search">Cari</string>
+    <string name="all_image_is_provided_by">"Semua Gambar disediakan oleh : "</string>
+    <string name="change_language">Ganti Bahasa</string>
+    <string name="there_s_two_language_you_can_choose_indonesia_and_english">Terdapat 2 bahasa yang tersedia, yaitu Indonesia dan Bahasa Inggris</string>
+    <string name="night_mode">Mode Malam</string>
+</resources>

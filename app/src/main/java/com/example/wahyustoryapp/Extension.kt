@@ -20,6 +20,7 @@ import java.util.*
 
 //? Variable Extension
 val Context.authDataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
+val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 //? Function Extension
 fun View.showOverlayWhileLoading(

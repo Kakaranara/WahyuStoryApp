@@ -37,6 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:hint="@string/email"
+            android:alpha="0"
+            tools:alpha="1"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +59,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             app:endIconMode="password_toggle"
+            android:alpha="0"
+            tools:alpha="1"
             app:layout_constraintTop_toBottomOf="@id/guideline3">
 
             <com.example.wahyustoryapp.customView.CustomEtPassword
@@ -82,18 +86,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/login"
+            android:alpha="0"
+            tools:alpha="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvHaveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/didn_t_have_account"
             app:layout_constraintBottom_toBottomOf="@+id/btnToRegister"
             app:layout_constraintEnd_toStartOf="@+id/btnToRegister"
             app:layout_constraintHorizontal_bias="0.5"
+            android:alpha="0"
+            tools:alpha="1"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btnToRegister" />
@@ -104,18 +112,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register"
+            tools:alpha="1"
+            android:alpha="0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/tvHaveAccount"
             app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/loginTitle"
             style="@style/TextAppearance.Material3.DisplaySmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/yu_story"
+            android:alpha="0"
+            tools:alpha="1"
             app:layout_constraintBottom_toTopOf="@+id/emailLayout"
             app:layout_constraintStart_toStartOf="parent" />
 

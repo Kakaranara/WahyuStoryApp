@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.data.auth
+package com.example.wahyustoryapp.preferences
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
