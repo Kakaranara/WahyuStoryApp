@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">WahyuStoryApp</string>
+    <string name="app_name" translatable="false">WahyuStoryApp</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="login">Login</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="confirm_password">Confirm Password</string>
@@ -16,18 +16,21 @@
     <string name="image_story">Image Story</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
-    <string name="image_placeholder">Image Placeholder</string>
+    <string name="image_placeholder" translatable="false">Image Placeholder</string>
     <string name="take_picture">take picture</string>
     <string name="description">description</string>
-    <string name="upload">UPLOAD</string>
-    <string name="detail">Detail</string>
+    <string name="upload" translatable="false">UPLOAD</string>
+    <string name="detail" translatable="false">Detail</string>
     <string name="date_format">Created at %s</string>
     <string name="app_bar_image">App bar image</string>
-    <string name="credit">Credit</string>
+    <string name="credit" translatable="false">Credit</string>
     <string name="logout">Logout</string>
     <string name="settings">Settings</string>
     <string name="profile">Profile</string>
     <string name="refresh">Refresh</string>
     <string name="search">Search</string>
     <string name="all_image_is_provided_by">All image is provided by :</string>
+    <string name="change_language">Change Language</string>
+    <string name="there_s_two_language_you_can_choose_indonesia_and_english">There\'s two language you can choose : Indonesia and English</string>
+    <string name="night_mode">Night Mode</string>
 </resources>
