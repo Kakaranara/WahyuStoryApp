@@ -21,21 +21,16 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
     private val viewModel by viewModels<RegisterViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnToLogin.setOnClickListener(this)
         binding.btnRegister.setOnClickListener(this)
+        setupObserver()
+    }
 
+    private fun setupObserver() {
         viewModel.isLoading.observe(viewLifecycleOwner) { isloading ->
             activity?.let {
                 binding.btnRegister.showOverlayWhileLoading(
@@ -59,12 +54,6 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                 findNavController().navigate(action)
             }
         }
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     override fun onClick(view: View) {
@@ -102,5 +91,19 @@ class RegisterFragment : Fragment(), View.OnClickListener {
             val password = etRegisterPassword.text.toString()
             return RegisterForm(name, email, password)
         }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

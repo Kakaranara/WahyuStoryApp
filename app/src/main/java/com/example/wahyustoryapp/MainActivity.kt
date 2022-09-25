@@ -14,6 +14,14 @@ class MainActivity : AppCompatActivity() {
      * Making this project available when offline.
      */
 
+    //---------------------------------------------------------------------------
+
+    /**
+     * Penentuan/validasi pertama kali masuk navigasi
+     * Terdapat di login fragment
+     * Pada method onCreate()
+     */
+
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }

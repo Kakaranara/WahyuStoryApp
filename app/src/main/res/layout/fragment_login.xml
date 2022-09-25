@@ -87,7 +87,7 @@
             app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvHaveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/didn_t_have_account"
@@ -106,11 +106,11 @@
             android:text="@string/register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/tvHaveAccount"
             app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/loginTitle"
             style="@style/TextAppearance.Material3.DisplaySmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
