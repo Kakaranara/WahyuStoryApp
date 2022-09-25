@@ -23,6 +23,12 @@ class MainActivity : AppCompatActivity() {
      * Pada method onCreate()
      */
 
+    //!! PENTING
+    /**
+     * Aplikasijuga tersedia dalam bentuk landscape :D
+     * Meski hanya di home;
+     */
+
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
