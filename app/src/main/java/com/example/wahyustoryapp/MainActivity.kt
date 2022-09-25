@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.wahyustoryapp.databinding.ActivityMainBinding
+import com.example.wahyustoryapp.helper.MySystem
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +31,6 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        MySystem.hideSystemUI(this)
     }
 }

@@ -1,5 +1,6 @@
 package com.example.wahyustoryapp.ui.auth.login
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -46,7 +47,29 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
     }
 
     private fun setupAnimation() {
+        ObjectAnimator.ofFloat(binding.loginTitle, View.ALPHA, 1f).apply {
+            duration = 4000L
+        }.start()
 
+        ObjectAnimator.ofFloat(binding.loginTitle, View.TRANSLATION_X, 0f, 60f).apply{
+            duration = 5000
+            repeatCount =ObjectAnimator.INFINITE
+            repeatMode =ObjectAnimator.REVERSE
+        }.start()
+
+        val email = ObjectAnimator.ofFloat(binding.emailLayout, View.ALPHA, 1f).setDuration(1000)
+        val password = ObjectAnimator.ofFloat(binding.passwordLayout, View.ALPHA, 1f).setDuration(1000)
+        val button = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(1000L)
+        val dontHaveAcc = ObjectAnimator.ofFloat(binding.tvHaveAccount, View.ALPHA, 1f).setDuration(1000)
+        val toRegister = ObjectAnimator.ofFloat(binding.btnToRegister, View.ALPHA, 1f).setDuration(1000)
+
+        val authAnim = AnimatorSet().apply {
+            playTogether(button, dontHaveAcc, toRegister)
+        }
+
+        AnimatorSet().apply {
+            playSequentially(email, password, authAnim)
+        }.start()
     }
 
     private fun setupObserver() {
@@ -118,8 +141,8 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
         //sengaja menggunakan runblocking
         //agar dapat dicek dahulu sebelum view dibuat
         runBlocking {
-            val a = prefs.isLogin().first()
-            if (a) {
+            val isLogin = prefs.isLogin().first()
+            if (isLogin) {
                 val goto = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                 findNavController().navigate(goto)
             }
