@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -51,9 +52,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
             val adapter = HomeAdapter(it)
             binding.rvHome.adapter = adapter
             adapter.setOnclick(object : HomeAdapter.OnItemCallbackListener {
-                override fun setButtonClickListener(data: Story) {
+                override fun setButtonClickListener(data: Story, image: View) {
+                    val extras = FragmentNavigatorExtras(image to "imageTarget")
                     val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
-                    findNavController().navigate(go)
+                    findNavController().navigate(go, extras)
                 }
             })
 

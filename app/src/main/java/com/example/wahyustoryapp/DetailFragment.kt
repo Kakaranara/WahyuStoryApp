@@ -1,6 +1,7 @@
 package com.example.wahyustoryapp
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,14 @@ class DetailFragment : Fragment() {
     val binding get() = _binding!!
 
     val args by navArgs<DetailFragmentArgs>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val transition =
+            TransitionInflater.from(requireActivity()).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = transition
+        sharedElementReturnTransition = transition
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +43,14 @@ class DetailFragment : Fragment() {
             detailName.text = arguments.name
             detailDate.text = arguments.createdAt
             detailDesc.text = arguments.description
-            Glide.with(requireActivity())
-                .load(arguments.photoUrl)
-                .into(detailImage)
+            detailImage.apply {
+                Glide.with(requireActivity())
+                    .load(arguments.photoUrl)
+                    .into(this)
+            }
+//            Glide.with(requireActivity())
+//                .load(arguments.photoUrl)
+//                .into(detailImage)
         }
     }
 

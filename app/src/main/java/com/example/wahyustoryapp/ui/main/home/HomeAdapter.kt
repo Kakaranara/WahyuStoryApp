@@ -1,6 +1,7 @@
 package com.example.wahyustoryapp.ui.main.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -32,20 +33,28 @@ class HomeAdapter(private val listItem: List<Story>) :
                 itemDescription2.text = data.description
                 itemDate2.text =
                     holder.itemView.resources.getString(R.string.date_format, data.createdAt)
+                storyImage2.apply {
+                    // transisi move tidak bekerja jika transition name berada di xml
+                    // saya juga sebenarnya tidak tahu mengapa, hanya trial dan error meletakkan kode disini
+                    // dan berhasil !!
+                    transitionName = data.photoUrl
+                    Glide.with(holder.binding.root.context)
+                        .load(data.photoUrl)
+                        .into(this)
+                }
+
                 btnDetail.setOnClickListener{
-                    listener.setButtonClickListener(data)
+                    listener.setButtonClickListener(data, storyImage2)
                 }
             }
         }
-        Glide.with(holder.binding.root.context)
-            .load(data.photoUrl)
-            .into(holder.binding.storyImage2)
+
     }
 
     override fun getItemCount(): Int = listItem.size
 
     interface OnItemCallbackListener{
-        fun setButtonClickListener(data: Story)
+        fun setButtonClickListener(data: Story, image: View)
     }
 
 }
