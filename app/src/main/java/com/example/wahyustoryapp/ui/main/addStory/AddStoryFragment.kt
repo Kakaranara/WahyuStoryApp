@@ -15,8 +15,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
-import com.example.wahyustoryapp.ui.main.home.ApplicationFactory
 import java.io.File
+
 
 
 class AddStoryFragment : Fragment(), View.OnClickListener {

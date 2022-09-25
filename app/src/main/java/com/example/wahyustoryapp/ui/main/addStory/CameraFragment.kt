@@ -15,12 +15,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.wahyustoryapp.ApplicationFactory
 import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.databinding.FragmentCameraBinding
 import com.example.wahyustoryapp.helper.MySystem
 import com.example.wahyustoryapp.makeFile
 import com.example.wahyustoryapp.rotateBitmap
-import com.example.wahyustoryapp.ui.main.home.ApplicationFactory
 import java.io.File
 
 class CameraFragment : Fragment(R.layout.fragment_camera) {
