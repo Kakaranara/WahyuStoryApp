@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp
+package com.example.wahyustoryapp.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
+import com.example.wahyustoryapp.R
 
 class CreditFragment : Fragment(R.layout.fragment_credit) {
     @SuppressLint("SetTextI18n")

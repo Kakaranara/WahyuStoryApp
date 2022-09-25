@@ -69,12 +69,12 @@
         tools:layout="@layout/fragment_camera" />
     <fragment
         android:id="@+id/creditFragment"
-        android:name="com.example.wahyustoryapp.CreditFragment"
+        android:name="com.example.wahyustoryapp.ui.CreditFragment"
         android:label="fragment_credit"
         tools:layout="@layout/fragment_credit" />
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.wahyustoryapp.DetailFragment"
+        android:name="com.example.wahyustoryapp.ui.main.DetailFragment"
         android:label="Detail"
         tools:layout="@layout/fragment_detail" >
         <argument

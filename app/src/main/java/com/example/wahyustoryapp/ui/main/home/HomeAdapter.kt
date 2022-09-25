@@ -37,17 +37,16 @@ class HomeAdapter(private val listItem: List<Story>) :
              * dan berhasil !!
              */
             binding.apply {
+                /**
+                 * untuk nama transisi yang memiliki kencendrungan mirip
+                 * diberikan random uuid agar transition name view selalu berbeda
+                 */
                 itemTitle2.apply {
-                    /**
-                     * beberapa nama seperti "andy"
-                     * animasinya tidak dapat berjalan.
-                     * maka dari itu digunakan random uid
-                     */
                     transitionName = UUID.randomUUID().toString()
                     text = data.name
                 }
                 itemDescription2.apply {
-                    transitionName = data.description
+                    transitionName = UUID.randomUUID().toString()
                     text = data.description
                 }
                 itemDate2.apply {
