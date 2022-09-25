@@ -1,10 +1,13 @@
 package com.example.wahyustoryapp
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.wahyustoryapp.databinding.ActivityMainBinding
 import com.example.wahyustoryapp.helper.MySystem
+import com.example.wahyustoryapp.preferences.SettingPreferences
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,10 +36,23 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    val viewModel by viewModels<MainViewModel> {
+        SettingsFactory.getInstance(SettingPreferences.getInstance(settingsDataStore))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         MySystem.hideSystemUI(this)
+
+        viewModel.getThemeSettings().observe(this) { darkMode ->
+            if (darkMode) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+
     }
 }
