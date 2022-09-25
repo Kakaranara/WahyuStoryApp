@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.wahyustoryapp.preferences.SettingPreferences
-import com.example.wahyustoryapp.ui.SettingViewModel
+import com.example.wahyustoryapp.ui.settings.SettingViewModel
 
 class MainViewModel(private val settingPreferences: SettingPreferences) : ViewModel() {
 

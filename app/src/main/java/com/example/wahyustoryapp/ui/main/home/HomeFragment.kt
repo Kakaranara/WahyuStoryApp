@@ -16,7 +16,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wahyustoryapp.*
-import com.example.wahyustoryapp.data.auth.AuthPreference
+import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch

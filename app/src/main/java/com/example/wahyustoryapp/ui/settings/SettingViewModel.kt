@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.ui
+package com.example.wahyustoryapp.ui.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

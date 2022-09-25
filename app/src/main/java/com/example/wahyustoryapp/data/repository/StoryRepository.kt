@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.wahyustoryapp.authDataStore
-import com.example.wahyustoryapp.data.auth.AuthPreference
+import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.data.database.StoryDao
 import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiConfig
