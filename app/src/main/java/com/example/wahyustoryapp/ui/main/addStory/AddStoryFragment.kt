@@ -80,6 +80,17 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
             file = it
         }
 
+        viewModel.isSuccess.observe(viewLifecycleOwner){ success ->
+            when(success){
+                true -> {
+                    findNavController().popBackStack()
+                }
+                false -> {
+                    //do nothing
+                }
+            }
+        }
+
         viewModel.isCompressing.observe(viewLifecycleOwner){ compressing ->
             //compressing dilakukan dalam ranah IO
             when(compressing){

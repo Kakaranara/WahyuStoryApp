@@ -13,9 +13,9 @@ import com.example.wahyustoryapp.databinding.FragmentDetailBinding
 class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
 
-    val args by navArgs<DetailFragmentArgs>()
+    private val args by navArgs<DetailFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

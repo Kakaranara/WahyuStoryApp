@@ -38,7 +38,9 @@ class StoryRepository(application: Application) {
     internal val storyDatabase = dao.getAllStories()
 
     private val _isError: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isError: LiveData<Boolean> get() = _isError
+
+    private val _isSuccess: MutableLiveData<Boolean> = MutableLiveData()
+    val isSuccess: LiveData<Boolean> get() = _isSuccess
 
     private val _message: MutableLiveData<String> = MutableLiveData()
     val message: LiveData<String> get() = _message
@@ -105,21 +107,31 @@ class StoryRepository(application: Application) {
                 if (network.isSuccessful) {
                     refreshRepositoryData()
                     network.body()?.let {
+                        _isSuccess.postValue(true)
                         _message.postValue(it.message)
                     }
                 } else {
                     network.errorBody()?.let {
                         val obj = JSONObject(it.string())
+                        _isSuccess.postValue(false)
                         _message.postValue(obj.getString("message"))
                     }
                 }
                 _isFetching.postValue(false)
             } catch (e: Exception) {
                 e.printStackTrace()
+                _isSuccess.postValue(false)
                 _message.postValue("Harap cek koneksi anda")
                 _isFetching.postValue(false)
                 Log.e("REPO", "uploadToServer: $e")
             }
         }
     }
+
+    suspend fun clearDb() {
+        withContext(Dispatchers.IO) {
+            dao.deleteAll()
+        }
+    }
+
 }

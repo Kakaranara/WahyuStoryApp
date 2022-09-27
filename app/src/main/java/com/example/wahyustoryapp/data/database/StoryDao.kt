@@ -16,4 +16,8 @@ interface StoryDao {
 
     @Query("DELETE FROM story")
     fun deleteAll()
+
+    @Query("SELECT * FROM story ORDER BY idOrder ASC")
+    fun getAllStoriesValues(): List<Story>
+
 }

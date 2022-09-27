@@ -23,6 +23,12 @@ class HomeViewModel(application: Application) : ViewModel() {
         refreshDatabase(size = 40)
     }
 
+    fun clearDatabase() {
+        viewModelScope.launch {
+            repository.clearDb()
+        }
+    }
+
     fun refreshDatabase(
         page: Int? = null,
         size: Int? = null,

@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Theme.AppCompat.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/flower</item>
         <item name="windowSplashScreenBackground">#FFFFFF</item>
         <item name="postSplashScreenTheme">@style/Theme.AppTheme</item>
     </style>

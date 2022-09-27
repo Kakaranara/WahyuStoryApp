@@ -33,4 +33,9 @@
     <string name="change_language">Change Language</string>
     <string name="there_s_two_language_you_can_choose_indonesia_and_english">There\'s two language you can choose : Indonesia and English</string>
     <string name="night_mode">Night Mode</string>
+    <string name="appwidget_text" translatable="false">EXAMPLE</string>
+    <string name="add_widget" translatable="false">Add widget</string>
+    <string name="app_widget_description" translatable="false">This is an app widget description</string>
+    <string name="empty_text">Empty</string>
+    <string name="detail_image">Detail Image</string>
 </resources>

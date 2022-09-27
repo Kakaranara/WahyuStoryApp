@@ -113,6 +113,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 }
                 R.id.action_logout -> {
                     lifecycleScope.launch {
+                        viewModel.clearDatabase()
                         val pref = AuthPreference.getInstance(requireActivity().authDataStore)
                         pref.logout()
                         val go = MainNavDirections.actionGlobalLoginFragment2()

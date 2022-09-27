@@ -2,7 +2,6 @@ package com.example.wahyustoryapp.ui.main.addStory
 
 import android.app.Application
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +17,7 @@ class AddStoryViewModel(private val application: Application) : ViewModel() {
     private val repository = StoryRepository(application)
     val isUploading = repository.isFetching
     val message = repository.message
+    val isSuccess = repository.isSuccess
 
     private val _photo: MutableLiveData<Bitmap> = MutableLiveData()
     val photo: LiveData<Bitmap> get() = _photo
