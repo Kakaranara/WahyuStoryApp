@@ -33,4 +33,7 @@
     <string name="change_language">Ganti Bahasa</string>
     <string name="there_s_two_language_you_can_choose_indonesia_and_english">Terdapat 2 bahasa yang tersedia, yaitu Indonesia dan Bahasa Inggris</string>
     <string name="night_mode">Mode Malam</string>
+    <string name="empty_text">Kosong</string>
+    <string name="app_widget_description" translatable="false">Ini ada</string>
+    <string name="detail_image">Gambar Detail</string>
 </resources>

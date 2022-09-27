@@ -85,11 +85,11 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
             }
         }
 
-        viewModel.message.observe(requireActivity()) {
+        viewModel.message.observe(viewLifecycleOwner) {
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.isLoginSuccess.observe(requireActivity()) {
+        viewModel.isLoginSuccess.observe(viewLifecycleOwner) {
             if (it) {
                 val toHome = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                 findNavController().navigate(toHome)
