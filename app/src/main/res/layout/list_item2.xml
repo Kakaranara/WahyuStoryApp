@@ -5,6 +5,7 @@
     style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardElevation="2dp"
     android:layout_margin="12dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +13,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:contentDescription="@string/detail_image"
             android:id="@+id/storyImage2"
             android:layout_width="match_parent"
             android:layout_height="200dp"

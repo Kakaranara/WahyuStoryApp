@@ -7,11 +7,13 @@
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapse"
             style="?attr/collapsingToolbarLayoutLargeStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
@@ -19,12 +21,13 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
+                android:id="@+id/ImageAppbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/flower"
-                android:scaleType="fitXY"
                 android:contentDescription="@string/app_bar_image"
-                android:fitsSystemWindows="true"/>
+                android:fitsSystemWindows="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/flower" />
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -43,6 +46,8 @@
         android:id="@+id/rvHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="100dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/list_item2" />
 
@@ -54,7 +59,7 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +67,9 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:contentDescription="@string/add_story"
-        android:src="@drawable/ic_baseline_add_24" />
+        app:icon="@drawable/ic_baseline_add_24"
+        android:text="@string/add_story"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
