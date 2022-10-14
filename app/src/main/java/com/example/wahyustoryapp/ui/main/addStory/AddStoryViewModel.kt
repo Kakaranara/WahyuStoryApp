@@ -13,8 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 
-class AddStoryViewModel(private val application: Application) : ViewModel() {
-    private val repository = StoryRepository(application)
+class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
+    //    private val repository = StoryRepository(application)
     val isUploading = repository.isFetching
     val message = repository.message
     val isSuccess = repository.isSuccess
@@ -45,7 +45,7 @@ class AddStoryViewModel(private val application: Application) : ViewModel() {
         }
     }
 
-    fun processCameraFileFromBitmap(bitmap: Bitmap) {
+    fun processCameraFileFromBitmap(bitmap: Bitmap, application: Application) {
         _photo.value = bitmap
         viewModelScope.launch(Dispatchers.IO) {
             _isCompressing.postValue(true)

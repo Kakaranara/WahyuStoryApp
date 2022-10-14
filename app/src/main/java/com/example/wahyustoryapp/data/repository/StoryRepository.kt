@@ -1,18 +1,12 @@
 package com.example.wahyustoryapp.data.repository
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.wahyustoryapp.authDataStore
-import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.data.database.StoryDao
-import com.example.wahyustoryapp.data.database.StoryRoomDatabase
-import com.example.wahyustoryapp.data.network.ApiConfig
+import com.example.wahyustoryapp.data.network.ApiService
 import com.example.wahyustoryapp.toEntity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -22,17 +16,24 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.File
 
-class StoryRepository(application: Application) {
-    private val dao: StoryDao
+class StoryRepository(
+    private val dao: StoryDao,
+    private var service: ApiService,
     private var token: String
+) {
+//    private val dao: StoryDao
+
+//    init {
+//        val db = StoryRoomDatabase.getInstance(application)
+//        dao = db.storyDao()
+//        val authDataStore = AuthPreference.getInstance(application.authDataStore)
+//        runBlocking {
+//            token = authDataStore.getToken().first()
+//        }
+//    }
 
     init {
-        val db = StoryRoomDatabase.getInstance(application)
-        dao = db.storyDao()
-        val authDataStore = AuthPreference.getInstance(application.authDataStore)
-        runBlocking {
-            token = authDataStore.getToken().first()
-        }
+
     }
 
     internal val storyDatabase = dao.getAllStories()
@@ -59,7 +60,7 @@ class StoryRepository(application: Application) {
         }
         withContext(Dispatchers.IO) {
             _isFetching.postValue(true)
-            val networkData = ApiConfig.getApiService()
+            val networkData = service
                 .getAllStory(
                     "Bearer $token",
                     page = page,
@@ -100,7 +101,7 @@ class StoryRepository(application: Application) {
         withContext(Dispatchers.Main) {
             try {
                 _isFetching.postValue(true)
-                val network = ApiConfig.getApiService().uploadImage(
+                val network = service.uploadImage(
                     "Bearer $token",
                     imgPart, requestDesc
                 )

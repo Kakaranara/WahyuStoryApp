@@ -19,6 +19,7 @@ import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
+import com.example.wahyustoryapp.di.Injection
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -27,7 +28,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     //( menghindari memory leaks)
 
     private val viewModel by viewModels<HomeViewModel> {
-        ApplicationFactory(requireActivity().application)
+        ViewModelFactory(Injection.provideStoryRepository(requireActivity()))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
