@@ -8,7 +8,7 @@ import com.example.wahyustoryapp.data.repository.StoryRepository
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
-    val story = repository.storyDatabase
+    val story = repository.storyData
     val message = repository.message
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)

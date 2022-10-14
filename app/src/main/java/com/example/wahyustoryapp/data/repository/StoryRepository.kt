@@ -22,7 +22,7 @@ class StoryRepository(
     private var token: String
 ) {
 
-    internal val storyDatabase = dao.getAllStories()
+    internal val storyData = dao.getAllStories()
 
     private val _isError: MutableLiveData<Boolean> = MutableLiveData(false)
 
