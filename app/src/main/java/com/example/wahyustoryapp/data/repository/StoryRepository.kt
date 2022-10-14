@@ -21,20 +21,6 @@ class StoryRepository(
     private var service: ApiService,
     private var token: String
 ) {
-//    private val dao: StoryDao
-
-//    init {
-//        val db = StoryRoomDatabase.getInstance(application)
-//        dao = db.storyDao()
-//        val authDataStore = AuthPreference.getInstance(application.authDataStore)
-//        runBlocking {
-//            token = authDataStore.getToken().first()
-//        }
-//    }
-
-    init {
-
-    }
 
     internal val storyDatabase = dao.getAllStories()
 

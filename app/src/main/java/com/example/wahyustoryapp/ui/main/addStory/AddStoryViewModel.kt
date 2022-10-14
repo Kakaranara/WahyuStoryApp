@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
-    //    private val repository = StoryRepository(application)
     val isUploading = repository.isFetching
     val message = repository.message
     val isSuccess = repository.isSuccess

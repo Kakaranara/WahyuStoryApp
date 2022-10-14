@@ -8,7 +8,6 @@ import com.example.wahyustoryapp.data.repository.StoryRepository
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
-    //    private val repository = StoryRepository(application)
     val story = repository.storyDatabase
     val message = repository.message
 
