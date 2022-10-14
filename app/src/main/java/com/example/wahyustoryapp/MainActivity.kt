@@ -1,32 +1,74 @@
 package com.example.wahyustoryapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.NavGraph
-import androidx.navigation.createGraph
-import androidx.navigation.fragment.NavHostFragment
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.wahyustoryapp.databinding.ActivityMainBinding
+import com.example.wahyustoryapp.helper.MySystem
+import com.example.wahyustoryapp.preferences.SettingPreferences
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
-    var isLogin = false
+    /**
+     * This project use single-activity architecture.
+     * Check the res > nav
+     * This project also use offline-online pattern.
+     * Making this project available when offline.
+     */
+
+    //---------------------------------------------------------------------------
+
+    /**
+     * Penentuan/validasi pertama kali masuk navigasi
+     * Terdapat di login fragment
+     * Pada method onCreate()
+     */
+
+    //!! PENTING
+    /**
+     * Aplikasijuga tersedia dalam bentuk landscape :D
+     * Meski hanya di home dan beberapa tempat lain.!;
+     */
+
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    val viewModel by viewModels<MainViewModel> {
+        SettingsFactory.getInstance(SettingPreferences.getInstance(settingsDataStore))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        MySystem.hideSystemUI(this)
 
-        val navHost = supportFragmentManager.findFragmentById(R.id.nav_container) as NavHostFragment
-        val navGraph: NavGraph = navHost.navController.navInflater.inflate(R.navigation.main_nav)
+        viewModel.getThemeSettings().value
 
-        if (isLogin) {
-            navGraph.setStartDestination(R.id.homeFragment)
-        } else {
-            navGraph.setStartDestination(R.id.loginFragment)
+        if(savedInstanceState == null){
+            /**
+             * Hal ini berguna agar user tidak melihat pergantian tema
+             * Saat aplikasi baru pertama kali dijalankan
+             * (Karena terlihat aneh)
+             */
+            runBlocking {
+                val darkMode = viewModel.getSingleThemeSettings()
+                setupDarkMode(darkMode)
+            }
         }
 
-        navHost.navController.graph = navGraph
+        viewModel.getThemeSettings().observe(this) { darkMode ->
+            setupDarkMode(darkMode)
+        }
+    }
+    private fun setupDarkMode(isDarkMode: Boolean){
+        when (isDarkMode) {
+            true -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            false -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 }

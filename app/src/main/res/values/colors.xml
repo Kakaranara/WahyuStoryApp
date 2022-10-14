@@ -1,4 +1,3 @@
-
 <resources>
     <color name="seed">#3b5caa</color>
     <color name="md_theme_light_primary">#3A5BA9</color>
@@ -59,4 +58,8 @@
     <color name="md_theme_dark_shadow">#000000</color>
     <color name="md_theme_dark_surfaceTint">#B2C5FF</color>
     <color name="md_theme_dark_surfaceTintColor">#B2C5FF</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
 </resources>
