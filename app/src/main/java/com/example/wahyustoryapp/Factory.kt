@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.example.wahyustoryapp
 
 import android.app.Application
@@ -8,7 +10,6 @@ import com.example.wahyustoryapp.ui.main.addStory.AddStoryViewModel
 import com.example.wahyustoryapp.ui.main.home.HomeViewModel
 import com.example.wahyustoryapp.ui.settings.SettingViewModel
 
-@Suppress("UNCHECKED_CAST")
 class SettingsFactory private constructor(private val settingPreferences: SettingPreferences) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -33,7 +34,6 @@ class SettingsFactory private constructor(private val settingPreferences: Settin
     }
 }
 
-@Suppress("UNCHECKED_CAST")
 class ApplicationFactory(private val application: Application) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
