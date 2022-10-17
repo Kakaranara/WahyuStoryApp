@@ -1,10 +1,8 @@
 package com.example.wahyustoryapp.data.repository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.wahyustoryapp.data.database.StoryDao
 import com.example.wahyustoryapp.data.network.ApiService
+import com.example.wahyustoryapp.data.network.response.NormalResponse
 import com.example.wahyustoryapp.toEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -13,7 +11,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
+import retrofit2.Response
 import java.io.File
 
 class StoryRepository(
@@ -23,17 +21,6 @@ class StoryRepository(
 ) {
 
     internal val storyData = dao.getAllStories()
-
-    private val _isError: MutableLiveData<Boolean> = MutableLiveData(false)
-
-    private val _isSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val isSuccess: LiveData<Boolean> get() = _isSuccess
-
-    private val _message: MutableLiveData<String> = MutableLiveData()
-    val message: LiveData<String> get() = _message
-
-    private val _isFetching: MutableLiveData<Boolean> = MutableLiveData()
-    val isFetching: LiveData<Boolean> get() = _isFetching
 
     suspend fun refreshRepositoryData(
         page: Int? = null,
@@ -45,7 +32,6 @@ class StoryRepository(
             true -> 1
         }
         withContext(Dispatchers.IO) {
-            _isFetching.postValue(true)
             val networkData = service
                 .getAllStory(
                     "Bearer $token",
@@ -53,72 +39,39 @@ class StoryRepository(
                     size = size,
                     location = location
                 )
-            _isFetching.postValue(true)
             if (networkData.isSuccessful) {
                 dao.deleteAll()
-                _isError.postValue(false)
                 networkData.body()?.let { response ->
-                    _message.postValue(response.message)
                     val result = response.listStory.toEntity()
                     dao.insertAll(result)
                 }
-            } else {
-                try {
-                    networkData.errorBody()?.let {
-                        val obj = JSONObject(it.string())
-                        _message.postValue(obj.getString("message"))
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    _message.postValue("Terjadi suatu kesalahan pada server")
-                }
-                _isError.value = true
             }
-
         }
     }
 
-    suspend fun addStory(file: File, description: String) {
+    suspend fun addStory(
+        file: File,
+        description: String
+    ): Response<NormalResponse> {
 
         val requestDesc = description.toRequestBody("text/plain".toMediaType())
         val requestImage = file.asRequestBody("image/jpg".toMediaTypeOrNull())
         val imgPart = MultipartBody.Part.createFormData("photo", file.name, requestImage)
 
-        withContext(Dispatchers.Main) {
-            try {
-                _isFetching.postValue(true)
-                val network = service.uploadImage(
-                    "Bearer $token",
-                    imgPart, requestDesc
-                )
-                if (network.isSuccessful) {
-                    refreshRepositoryData()
-                    network.body()?.let {
-                        _isSuccess.postValue(true)
-                        _message.postValue(it.message)
-                    }
-                } else {
-                    network.errorBody()?.let {
-                        val obj = JSONObject(it.string())
-                        _isSuccess.postValue(false)
-                        _message.postValue(obj.getString("message"))
-                    }
-                }
-                _isFetching.postValue(false)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                _isSuccess.postValue(false)
-                _message.postValue("Harap cek koneksi anda")
-                _isFetching.postValue(false)
-                Log.e("REPO", "uploadToServer: $e")
-            }
-        }
+        return service.uploadImage(
+            "Bearer $token",
+            imgPart, requestDesc
+        )
     }
 
     suspend fun clearDb() {
         withContext(Dispatchers.IO) {
             dao.deleteAll()
         }
+    }
+
+    companion object {
+        private const val TAG = "STORY_REPOSITORY"
     }
 
 }

@@ -16,8 +16,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
 import com.example.wahyustoryapp.di.Injection
+import com.example.wahyustoryapp.helper.Async
 import java.io.File
-
 
 
 class AddStoryFragment : Fragment(), View.OnClickListener {
@@ -47,13 +47,17 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
 
     private var intentGallery = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ){ result ->
-        if(result.resultCode == Activity.RESULT_OK){
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
             val uri = result.data?.data
             uri?.let {
                 val myFile = uriToFile(it, requireActivity())
                 viewModel.processGalleryFile(myFile)
-            } ?: Toast.makeText(requireActivity(), "Tidak ada file yang dipilih", Toast.LENGTH_SHORT)
+            } ?: Toast.makeText(
+                requireActivity(),
+                "Tidak ada file yang dipilih",
+                Toast.LENGTH_SHORT
+            )
                 .show()
         }
     }
@@ -74,58 +78,83 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
             binding.imageView.setImageBitmap(it)
         }
 
-        viewModel.message.observe(viewLifecycleOwner) {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+        viewModel.posting.observe(viewLifecycleOwner) {
+            when (it) {
+                is Async.Success -> {
+                    loadingEnds()
+                    it.data.body()?.let {
+                        Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    findNavController().popBackStack()
+                }
+                is Async.Error -> {
+                    loadingEnds()
+                    Toast.makeText(requireActivity(), it.error, Toast.LENGTH_SHORT).show()
+                }
+                is Async.Loading -> {
+                    showLoading()
+                }
+            }
         }
 
         viewModel.file.observe(viewLifecycleOwner) {
             file = it
         }
+//        viewModel.message.observe(viewLifecycleOwner) {
+//            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+//        }
+//
 
-        viewModel.isSuccess.observe(viewLifecycleOwner){ success ->
-            when(success){
-                true -> {
-                    findNavController().popBackStack()
-                }
-                false -> {
-                    //do nothing
-                }
-            }
-        }
+//        viewModel.isSuccess.observe(viewLifecycleOwner){ success ->
+//            when(success){
+//                true -> {
+//                    findNavController().popBackStack()
+//                }
+//                false -> {
+//                    //do nothing
+//                }
+//            }
+//        }
 
-        viewModel.isCompressing.observe(viewLifecycleOwner){ compressing ->
+        viewModel.isCompressing.observe(viewLifecycleOwner) { compressing ->
             //compressing dilakukan dalam ranah IO
-            when(compressing){
+            when (compressing) {
                 true -> {
                     showLoading()
-                    Toast.makeText(requireActivity(), "Please wait (Compressing)", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireActivity(),
+                        "Please wait (Compressing)",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 false -> {
                     loadingEnds()
-                    Toast.makeText(requireActivity(), "Compressing Complete", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), "Compressing Complete", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
 
-        viewModel.isUploading.observe(viewLifecycleOwner) { uploading ->
-            when (uploading) {
-                true -> {
-                    showLoading()
-                }
-                false -> {
-                    loadingEnds()
-                }
-            }
-        }
+//        viewModel.isUploading.observe(viewLifecycleOwner) { uploading ->
+//            when (uploading) {
+//                true -> {
+//                    showLoading()
+//                }
+//                false -> {
+//                    loadingEnds()
+//                }
+//            }
+//        }
     }
 
-    private fun showLoading(){
+    private fun showLoading() {
         binding.btnUpload.disabled()
         binding.btnUpload.text = ""
         binding.progressBar.visible()
     }
 
-    private fun loadingEnds(){
+    private fun loadingEnds() {
         binding.progressBar.gone()
         binding.btnUpload.text = requireActivity().resources.getString(R.string.upload)
         binding.btnUpload.enabled()
@@ -159,8 +188,8 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
             }
             binding.btnGallery -> {
                 Intent(Intent.ACTION_GET_CONTENT).also {
-                    it.type ="image/*"
-                    val chooser = Intent.createChooser(it,"Choose a picture")
+                    it.type = "image/*"
+                    val chooser = Intent.createChooser(it, "Choose a picture")
                     intentGallery.launch(chooser)
                 }
             }

@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
     val story = repository.storyData
-    val message = repository.message
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading

@@ -6,17 +6,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wahyustoryapp.data.network.response.NormalResponse
 import com.example.wahyustoryapp.data.repository.StoryRepository
 import com.example.wahyustoryapp.decodeToBitmap
+import com.example.wahyustoryapp.helper.Async
 import com.example.wahyustoryapp.reduceFileImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import java.io.File
 
 class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
-    val isUploading = repository.isFetching
-    val message = repository.message
-    val isSuccess = repository.isSuccess
+//    val isUploading = repository.isFetching
+//    val message = repository.message
+//    val isSuccess = repository.isSuccess
+
+    private val _posting: MutableLiveData<Async<Response<NormalResponse>>> = MutableLiveData()
+    val posting: LiveData<Async<Response<NormalResponse>>> get() = _posting
 
     private val _photo: MutableLiveData<Bitmap> = MutableLiveData()
     val photo: LiveData<Bitmap> get() = _photo
@@ -30,7 +36,19 @@ class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
 
     fun uploadToServer(file: File, description: String) {
         viewModelScope.launch {
-            repository.addStory(file, description)
+            _posting.postValue(Async.Loading)
+            try {
+                val response = repository.addStory(file, description)
+                if (response.isSuccessful) {
+                    _posting.postValue(Async.Success(response))
+                    repository.refreshRepositoryData()
+                } else {
+                    _posting.postValue(Async.Error(response.message()))
+                }
+            } catch (e: Exception) {
+                _posting.postValue(Async.Error("Please check your internet connection"))
+            }
+
         }
     }
 
