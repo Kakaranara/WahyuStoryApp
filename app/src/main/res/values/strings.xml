@@ -18,7 +18,7 @@
     <string name="gallery">Gallery</string>
     <string name="image_placeholder" translatable="false">Image Placeholder</string>
     <string name="take_picture">take picture</string>
-    <string name="description">description</string>
+    <string name="description">Add your description (optional)</string>
     <string name="upload" translatable="false">UPLOAD</string>
     <string name="detail" translatable="false">Detail</string>
     <string name="date_format">Created at %s</string>

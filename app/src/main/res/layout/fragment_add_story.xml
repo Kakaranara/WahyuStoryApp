@@ -56,11 +56,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
         android:hint="@string/description"
+        android:textAlignment="textStart"
+        app:placeholderText="Write something here.."
+        app:layout_constraintBottom_toTopOf="@+id/btnUpload"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flowCam">
@@ -68,7 +72,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etDesc"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:ellipsize="end"
             android:maxLines="6"
             android:minLines="4" />
