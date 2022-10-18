@@ -40,24 +40,3 @@ class LoginViewModel(private val pref: AuthPreference) : ViewModel() {
     }
 }
 
-class AuthViewModelFactory private constructor(private val prefs: AuthPreference) :
-    ViewModelProvider.NewInstanceFactory() {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(prefs) as T
-        }
-        return super.create(modelClass)
-    }
-
-    companion object {
-        private var INSTANCE: AuthViewModelFactory? = null
-        fun getInstance(prefs: AuthPreference): AuthViewModelFactory {
-            return INSTANCE ?: synchronized(this) {
-                val instance = AuthViewModelFactory(prefs)
-                INSTANCE = instance
-                instance
-            }
-        }
-    }
-}
