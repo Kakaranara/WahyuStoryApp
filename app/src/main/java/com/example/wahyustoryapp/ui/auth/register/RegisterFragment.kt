@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.wahyustoryapp.MainNavDirections
 import com.example.wahyustoryapp.data.network.RegisterForm
 import com.example.wahyustoryapp.databinding.FragmentRegisterBinding
-import com.example.wahyustoryapp.showOverlayWhileLoading
+import com.example.wahyustoryapp.helper.Async
+import com.example.wahyustoryapp.hideOverlayWhileLoadingRef
+import com.example.wahyustoryapp.showOverlayWhileLoadingRef
 
 class RegisterFragment : Fragment(), View.OnClickListener {
 
@@ -31,27 +33,36 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setupObserver() {
-        viewModel.isLoading.observe(viewLifecycleOwner) { isloading ->
+
+        viewModel.registerEvent.observe(viewLifecycleOwner) { event ->
             activity?.let {
-                binding.btnRegister.showOverlayWhileLoading(
-                    it,
-                    binding.root,
-                    binding.registerProgressBar,
-                    isloading
-                )
-            }
-        }
-
-        viewModel.message.observe(viewLifecycleOwner) {
-            Toast.makeText(requireActivity(), "$it ???", Toast.LENGTH_SHORT).show()
-        }
-
-        viewModel.isRegisterSucces.observe(viewLifecycleOwner) { success ->
-            if (success) {
-                Toast.makeText(requireActivity(), "berhasil membuat akun", Toast.LENGTH_SHORT)
-                    .show()
-                val action = RegisterFragmentDirections.actionGlobalLoginFragment2()
-                findNavController().navigate(action)
+                when (event) {
+                    is Async.Error -> {
+                        binding.btnRegister.hideOverlayWhileLoadingRef(
+                            it,
+                            binding.root,
+                            binding.registerProgressBar
+                        )
+                        Toast.makeText(it, event.error, Toast.LENGTH_SHORT).show()
+                    }
+                    is Async.Loading -> {
+                        binding.btnRegister.showOverlayWhileLoadingRef(
+                            it,
+                            binding.root,
+                            binding.registerProgressBar
+                        )
+                    }
+                    is Async.Success -> {
+                        binding.btnRegister.hideOverlayWhileLoadingRef(
+                            it,
+                            binding.root,
+                            binding.registerProgressBar
+                        )
+                        Toast.makeText(it, event.data.message(), Toast.LENGTH_SHORT).show()
+                        val action = RegisterFragmentDirections.actionGlobalLoginFragment2()
+                        findNavController().navigate(action)
+                    }
+                }
             }
         }
     }

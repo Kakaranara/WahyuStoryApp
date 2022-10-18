@@ -48,6 +48,40 @@ fun View.showOverlayWhileLoading(
     }
 }
 
+fun View.showOverlayWhileLoadingRef(
+    activity: Activity,
+    root: View,
+    progressBar: ProgressBar,
+) {
+    //user can't interact with window.flags
+
+    val darkColor =
+        ContextCompat.getColor(activity, R.color.md_theme_dark_onSurface)
+
+    this.isEnabled = false
+    root.setBackgroundColor(darkColor)
+    progressBar.visible()
+    activity.window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+}
+
+fun View.hideOverlayWhileLoadingRef(
+    activity: Activity,
+    root: View,
+    progressBar: ProgressBar,
+) {
+    //user can't interact with window.flags
+
+    val lightColor =
+        ContextCompat.getColor(activity, R.color.md_theme_light_background)
+
+    this.isEnabled = true
+    root.setBackgroundColor(lightColor)
+    progressBar.gone()
+    activity.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+}
+
+
 fun View.gone() {
     this.visibility = View.GONE
 }
