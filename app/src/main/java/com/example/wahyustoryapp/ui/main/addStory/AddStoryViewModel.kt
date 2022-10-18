@@ -17,9 +17,6 @@ import retrofit2.Response
 import java.io.File
 
 class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
-//    val isUploading = repository.isFetching
-//    val message = repository.message
-//    val isSuccess = repository.isSuccess
 
     private val _posting: MutableLiveData<Async<Response<NormalResponse>>> = MutableLiveData()
     val posting: LiveData<Async<Response<NormalResponse>>> get() = _posting
