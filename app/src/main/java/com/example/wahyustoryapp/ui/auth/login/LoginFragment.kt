@@ -10,12 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.wahyustoryapp.R
-import com.example.wahyustoryapp.authDataStore
+import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.data.network.LoginForm
 import com.example.wahyustoryapp.databinding.FragmentLoginBinding
-import com.example.wahyustoryapp.showOverlayWhileLoading
+import com.example.wahyustoryapp.helper.Async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -49,17 +48,20 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
             duration = 4000L
         }.start()
 
-        ObjectAnimator.ofFloat(binding.loginTitle, View.TRANSLATION_X, 0f, 60f).apply{
+        ObjectAnimator.ofFloat(binding.loginTitle, View.TRANSLATION_X, 0f, 60f).apply {
             duration = 5000
-            repeatCount =ObjectAnimator.INFINITE
-            repeatMode =ObjectAnimator.REVERSE
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
         }.start()
 
         val email = ObjectAnimator.ofFloat(binding.emailLayout, View.ALPHA, 1f).setDuration(1000)
-        val password = ObjectAnimator.ofFloat(binding.passwordLayout, View.ALPHA, 1f).setDuration(1000)
+        val password =
+            ObjectAnimator.ofFloat(binding.passwordLayout, View.ALPHA, 1f).setDuration(1000)
         val button = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(1000L)
-        val dontHaveAcc = ObjectAnimator.ofFloat(binding.tvHaveAccount, View.ALPHA, 1f).setDuration(1000)
-        val toRegister = ObjectAnimator.ofFloat(binding.btnToRegister, View.ALPHA, 1f).setDuration(1000)
+        val dontHaveAcc =
+            ObjectAnimator.ofFloat(binding.tvHaveAccount, View.ALPHA, 1f).setDuration(1000)
+        val toRegister =
+            ObjectAnimator.ofFloat(binding.btnToRegister, View.ALPHA, 1f).setDuration(1000)
 
         val authAnim = AnimatorSet().apply {
             playTogether(button, dontHaveAcc, toRegister)
@@ -71,26 +73,33 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
     }
 
     private fun setupObserver() {
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            activity?.let { activity ->
 
-                binding.btnLogin.showOverlayWhileLoading(
-                    activity,
-                    binding.root,
-                    binding.loginProgress,
-                    isLoading
-                )
-            }
-        }
-
-        viewModel.message.observe(viewLifecycleOwner) {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
-        }
-
-        viewModel.isLoginSuccess.observe(viewLifecycleOwner) {
-            if (it) {
-                val toHome = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
-                findNavController().navigate(toHome)
+        viewModel.loginEvent.observe(viewLifecycleOwner) { event ->
+            when (event) {
+                is Async.Error -> {
+                    binding.btnLogin.hideOverlayWhileLoadingRef(
+                        requireActivity(),
+                        binding.root,
+                        binding.loginProgress
+                    )
+                    Toast.makeText(requireActivity(), event.error, Toast.LENGTH_SHORT).show()
+                }
+                is Async.Loading -> {
+                    binding.btnLogin.showOverlayWhileLoadingRef(
+                        requireActivity(),
+                        binding.root,
+                        binding.loginProgress
+                    )
+                }
+                is Async.Success -> {
+                    binding.btnLogin.hideOverlayWhileLoadingRef(
+                        requireActivity(),
+                        binding.root,
+                        binding.loginProgress
+                    )
+                    val toHome = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                    findNavController().navigate(toHome)
+                }
             }
         }
     }
