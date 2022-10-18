@@ -1,6 +1,5 @@
 package com.example.wahyustoryapp.ui.main.home
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,10 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.repository.StoryRepository
 import kotlinx.coroutines.launch
 
-class HomeViewModel(application: Application) : ViewModel() {
-    private val repository = StoryRepository(application)
-    val story = repository.storyDatabase
-    val message = repository.message
+class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
+    val story = repository.storyData
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading

@@ -1,6 +1,6 @@
 package com.example.wahyustoryapp.data.database
 
-import android.app.Application
+import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -14,10 +14,10 @@ abstract class StoryRoomDatabase : RoomDatabase() {
         private var INSTANCE: StoryRoomDatabase? = null
 
         @JvmStatic
-        fun getInstance(application: Application): StoryRoomDatabase {
+        fun getInstance(context: Context): StoryRoomDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
-                    application.applicationContext, StoryRoomDatabase::class.java, "story-db"
+                    context.applicationContext, StoryRoomDatabase::class.java, "story-db"
                 ).build()
                 INSTANCE = instance
                 instance

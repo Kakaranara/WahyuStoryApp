@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.data.auth
+package com.example.wahyustoryapp.ui.auth.login
 
 import androidx.lifecycle.*
 import com.example.wahyustoryapp.data.network.ApiConfig

@@ -15,9 +15,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.wahyustoryapp.ApplicationFactory
 import com.example.wahyustoryapp.R
+import com.example.wahyustoryapp.ViewModelFactory
 import com.example.wahyustoryapp.databinding.FragmentCameraBinding
+import com.example.wahyustoryapp.di.Injection
 import com.example.wahyustoryapp.helper.MySystem
 import com.example.wahyustoryapp.makeFile
 import com.example.wahyustoryapp.rotateBitmap
@@ -30,8 +31,8 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
     private var imageCapture: ImageCapture? = null
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-    private val viewModel by activityViewModels<AddStoryViewModel>{
-        ApplicationFactory(requireActivity().application)
+    private val viewModel by activityViewModels<AddStoryViewModel> {
+        ViewModelFactory(Injection.provideStoryRepository(requireActivity()))
     }
 
     override fun onCreateView(
@@ -68,7 +69,10 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                     Toast.makeText(requireActivity(), "Berhasil", Toast.LENGTH_SHORT).show()
                     val bitmap = BitmapFactory.decodeFile(photoFile.path)
                     val rotatedBitmap = rotateBitmap(bitmap, isBackCamera)
-                    viewModel.processCameraFileFromBitmap(rotatedBitmap)
+                    viewModel.processCameraFileFromBitmap(
+                        rotatedBitmap,
+                        requireActivity().application
+                    )
 //                    viewModel.insertFile(photoFile)
                     findNavController().popBackStack()
                 }

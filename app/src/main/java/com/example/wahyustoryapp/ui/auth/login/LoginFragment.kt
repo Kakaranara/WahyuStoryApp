@@ -13,8 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.authDataStore
 import com.example.wahyustoryapp.preferences.AuthPreference
-import com.example.wahyustoryapp.data.auth.AuthViewModelFactory
-import com.example.wahyustoryapp.data.auth.LoginViewModel
 import com.example.wahyustoryapp.data.network.LoginForm
 import com.example.wahyustoryapp.databinding.FragmentLoginBinding
 import com.example.wahyustoryapp.showOverlayWhileLoading
