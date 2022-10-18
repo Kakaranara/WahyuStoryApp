@@ -11,15 +11,6 @@ import org.json.JSONObject
 
 class LoginViewModel(private val pref: AuthPreference) : ViewModel() {
 
-//    private val _isLoginSuccess: MutableLiveData<Boolean> = MutableLiveData()
-//    val isLoginSuccess: LiveData<Boolean> = _isLoginSuccess
-//
-//    private val _message: MutableLiveData<String> = MutableLiveData()
-//    val message: LiveData<String> = _message
-//
-//    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
-//    val isLoading: LiveData<Boolean> = _isLoading
-
     private val _loginEvent = MutableLiveData<Async<LoginResponse>>()
     val loginEvent: LiveData<Async<LoginResponse>> get() = _loginEvent
 
