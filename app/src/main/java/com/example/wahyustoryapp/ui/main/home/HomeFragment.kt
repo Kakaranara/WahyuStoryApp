@@ -20,6 +20,7 @@ import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
 import com.example.wahyustoryapp.di.Injection
+import com.example.wahyustoryapp.helper.Async
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -64,16 +65,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
-            when (loading) {
-                true -> binding.progressBar2.visible()
-                false -> binding.progressBar2.gone()
-            }
-        }
-
-        viewModel.isNetworkError.observe(viewLifecycleOwner) {
-            if (it) {
-                Toast.makeText(requireActivity(), "Network error", Toast.LENGTH_SHORT).show()
+        viewModel.refreshDb.observe(viewLifecycleOwner){
+            when(it){
+                is Async.Error -> {
+                    binding.progressBar2.gone()
+                    Toast.makeText(requireActivity(), it.error, Toast.LENGTH_SHORT).show()
+                }
+                is Async.Loading -> {
+                    binding.progressBar2.visible()
+                }
+                is Async.Success -> {
+                    binding.progressBar2.gone()
+                }
             }
         }
     }
@@ -105,9 +108,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     viewModel.refreshDatabase()
                     true
                 }
-//                R.id.action_search -> {
-//                    true
-//                }
                 R.id.action_credit -> {
                     findNavController().navigate(R.id.action_homeFragment_to_creditFragment)
                     true

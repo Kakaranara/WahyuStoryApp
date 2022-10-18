@@ -5,16 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.repository.StoryRepository
+import com.example.wahyustoryapp.helper.Async
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
     val story = repository.storyData
 
-    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isLoading: LiveData<Boolean> get() = _isLoading
-
-    private val _isNetworkError: MutableLiveData<Boolean> = MutableLiveData()
-    val isNetworkError: LiveData<Boolean> get() = _isNetworkError
+    private val _refreshDb: MutableLiveData<Async<Boolean>> = MutableLiveData()
+    val refreshDb: LiveData<Async<Boolean>> = _refreshDb
 
     init {
         refreshDatabase(size = 40)
@@ -31,7 +29,7 @@ class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
         size: Int? = null,
         location: Boolean = false
     ) {
-        _isLoading.value = true
+        _refreshDb.postValue(Async.Loading)
         viewModelScope.launch {
             try {
                 repository.refreshRepositoryData(
@@ -39,12 +37,10 @@ class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
                     size = size,
                     withLocation = location
                 )
-                _isNetworkError.value = false
-                _isLoading.value = false
+                _refreshDb.postValue(Async.Success(true))
             } catch (e: Exception) {
                 e.printStackTrace()
-                _isNetworkError.value = true
-                _isLoading.value = false
+                _refreshDb.postValue(Async.Error("Couldn't Refresh Data"))
             }
 
         }
