@@ -37,6 +37,7 @@ class RegisterViewModel : ViewModel() {
                     _registerEvent.postValue(Async.Error(response.message()))
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 _registerEvent.postValue(Async.Error("Terjadi suatu masalah"))
             }
 //            _isLoading.value = true
