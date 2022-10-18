@@ -5,7 +5,9 @@ package com.example.wahyustoryapp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.wahyustoryapp.data.repository.StoryRepository
+import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.preferences.SettingPreferences
+import com.example.wahyustoryapp.ui.auth.login.LoginViewModel
 import com.example.wahyustoryapp.ui.main.addStory.AddStoryViewModel
 import com.example.wahyustoryapp.ui.main.home.HomeViewModel
 import com.example.wahyustoryapp.ui.settings.SettingViewModel
@@ -46,16 +48,24 @@ class ViewModelFactory(private val repository: StoryRepository) : ViewModelProvi
     }
 }
 
-//class ApplicationFactory(private val application: Application) :
-//    ViewModelProvider.NewInstanceFactory() {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-//            return HomeViewModel(application) as T
-//        }
-//        if(modelClass.isAssignableFrom(AddStoryViewModel::class.java)){
-//            return AddStoryViewModel(application) as T
-//        }
-//        return super.create(modelClass)
-//    }
-//}
+class AuthViewModelFactory private constructor(private val prefs: AuthPreference) :
+    ViewModelProvider.NewInstanceFactory() {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+            return LoginViewModel(prefs) as T
+        }
+        return super.create(modelClass)
+    }
 
+    companion object {
+        private var INSTANCE: AuthViewModelFactory? = null
+        fun getInstance(prefs: AuthPreference): AuthViewModelFactory {
+            return INSTANCE ?: synchronized(this) {
+                val instance = AuthViewModelFactory(prefs)
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
+}
