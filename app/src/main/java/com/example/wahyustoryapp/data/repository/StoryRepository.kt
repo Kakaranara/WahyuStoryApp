@@ -18,14 +18,14 @@ class StoryRepository(
     private val dao: StoryDao,
     private var service: ApiService,
     private var token: String
-) {
+) : StoryRepositoryModel {
 
-    internal val storyData = dao.getAllStories()
+    override fun getStoryData() = dao.getAllStories()
 
-    suspend fun refreshRepositoryData(
-        page: Int? = null,
-        size: Int? = null,
-        withLocation: Boolean = false
+    override suspend fun refreshRepositoryData(
+        page: Int?,
+        size: Int?,
+        withLocation: Boolean
     ) {
         val location = when (withLocation) {
             false -> 0
@@ -49,7 +49,7 @@ class StoryRepository(
         }
     }
 
-    suspend fun addStory(
+    override suspend fun addStory(
         file: File,
         description: String
     ): Response<NormalResponse> {

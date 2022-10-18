@@ -9,7 +9,7 @@ import com.example.wahyustoryapp.helper.Async
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
-    val story = repository.storyData
+    val story = repository.getStoryData()
 
     private val _refreshDb: MutableLiveData<Async<Boolean>> = MutableLiveData()
     val refreshDb: LiveData<Async<Boolean>> = _refreshDb
