@@ -166,8 +166,8 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 

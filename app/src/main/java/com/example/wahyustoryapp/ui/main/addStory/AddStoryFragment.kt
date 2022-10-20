@@ -148,9 +148,13 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
 
         //removing all shared view model
         requireActivity().viewModelStore.clear()
