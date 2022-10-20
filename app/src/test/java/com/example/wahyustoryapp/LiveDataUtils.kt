@@ -2,12 +2,14 @@
 
 package com.example.wahyustoryapp
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
+@VisibleForTesting(otherwise = VisibleForTesting.NONE)
 fun <T> LiveData<T>.getOrAwaitValue(
     timeout: Long = 2,
     timeUnit: TimeUnit = TimeUnit.SECONDS,
@@ -23,11 +25,16 @@ fun <T> LiveData<T>.getOrAwaitValue(
         }
     }
     this.observeForever(observer)
-    callback.invoke()
 
-    if (!latch.await(timeout, timeUnit)) {
+    try {
+        callback.invoke()
+        // Don't wait indefinitely if the LiveData is not set.
+        if (!latch.await(timeout, timeUnit)) {
+            throw TimeoutException("LiveData value was never set.")
+        }
+
+    } finally {
         this.removeObserver(observer)
-        throw TimeoutException("Live data isn't there!")
     }
 
     return data as T
