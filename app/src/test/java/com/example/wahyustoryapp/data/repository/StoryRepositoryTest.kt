@@ -39,7 +39,7 @@ class StoryRepositoryTest {
 
     @Test
     fun `when database got refreshed then it comes to the first refreshed data`() = runTest {
-        val expected = DataDummy.provideStoryList(10)
+        val expected = DataDummy.provideStoryDataInDatabase(10)
         repository.refreshRepositoryData(size = 10)
         dao.insertAll(expected)        //? Simulates inserting any data
 
