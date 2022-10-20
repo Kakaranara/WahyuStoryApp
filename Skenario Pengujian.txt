@@ -1,0 +1,12 @@
+Skenario Pengujian
+
+Pengujian Repository :
+- Story Repository
+1. Saat database di refresh maka data akan kembali seperti semula
+2. Saat database di clear, maka list akan kosong
+
+
+
+Pengujian View Model :
+- Home View Model
+- Add Story View Model

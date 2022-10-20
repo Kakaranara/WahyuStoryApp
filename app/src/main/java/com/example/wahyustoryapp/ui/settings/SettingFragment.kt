@@ -67,4 +67,9 @@ class SettingFragment : Fragment() {
         val appBarConfig = AppBarConfiguration(navController.graph)
         binding.toolbar2.setupWithNavController(navController, appBarConfig)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

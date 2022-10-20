@@ -64,7 +64,7 @@ class StoryRepository(
         )
     }
 
-    suspend fun clearDb() {
+    override suspend fun clearDb() {
         withContext(Dispatchers.IO) {
             dao.deleteAll()
         }
