@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.data.repository
+package com.example.wahyustoryapp.data.story.repository
 
 import com.example.wahyustoryapp.data.database.StoryDao
 import com.example.wahyustoryapp.data.network.ApiService

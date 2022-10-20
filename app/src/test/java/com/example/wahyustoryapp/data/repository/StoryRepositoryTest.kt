@@ -7,6 +7,8 @@ import com.example.wahyustoryapp.data.database.StoryDao
 import com.example.wahyustoryapp.data.fake.FakeApiStory
 import com.example.wahyustoryapp.data.fake.FakeDaoStory
 import com.example.wahyustoryapp.data.network.ApiService
+import com.example.wahyustoryapp.data.story.repository.StoryRepository
+import com.example.wahyustoryapp.data.story.repository.StoryRepositoryModel
 import com.example.wahyustoryapp.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

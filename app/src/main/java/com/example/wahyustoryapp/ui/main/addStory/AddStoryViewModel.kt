@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.network.response.NormalResponse
-import com.example.wahyustoryapp.data.repository.StoryRepository
+import com.example.wahyustoryapp.data.story.repository.StoryRepository
 import com.example.wahyustoryapp.decodeToBitmap
 import com.example.wahyustoryapp.helper.Async
 import com.example.wahyustoryapp.reduceFileImage

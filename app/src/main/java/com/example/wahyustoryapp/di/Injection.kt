@@ -5,7 +5,7 @@ import com.example.wahyustoryapp.authDataStore
 import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiConfig
 import com.example.wahyustoryapp.data.network.ApiService
-import com.example.wahyustoryapp.data.repository.StoryRepository
+import com.example.wahyustoryapp.data.story.repository.StoryRepository
 import com.example.wahyustoryapp.preferences.AuthPreference
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
