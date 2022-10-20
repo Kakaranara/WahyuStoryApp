@@ -101,21 +101,6 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
         viewModel.file.observe(viewLifecycleOwner) {
             file = it
         }
-//        viewModel.message.observe(viewLifecycleOwner) {
-//            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
-//        }
-//
-
-//        viewModel.isSuccess.observe(viewLifecycleOwner){ success ->
-//            when(success){
-//                true -> {
-//                    findNavController().popBackStack()
-//                }
-//                false -> {
-//                    //do nothing
-//                }
-//            }
-//        }
 
         viewModel.isCompressing.observe(viewLifecycleOwner) { compressing ->
             //compressing dilakukan dalam ranah IO
@@ -136,16 +121,6 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
             }
         }
 
-//        viewModel.isUploading.observe(viewLifecycleOwner) { uploading ->
-//            when (uploading) {
-//                true -> {
-//                    showLoading()
-//                }
-//                false -> {
-//                    loadingEnds()
-//                }
-//            }
-//        }
     }
 
     private fun showLoading() {
