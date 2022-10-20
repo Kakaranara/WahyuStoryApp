@@ -15,7 +15,7 @@ class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
     val refreshDb: LiveData<Async<Boolean>> = _refreshDb
 
     init {
-        refreshDatabase(size = 40)
+        refreshDatabase()
     }
 
     fun clearDatabase() {
