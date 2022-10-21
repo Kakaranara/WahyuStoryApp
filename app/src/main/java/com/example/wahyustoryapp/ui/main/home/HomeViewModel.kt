@@ -15,10 +15,6 @@ class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
     private val _refreshDb: MutableLiveData<Async<Boolean>> = MutableLiveData()
     val refreshDb: LiveData<Async<Boolean>> = _refreshDb
 
-    init {
-        refreshDatabase()
-    }
-
     fun clearDatabase() {
         viewModelScope.launch {
             repository.clearDb()
