@@ -115,6 +115,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     adapter.refresh()
                     true
                 }
+                R.id.action_maps -> {
+                    val go = HomeFragmentDirections.actionHomeFragmentToMapsFragment()
+                    findNavController().navigate(go)
+                    true
+                }
                 R.id.action_credit -> {
                     findNavController().navigate(R.id.action_homeFragment_to_creditFragment)
                     true
