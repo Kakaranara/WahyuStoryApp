@@ -1,6 +1,7 @@
 package com.example.wahyustoryapp.data.story.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.data.network.response.NormalResponse
 import retrofit2.Response
@@ -15,7 +16,7 @@ interface StoryRepositoryModel {
 
     suspend fun addStory(file: File, description: String) : Response<NormalResponse>
 
-    fun getStoryData() : LiveData<List<Story>>
+    fun getStoryData() : LiveData<PagingData<Story>>
 
     suspend fun clearDb()
 }

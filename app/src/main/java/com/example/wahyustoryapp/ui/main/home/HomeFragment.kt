@@ -29,6 +29,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private val binding get() = _binding!! //dari dokumentasinya begini, memakai double bang
     //( menghindari memory leaks)
 
+    private lateinit var adapter: HomeAdapter
+
     private val viewModel by viewModels<HomeViewModel> {
         ViewModelFactory(Injection.provideStoryRepository(requireActivity()))
     }
@@ -44,32 +46,33 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun observeViewModel() {
-        viewModel.story.observe(viewLifecycleOwner) {
-            val adapter = HomeAdapter(it)
-            binding.rvHome.adapter = adapter
-            adapter.setOnclick(object : HomeAdapter.OnItemCallbackListener {
-                override fun setButtonClickListener(
-                    data: Story,
-                    image: View,
-                    name: View,
-                    desc: View,
-                    date: View
-                ) {
-                    val extras = FragmentNavigatorExtras(
-                        image to "imageTarget",
-                        name to "titleTarget",
-                        desc to "descTarget",
-                        date to "dateTarget"
-                    )
-                    val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
-                    findNavController().navigate(go, extras)
-                }
-            })
+        adapter = HomeAdapter()
 
+        binding.rvHome.adapter = adapter
+        adapter.setOnclick(object : HomeAdapter.OnItemCallbackListener {
+            override fun setButtonClickListener(
+                data: Story,
+                image: View,
+                name: View,
+                desc: View,
+                date: View
+            ) {
+                val extras = FragmentNavigatorExtras(
+                    image to "imageTarget",
+                    name to "titleTarget",
+                    desc to "descTarget",
+                    date to "dateTarget"
+                )
+                val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
+                findNavController().navigate(go, extras)
+            }
+        })
+        viewModel.story.observe(viewLifecycleOwner) {
+            adapter.submitData(lifecycle, it)
         }
 
-        viewModel.refreshDb.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.refreshDb.observe(viewLifecycleOwner) {
+            when (it) {
                 is Async.Error -> {
                     binding.progressBar2.gone()
                     Toast.makeText(requireActivity(), it.error, Toast.LENGTH_SHORT).show()
@@ -108,7 +111,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     true
                 }
                 R.id.action_refresh -> {
-                    viewModel.refreshDatabase()
+//                    viewModel.refreshDatabase()
+                    adapter.refresh()
                     true
                 }
                 R.id.action_credit -> {

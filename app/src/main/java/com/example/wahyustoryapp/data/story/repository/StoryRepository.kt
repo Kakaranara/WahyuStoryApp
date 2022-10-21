@@ -1,8 +1,13 @@
 package com.example.wahyustoryapp.data.story.repository
 
-import com.example.wahyustoryapp.data.database.StoryDao
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.liveData
+import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiService
 import com.example.wahyustoryapp.data.network.response.NormalResponse
+import com.example.wahyustoryapp.data.story.paging.StoryRemoteMediator
 import com.example.wahyustoryapp.toEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,12 +20,21 @@ import retrofit2.Response
 import java.io.File
 
 class StoryRepository(
-    private val dao: StoryDao,
+    private val database: StoryRoomDatabase,
     private var service: ApiService,
     private var token: String
 ) : StoryRepositoryModel {
 
-    override fun getStoryData() = dao.getAllStories()
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getStoryData() = Pager(
+        config = PagingConfig(
+            pageSize = 5
+        ),
+        remoteMediator = StoryRemoteMediator(service, database, token),
+        pagingSourceFactory = {
+            database.storyDao().getAllStories()
+        }
+    ).liveData
 
     override suspend fun refreshRepositoryData(
         page: Int?,
@@ -40,10 +54,10 @@ class StoryRepository(
                     location = location
                 )
             if (networkData.isSuccessful) {
-                dao.deleteAll()
+                database.storyDao().deleteAll()
                 networkData.body()?.let { response ->
                     val result = response.listStory.toEntity()
-                    dao.insertAll(result)
+                    database.storyDao().insertAll(result)
                 }
             }
         }
@@ -66,7 +80,7 @@ class StoryRepository(
 
     override suspend fun clearDb() {
         withContext(Dispatchers.IO) {
-            dao.deleteAll()
+            database.storyDao().deleteAll()
         }
     }
 

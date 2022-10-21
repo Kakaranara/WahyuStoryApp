@@ -43,7 +43,7 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
@@ -77,6 +77,8 @@ dependencies {
     //data persistence
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.room:room-runtime:2.4.3"
+    implementation "androidx.room:room-paging:2.4.3" //paging purpose
+    implementation "androidx.room:room-ktx:2.4.3"
     kapt "androidx.room:room-compiler:2.4.3"
     annotationProcessor "androidx.room:room-compiler:2.4.3"
 
@@ -86,8 +88,15 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
     implementation "androidx.camera:camera-view:${camerax_version}"
 
+    //paging
+    implementation "androidx.paging:paging-runtime:3.1.1"
+    testImplementation "androidx.paging:paging-common:3.1.1"
+
+
     //testing purpose
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     testImplementation "androidx.arch.core:core-testing:2.1.0" //executor rule
+
+
 
 }
