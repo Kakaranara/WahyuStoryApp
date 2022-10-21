@@ -77,7 +77,7 @@
         tools:layout="@layout/fragment_credit" />
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.wahyustoryapp.ui.main.DetailFragment"
+        android:name="com.example.wahyustoryapp.ui.main.home.detail.DetailFragment"
         android:label="Detail"
         tools:layout="@layout/fragment_detail" >
         <argument
@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.example.wahyustoryapp.MapsFragment"
+        android:name="com.example.wahyustoryapp.ui.main.maps.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
 </navigation>

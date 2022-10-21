@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp
+package com.example.wahyustoryapp.ui.main.maps
 
 import androidx.fragment.app.Fragment
 
@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.wahyustoryapp.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -29,6 +29,17 @@ class MapsFragment : Fragment() {
         val sydney = LatLng(-34.0, 151.0)
         googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+//
+//        lifecycleScope.launch {
+//            val token =
+//                AuthPreference.getInstance(requireActivity().authDataStore).getToken().first()
+//            val api =
+//                ApiConfig.getApiService().getAllStory("Bearer $token", size = 150, location = 1)
+//
+//
+//        }
+
     }
 
     override fun onCreateView(
