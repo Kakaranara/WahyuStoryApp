@@ -10,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.authDataStore
+import com.example.wahyustoryapp.constant.MapArgs
 import com.example.wahyustoryapp.data.network.ApiConfig
 import com.example.wahyustoryapp.preferences.AuthPreference
 
@@ -26,6 +28,9 @@ import java.util.Locale
 
 class MapsFragment : Fragment() {
 
+    val args: MapsFragmentArgs by navArgs()
+
+
     private val callback = OnMapReadyCallback { googleMap ->
         /**
          * Manipulates the map once available.
@@ -37,6 +42,14 @@ class MapsFragment : Fragment() {
          * user has installed Google Play services and returned to the app.
          */
 
+        when(args.types){
+            MapArgs.CheckMyLocation -> {
+                Toast.makeText(requireActivity(), "Check my location.", Toast.LENGTH_SHORT).show()
+            }
+            MapArgs.CheckAllMaps -> {
+                Toast.makeText(requireActivity(), "Check all maps!", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         lifecycleScope.launch {
             val token =
@@ -103,6 +116,8 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+
     }
 
     companion object {

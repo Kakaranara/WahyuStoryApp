@@ -8,11 +8,7 @@ import kotlinx.coroutines.launch
 class MapsViewModel(private val token: String) : ViewModel() {
     fun requestApisLocation() {
         viewModelScope.launch {
-            try {
 
-            } catch (e: Exception) {
-
-            }
         }
     }
 }

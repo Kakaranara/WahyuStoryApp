@@ -17,6 +17,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wahyustoryapp.*
+import com.example.wahyustoryapp.constant.MapArgs
 import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
@@ -116,7 +117,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     true
                 }
                 R.id.action_maps -> {
-                    val go = HomeFragmentDirections.actionHomeFragmentToMapsFragment()
+                    val go =
+                        HomeFragmentDirections.actionHomeFragmentToMapsFragment(MapArgs.CheckAllMaps)
                     findNavController().navigate(go)
                     true
                 }
