@@ -41,7 +41,7 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
 
-        viewModel.getTheme().observe(requireActivity()) { darkMode ->
+        viewModel.getTheme().observe(viewLifecycleOwner) { darkMode ->
             binding.swNightMode.isChecked = darkMode
         }
 
