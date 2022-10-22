@@ -26,6 +26,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import java.util.*
 
@@ -38,6 +39,8 @@ class MapsFragment : Fragment() {
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
     private var gMaps: GoogleMap? = null
+    private var lastMarker: Marker? = null
+
 
     private val launcher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -51,8 +54,7 @@ class MapsFragment : Fragment() {
 
     private fun activateLocation() {
         if (ContextCompat.checkSelfPermission(
-                requireActivity().applicationContext,
-                finePermission
+                requireActivity().applicationContext, finePermission
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             gMaps?.isMyLocationEnabled = true
@@ -64,6 +66,14 @@ class MapsFragment : Fragment() {
 
     private val callback = OnMapReadyCallback { googleMap ->
         gMaps = googleMap
+
+        googleMap.setOnMapClickListener {
+            val a = googleMap.addMarker(
+                MarkerOptions().position(it)
+            )
+            lastMarker?.remove()
+            lastMarker = a
+        }
 
         /**
          * Manipulates the map once available.
@@ -85,6 +95,7 @@ class MapsFragment : Fragment() {
 
         when (args.types) {
             MapArgs.CheckMyLocation -> {
+                binding.btnSubmitLocation.visibility = View.VISIBLE
                 Toast.makeText(requireActivity(), "Check my location.", Toast.LENGTH_SHORT).show()
             }
             MapArgs.CheckAllMaps -> {
@@ -113,8 +124,7 @@ class MapsFragment : Fragment() {
         gmaps.animateCamera(
             CameraUpdateFactory.newLatLngZoom(
                 LatLng(
-                    firstItem.lat ?: 0.0,
-                    firstItem.lon ?: 0.0
+                    firstItem.lat ?: 0.0, firstItem.lon ?: 0.0
                 ), 8f
             )
         )
@@ -124,10 +134,7 @@ class MapsFragment : Fragment() {
                 val latLng = LatLng(it.lat!!, it.lon!!) //? i have checked it in takeIf, don't worry
                 val city = getAddressName(it.lat, it.lon)
                 gmaps.addMarker(
-                    MarkerOptions()
-                        .position(latLng)
-                        .title(it.name)
-                        .snippet(city)
+                    MarkerOptions().position(latLng).title(it.name).snippet(city)
                 )
             }
         }
@@ -161,6 +168,14 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+        binding.btnSubmitLocation.setOnClickListener {
+            lastMarker?.let {
+                //TODO add callback for add fragment to receive latlng
+            } ?: kotlin.run {
+                Toast.makeText(requireActivity(), "please add a marker.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDestroyView() {
