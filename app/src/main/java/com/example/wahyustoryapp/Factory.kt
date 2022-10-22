@@ -4,12 +4,14 @@ package com.example.wahyustoryapp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.wahyustoryapp.data.story.repository.MapsRepository
 import com.example.wahyustoryapp.data.story.repository.StoryRepository
 import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.preferences.SettingPreferences
 import com.example.wahyustoryapp.ui.auth.login.LoginViewModel
 import com.example.wahyustoryapp.ui.main.addStory.AddStoryViewModel
 import com.example.wahyustoryapp.ui.main.home.HomeViewModel
+import com.example.wahyustoryapp.ui.main.maps.MapsViewModel
 import com.example.wahyustoryapp.ui.settings.SettingViewModel
 
 class SettingsFactory private constructor(private val settingPreferences: SettingPreferences) :
@@ -47,6 +49,16 @@ class ViewModelFactory(private val repository: StoryRepository) : ViewModelProvi
         return super.create(modelClass)
     }
 }
+
+class MapsViewModelFactory(private val repository: MapsRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MapsViewModel::class.java)) {
+            return MapsViewModel(repository) as T
+        }
+        return super.create(modelClass)
+    }
+}
+
 
 class AuthViewModelFactory private constructor(private val prefs: AuthPreference) :
     ViewModelProvider.NewInstanceFactory() {

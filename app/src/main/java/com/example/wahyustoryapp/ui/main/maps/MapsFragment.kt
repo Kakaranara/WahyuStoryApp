@@ -1,34 +1,38 @@
 package com.example.wahyustoryapp.ui.main.maps
 
 import android.location.Geocoder
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.example.wahyustoryapp.MapsViewModelFactory
 import com.example.wahyustoryapp.R
-import com.example.wahyustoryapp.authDataStore
 import com.example.wahyustoryapp.constant.MapArgs
-import com.example.wahyustoryapp.data.network.ApiConfig
-import com.example.wahyustoryapp.preferences.AuthPreference
-
+import com.example.wahyustoryapp.data.network.response.ListStoryItem
+import com.example.wahyustoryapp.databinding.FragmentMapsBinding
+import com.example.wahyustoryapp.di.Injection
+import com.example.wahyustoryapp.helper.Async
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import java.util.Locale
+import java.util.*
 
 class MapsFragment : Fragment() {
 
-    val args: MapsFragmentArgs by navArgs()
+    private val args: MapsFragmentArgs by navArgs()
+    private val viewModel by viewModels<MapsViewModel> {
+        MapsViewModelFactory(Injection.provideMapsRepository(requireActivity()))
+    }
+    private var _binding : FragmentMapsBinding? = null
+    private val binding get() = _binding!!
 
 
     private val callback = OnMapReadyCallback { googleMap ->
@@ -42,50 +46,52 @@ class MapsFragment : Fragment() {
          * user has installed Google Play services and returned to the app.
          */
 
-        when(args.types){
+        when (args.types) {
             MapArgs.CheckMyLocation -> {
                 Toast.makeText(requireActivity(), "Check my location.", Toast.LENGTH_SHORT).show()
             }
             MapArgs.CheckAllMaps -> {
                 Toast.makeText(requireActivity(), "Check all maps!", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        lifecycleScope.launch {
-            val token =
-                AuthPreference.getInstance(requireActivity().authDataStore).getToken().first()
-            try {
-                val response =
-                    ApiConfig.getApiService().getAllStory("Bearer $token", size = 150, location = 1)
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        val firstStory = it.listStory.first()
-                        googleMap.animateCamera(
-                            CameraUpdateFactory.newLatLngZoom(
-                                LatLng(
-                                    firstStory.lat ?: 0.0, firstStory.lon ?: 0.0
-                                ), 8f
-                            )
-                        )
-                        Log.d(TAG, "list size :  $it.size ")
-                        it.listStory.forEach { storyList ->
-                            if (storyList.lat != null && storyList.lon != null) {
-                                val address = getAddressName(storyList.lat, storyList.lon)
-                                googleMap.addMarker(
-                                    MarkerOptions().position(
-                                        LatLng(
-                                            storyList.lat, storyList.lon
-                                        )
-                                    ).title(storyList.name).snippet(address)
-                                )
-                            }
+                viewModel.data.observe(viewLifecycleOwner) {
+                    when (it) {
+                        is Async.Error -> {
+                            binding.mapsProgressBar.visibility = View.GONE
+                            Toast.makeText(requireActivity(), it.error, Toast.LENGTH_SHORT).show()
+                        }
+                        is Async.Loading -> {
+                            binding.mapsProgressBar.visibility = View.VISIBLE
+                        }
+                        is Async.Success -> {
+                            binding.mapsProgressBar.visibility = View.GONE
+                            showAllStoryMarker(it.data, googleMap)
                         }
                     }
-                } else {
-                    Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun showAllStoryMarker(list: List<ListStoryItem>, gmaps: GoogleMap) {
+        val firstItem = list.first()
+        gmaps.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(
+                    firstItem.lat ?: 0.0,
+                    firstItem.lon ?: 0.0
+                ), 8f
+            )
+        )
+
+        list.forEach { item ->
+            item.takeIf { it.lat != null || it.lon != null }?.let {
+                val latLng = LatLng(it.lat!!, it.lon!!) //? i have checked it in takeIf, don't worry
+                val city = getAddressName(it.lat, it.lon)
+                gmaps.addMarker(
+                    MarkerOptions()
+                        .position(latLng)
+                        .title(it.name)
+                        .snippet(city)
+                )
             }
         }
     }
@@ -108,16 +114,20 @@ class MapsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_maps, container, false)
+    ): View {
+        _binding = FragmentMapsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+    }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
