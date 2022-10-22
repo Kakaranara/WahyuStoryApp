@@ -11,8 +11,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.wahyustoryapp.MapsViewModelFactory
 import com.example.wahyustoryapp.R
@@ -40,6 +44,7 @@ class MapsFragment : Fragment() {
     private val binding get() = _binding!!
     private var gMaps: GoogleMap? = null
     private var lastMarker: Marker? = null
+
 
 
     private val launcher = registerForActivityResult(
@@ -171,7 +176,20 @@ class MapsFragment : Fragment() {
 
         binding.btnSubmitLocation.setOnClickListener {
             lastMarker?.let {
-                //TODO add callback for add fragment to receive latlng
+                val latLng = it.position
+                val latitude = latLng.latitude
+                val longitude = latLng.longitude
+                val city = getAddressName(latitude, longitude)
+
+                setFragmentResult(
+                    EXTRAS_KEY,
+                    bundleOf(
+                        EXTRAS_LAT to latitude,
+                        EXTRAS_LON to longitude,
+                        EXTRAS_CITY to city
+                    )
+                )
+                findNavController().popBackStack()
             } ?: kotlin.run {
                 Toast.makeText(requireActivity(), "please add a marker.", Toast.LENGTH_SHORT).show()
             }
@@ -186,6 +204,10 @@ class MapsFragment : Fragment() {
 
     companion object {
         private const val TAG = "MapsFragment"
-        const val finePermission = Manifest.permission.ACCESS_FINE_LOCATION
+        private const val finePermission = Manifest.permission.ACCESS_FINE_LOCATION
+        const val EXTRAS_LAT = "lat"
+        const val EXTRAS_LON = "lon"
+        const val EXTRAS_CITY = "city"
+        const val EXTRAS_KEY = "mapsKey"
     }
 }
