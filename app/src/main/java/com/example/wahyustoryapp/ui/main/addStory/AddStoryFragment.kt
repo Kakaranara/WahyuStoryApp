@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.wahyustoryapp.*
+import com.example.wahyustoryapp.constant.MapArgs
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
 import com.example.wahyustoryapp.di.Injection
 import com.example.wahyustoryapp.helper.Async
@@ -69,6 +70,11 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
         binding.btnCamera.setOnClickListener(this)
         binding.btnGallery.setOnClickListener(this)
         binding.btnUpload.setOnClickListener(this)
+        binding.btnAddLocation?.setOnClickListener {
+            val go =
+                AddStoryFragmentDirections.actionAddStoryFragmentToMapsFragment(MapArgs.CheckMyLocation)
+            findNavController().navigate(go)
+        }
         observeViewModel()
 
     }

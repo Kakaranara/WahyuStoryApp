@@ -37,4 +37,5 @@
     <string name="app_widget_description" translatable="false">Ini ada</string>
     <string name="detail_image">Gambar Detail</string>
     <string name="show_maps">Lihat Map</string>
+    <string name="add_location">Tambah Lokasi</string>
 </resources>
