@@ -1,5 +1,7 @@
 package com.example.wahyustoryapp.ui.main.maps
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -31,11 +35,36 @@ class MapsFragment : Fragment() {
     private val viewModel by viewModels<MapsViewModel> {
         MapsViewModelFactory(Injection.provideMapsRepository(requireActivity()))
     }
-    private var _binding : FragmentMapsBinding? = null
+    private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
+    private var gMaps: GoogleMap? = null
+
+    private val launcher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            activateLocation()
+        } else {
+            Toast.makeText(requireActivity(), "Permission not granted.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun activateLocation() {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity().applicationContext,
+                finePermission
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            gMaps?.isMyLocationEnabled = true
+        } else {
+            launcher.launch(finePermission)
+        }
+    }
 
 
     private val callback = OnMapReadyCallback { googleMap ->
+        gMaps = googleMap
+
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -45,6 +74,14 @@ class MapsFragment : Fragment() {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
+
+        googleMap.uiSettings.apply {
+            isMapToolbarEnabled = true
+            isZoomControlsEnabled = true
+            isIndoorLevelPickerEnabled = true
+            isCompassEnabled = true
+        }
+        activateLocation()
 
         when (args.types) {
             MapArgs.CheckMyLocation -> {
@@ -112,6 +149,7 @@ class MapsFragment : Fragment() {
         return addressName
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -127,10 +165,12 @@ class MapsFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        gMaps = null
         _binding = null
     }
 
     companion object {
-        const val TAG = "MapsFragment"
+        private const val TAG = "MapsFragment"
+        const val finePermission = Manifest.permission.ACCESS_FINE_LOCATION
     }
 }
