@@ -28,11 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import java.util.*
 
 class MapsFragment : Fragment() {
@@ -68,6 +64,22 @@ class MapsFragment : Fragment() {
         }
     }
 
+    private fun applyMapStyles() {
+        try {
+            gMaps?.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    requireActivity(),
+                    R.raw.styles_gmap
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * * This is where all the main task.
+     */
 
     private val callback = OnMapReadyCallback { googleMap ->
         gMaps = googleMap
@@ -98,6 +110,7 @@ class MapsFragment : Fragment() {
             isCompassEnabled = true
         }
         activateLocation()
+        applyMapStyles()
 
         /**
          * * Will be the starting point
