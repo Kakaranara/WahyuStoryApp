@@ -14,6 +14,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wahyustoryapp.*
@@ -70,6 +71,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
         })
         viewModel.story.observe(viewLifecycleOwner) {
             adapter.submitData(lifecycle, it)
+            adapter.addLoadStateListener {
+                val mediatorLoadState = it.mediator?.refresh
+                if(mediatorLoadState is LoadState.Error){
+                    Toast.makeText(requireActivity(), "Couldn't refresh feed", Toast.LENGTH_SHORT).show()
+                }
+            }
+
         }
 
         viewModel.refreshDb.observe(viewLifecycleOwner) {
