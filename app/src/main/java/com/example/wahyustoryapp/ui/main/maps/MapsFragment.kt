@@ -114,7 +114,7 @@ class MapsFragment : Fragment() {
                             -12.326900879072957,
                             106.74562096595766
                         ), 4f
-                    ) //? sorry for the hardcode, this was supposed to be zoom to indonesia plaec
+                    ) //? sorry for the hardcode, this was supposed to be zoom to indonesian place
                 )
 
             }
