@@ -13,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -44,7 +43,6 @@ class MapsFragment : Fragment() {
     private val binding get() = _binding!!
     private var gMaps: GoogleMap? = null
     private var lastMarker: Marker? = null
-
 
 
     private val launcher = registerForActivityResult(
@@ -98,13 +96,26 @@ class MapsFragment : Fragment() {
         }
         activateLocation()
 
+        /**
+         * * Will be the starting point
+         * * Accessing this fragment from home / add story will be different
+         * ? check enums //MapsArgs//.
+         */
+
         when (args.types) {
             MapArgs.CheckMyLocation -> {
                 binding.btnSubmitLocation.visibility = View.VISIBLE
-                Toast.makeText(requireActivity(), "Check my location.", Toast.LENGTH_SHORT).show()
+                googleMap.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            -12.326900879072957,
+                            106.74562096595766
+                        ), 4f
+                    ) //? sorry for the hardcode, this was supposed to be zoom to indonesia plaec
+                )
+
             }
             MapArgs.CheckAllMaps -> {
-                Toast.makeText(requireActivity(), "Check all maps!", Toast.LENGTH_SHORT).show()
                 viewModel.data.observe(viewLifecycleOwner) {
                     when (it) {
                         is Async.Error -> {
@@ -123,6 +134,10 @@ class MapsFragment : Fragment() {
             }
         }
     }
+
+    /**
+     * * Show all Marker From List Story Responses (data fetched)
+     */
 
     private fun showAllStoryMarker(list: List<ListStoryItem>, gmaps: GoogleMap) {
         val firstItem = list.first()
@@ -144,6 +159,10 @@ class MapsFragment : Fragment() {
             }
         }
     }
+
+    /**
+     * * Get a city name, change it to anything like address if you like.
+     */
 
     @Suppress("DEPRECATION") //? only deprecated on api < 33
     private fun getAddressName(lat: Double, lon: Double): String? {
@@ -181,6 +200,7 @@ class MapsFragment : Fragment() {
                 val longitude = latLng.longitude
                 val city = getAddressName(latitude, longitude)
 
+
                 setFragmentResult(
                     EXTRAS_KEY,
                     bundleOf(
@@ -188,7 +208,7 @@ class MapsFragment : Fragment() {
                         EXTRAS_LON to longitude,
                         EXTRAS_CITY to city
                     )
-                )
+                ) //? data will be transferred to fragment manager and give the result to AddStoryFragment.
                 findNavController().popBackStack()
             } ?: kotlin.run {
                 Toast.makeText(requireActivity(), "please add a marker.", Toast.LENGTH_SHORT).show()
