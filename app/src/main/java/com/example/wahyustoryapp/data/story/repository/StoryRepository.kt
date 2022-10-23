@@ -59,7 +59,7 @@ class StoryRepository(
     ): Response<NormalResponse> {
 
         val lat = latLng?.latitude
-        val lon = latLng?.latitude
+        val lon = latLng?.longitude
 
         val requestDesc = description.toRequestBody("text/plain".toMediaType())
         val requestImage = file.asRequestBody("image/jpg".toMediaTypeOrNull())
