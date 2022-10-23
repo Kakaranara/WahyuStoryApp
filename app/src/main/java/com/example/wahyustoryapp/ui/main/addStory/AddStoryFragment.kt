@@ -32,9 +32,6 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
 
     private var file: File? = null
 
-    private var result: String? = null
-
-
     //shared view model
     private val viewModel by activityViewModels<AddStoryViewModel> {
 //        ApplicationFactory(requireActivity().application)
@@ -207,7 +204,7 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
                     "Tidak ada deskripsi"
                 }
                 file?.let {
-                    viewModel.uploadToServer(it, description)
+                    viewModel.uploadToServer(it, description, latLng)
                 } ?: Toast.makeText(requireActivity(), "Please input the image", Toast.LENGTH_SHORT)
                     .show()
             }

@@ -9,6 +9,7 @@ import com.example.wahyustoryapp.data.network.ApiService
 import com.example.wahyustoryapp.data.network.response.NormalResponse
 import com.example.wahyustoryapp.data.story.paging.StoryRemoteMediator
 import com.example.wahyustoryapp.toEntity
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
@@ -26,33 +27,23 @@ class StoryRepository(
 ) : StoryRepositoryModel {
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getStoryData() = Pager(
-        config = PagingConfig(
-            pageSize = 5
-        ),
-        remoteMediator = StoryRemoteMediator(service, database, token),
-        pagingSourceFactory = {
-            database.storyDao().getAllStories()
-        }
-    ).liveData
+    override fun getStoryData() = Pager(config = PagingConfig(
+        pageSize = 5
+    ), remoteMediator = StoryRemoteMediator(service, database, token), pagingSourceFactory = {
+        database.storyDao().getAllStories()
+    }).liveData
 
     override suspend fun refreshRepositoryData(
-        page: Int?,
-        size: Int?,
-        withLocation: Boolean
+        page: Int?, size: Int?, withLocation: Boolean
     ) {
         val location = when (withLocation) {
             false -> 0
             true -> 1
         }
         withContext(Dispatchers.IO) {
-            val networkData = service
-                .getAllStory(
-                    "Bearer $token",
-                    page = page,
-                    size = size,
-                    location = location
-                )
+            val networkData = service.getAllStory(
+                "Bearer $token", page = page, size = size, location = location
+            )
             if (networkData.isSuccessful) {
                 database.storyDao().deleteAll()
                 networkData.body()?.let { response ->
@@ -64,18 +55,22 @@ class StoryRepository(
     }
 
     override suspend fun addStory(
-        file: File,
-        description: String
+        file: File, description: String, latLng: LatLng?
     ): Response<NormalResponse> {
+
+        val lat = latLng?.latitude
+        val lon = latLng?.latitude
 
         val requestDesc = description.toRequestBody("text/plain".toMediaType())
         val requestImage = file.asRequestBody("image/jpg".toMediaTypeOrNull())
         val imgPart = MultipartBody.Part.createFormData("photo", file.name, requestImage)
 
-        return service.uploadImage(
-            "Bearer $token",
-            imgPart, requestDesc
-        )
+        return if (lat != null && lon != null) {
+            service.uploadImageWithLocation("Bearer $token", imgPart, requestDesc, lat, lon)
+        } else {
+            service.uploadImage("Bearer $token", imgPart, requestDesc)
+        }
+
     }
 
     override suspend fun clearDb() {
