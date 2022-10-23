@@ -28,7 +28,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import java.util.*
@@ -74,6 +76,7 @@ class MapsFragment : Fragment() {
             val a = googleMap.addMarker(
                 MarkerOptions().position(it)
             )
+            Log.d(TAG, "lat: ${it.latitude}, lon : ${it.longitude}")
             lastMarker?.remove()
             lastMarker = a
         }
@@ -155,6 +158,7 @@ class MapsFragment : Fragment() {
                 val city = getAddressName(it.lat, it.lon)
                 gmaps.addMarker(
                     MarkerOptions().position(latLng).title(it.name).snippet(city)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                 )
             }
         }

@@ -18,7 +18,7 @@ class MapsRepository(
             if (response.isSuccessful) {
                 response.body()?.let {
                     emit(Async.Success(response.body()?.listStory ?: listOf()))
-                }
+                } ?: emit(Async.Error("No Data"))
             } else {
                 response.errorBody()?.let {
                     val obj = JSONObject(it.string())
