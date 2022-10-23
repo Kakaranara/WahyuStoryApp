@@ -29,8 +29,8 @@ class StoryRepository(
     @OptIn(ExperimentalPagingApi::class)
     override fun getStoryData() = Pager(
         config = PagingConfig(
-            pageSize = 1,
-            initialLoadSize = 1,
+            pageSize = 5,
+            initialLoadSize = 10,
             prefetchDistance = 0,
 
         ),

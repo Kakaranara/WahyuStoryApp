@@ -35,7 +35,7 @@ class StoryRemoteMediator(
         }
 
         try {
-            val response = remoteDataSource.getAllStory("Bearer $token", page)
+            val response = remoteDataSource.getAllStory("Bearer $token", page, state.config.pageSize)
             val body = response.body()?.listStory
             val isPaginationEnded = body?.isEmpty() ?: true
             val entity = body?.toEntity() ?: return MediatorResult.Success(true)
