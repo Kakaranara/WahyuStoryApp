@@ -27,11 +27,17 @@ class StoryRepository(
 ) : StoryRepositoryModel {
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getStoryData() = Pager(config = PagingConfig(
-        pageSize = 5
-    ), remoteMediator = StoryRemoteMediator(service, database, token), pagingSourceFactory = {
-        database.storyDao().getAllStories()
-    }).liveData
+    override fun getStoryData() = Pager(
+        config = PagingConfig(
+            pageSize = 1,
+            initialLoadSize = 1,
+            prefetchDistance = 0,
+
+        ),
+        remoteMediator = StoryRemoteMediator(service, database, token),
+        pagingSourceFactory = {
+            database.storyDao().getAllStories()
+        }).liveData
 
     override suspend fun refreshRepositoryData(
         page: Int?, size: Int?, withLocation: Boolean
