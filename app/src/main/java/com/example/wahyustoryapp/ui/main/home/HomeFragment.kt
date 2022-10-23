@@ -50,7 +50,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private fun observeViewModel() {
         adapter = HomeAdapter()
 
-        binding.rvHome.adapter = adapter
+        binding.rvHome.adapter = adapter.withLoadStateFooter(LoadingStateAdapter())
         adapter.setOnclick(object : HomeAdapter.OnItemCallbackListener {
             override fun setButtonClickListener(
                 data: Story,
@@ -69,14 +69,17 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 findNavController().navigate(go, extras)
             }
         })
+
+        adapter.addLoadStateListener {
+            val mediatorLoadState = it.mediator?.refresh
+            if (mediatorLoadState is LoadState.Error) {
+                Toast.makeText(requireActivity(), "Couldn't refresh feed", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
         viewModel.story.observe(viewLifecycleOwner) {
             adapter.submitData(lifecycle, it)
-            adapter.addLoadStateListener {
-                val mediatorLoadState = it.mediator?.refresh
-                if(mediatorLoadState is LoadState.Error){
-                    Toast.makeText(requireActivity(), "Couldn't refresh feed", Toast.LENGTH_SHORT).show()
-                }
-            }
 
         }
 
