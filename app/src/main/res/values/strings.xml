@@ -38,4 +38,7 @@
     <string name="app_widget_description" translatable="false">This is an app widget description</string>
     <string name="empty_text">Empty</string>
     <string name="detail_image">Detail Image</string>
+    <string name="show_maps">Show Maps</string>
+    <string name="add_location">Add location</string>
+    <string name="submit_location">Submit Location</string>
 </resources>

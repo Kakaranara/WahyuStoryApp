@@ -14,9 +14,11 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wahyustoryapp.*
+import com.example.wahyustoryapp.constant.MapArgs
 import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
@@ -28,6 +30,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!! //dari dokumentasinya begini, memakai double bang
     //( menghindari memory leaks)
+
+    private lateinit var adapter: HomeAdapter
 
     private val viewModel by viewModels<HomeViewModel> {
         ViewModelFactory(Injection.provideStoryRepository(requireActivity()))
@@ -44,32 +48,43 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun observeViewModel() {
+        adapter = HomeAdapter()
+
+        binding.rvHome.adapter = adapter.withLoadStateFooter(LoadingStateAdapter())
+        adapter.setOnclick(object : HomeAdapter.OnItemCallbackListener {
+            override fun setButtonClickListener(
+                data: Story,
+                image: View,
+                name: View,
+                desc: View,
+                date: View
+            ) {
+                val extras = FragmentNavigatorExtras(
+                    image to "imageTarget",
+                    name to "titleTarget",
+                    desc to "descTarget",
+                    date to "dateTarget"
+                )
+                val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
+                findNavController().navigate(go, extras)
+            }
+        })
+
+        adapter.addLoadStateListener {
+            val mediatorLoadState = it.mediator?.refresh
+            if (mediatorLoadState is LoadState.Error) {
+                Toast.makeText(requireActivity(), "Couldn't refresh feed", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
         viewModel.story.observe(viewLifecycleOwner) {
-            val adapter = HomeAdapter(it)
-            binding.rvHome.adapter = adapter
-            adapter.setOnclick(object : HomeAdapter.OnItemCallbackListener {
-                override fun setButtonClickListener(
-                    data: Story,
-                    image: View,
-                    name: View,
-                    desc: View,
-                    date: View
-                ) {
-                    val extras = FragmentNavigatorExtras(
-                        image to "imageTarget",
-                        name to "titleTarget",
-                        desc to "descTarget",
-                        date to "dateTarget"
-                    )
-                    val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
-                    findNavController().navigate(go, extras)
-                }
-            })
+            adapter.submitData(lifecycle, it)
 
         }
 
-        viewModel.refreshDb.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.refreshDb.observe(viewLifecycleOwner) {
+            when (it) {
                 is Async.Error -> {
                     binding.progressBar2.gone()
                     Toast.makeText(requireActivity(), it.error, Toast.LENGTH_SHORT).show()
@@ -108,7 +123,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     true
                 }
                 R.id.action_refresh -> {
-                    viewModel.refreshDatabase()
+//                    viewModel.refreshDatabase()
+                    adapter.refresh()
+                    true
+                }
+                R.id.action_maps -> {
+                    val go =
+                        HomeFragmentDirections.actionHomeFragmentToMapsFragment(MapArgs.CheckAllMaps)
+                    findNavController().navigate(go)
                     true
                 }
                 R.id.action_credit -> {

@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.ui.main
+package com.example.wahyustoryapp.ui.main.home.detail
 
 import android.os.Bundle
 import android.transition.TransitionInflater

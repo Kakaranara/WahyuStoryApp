@@ -11,12 +11,16 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.wahyustoryapp.*
+import com.example.wahyustoryapp.constant.MapArgs
 import com.example.wahyustoryapp.databinding.FragmentAddStoryBinding
 import com.example.wahyustoryapp.di.Injection
 import com.example.wahyustoryapp.helper.Async
+import com.example.wahyustoryapp.ui.main.maps.MapsFragment
+import com.google.android.gms.maps.model.LatLng
 import java.io.File
 
 
@@ -24,6 +28,7 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentAddStoryBinding? = null
     private val binding get() = _binding!!
+    private var latLng: LatLng? = null
 
     private var file: File? = null
 
@@ -69,6 +74,13 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
         binding.btnCamera.setOnClickListener(this)
         binding.btnGallery.setOnClickListener(this)
         binding.btnUpload.setOnClickListener(this)
+        binding.btnAddLocation?.setOnClickListener {
+            val go =
+                AddStoryFragmentDirections.actionAddStoryFragmentToMapsFragment(MapArgs.CheckMyLocation)
+            findNavController().navigate(go)
+        }
+
+
         observeViewModel()
 
     }
@@ -139,11 +151,25 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
         binding.toolbar3.setupWithNavController(findNavController())
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(MapsFragment.EXTRAS_KEY) { requestKey, bundle ->
+            val lat = bundle.getDouble(MapsFragment.EXTRAS_LAT)
+            val lon = bundle.getDouble(MapsFragment.EXTRAS_LON)
+            val city = bundle.getString(MapsFragment.EXTRAS_CITY)
+
+            latLng = LatLng(lat, lon)
+
+            binding.tvLocation?.text = city ?: "Kota tidak terdaftar di google map"
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentAddStoryBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -178,7 +204,7 @@ class AddStoryFragment : Fragment(), View.OnClickListener {
                     "Tidak ada deskripsi"
                 }
                 file?.let {
-                    viewModel.uploadToServer(it, description)
+                    viewModel.uploadToServer(it, description, latLng)
                 } ?: Toast.makeText(requireActivity(), "Please input the image", Toast.LENGTH_SHORT)
                     .show()
             }

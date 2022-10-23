@@ -7,10 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.network.response.NormalResponse
-import com.example.wahyustoryapp.data.repository.StoryRepository
+import com.example.wahyustoryapp.data.story.repository.StoryRepository
 import com.example.wahyustoryapp.decodeToBitmap
 import com.example.wahyustoryapp.helper.Async
 import com.example.wahyustoryapp.reduceFileImage
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -31,11 +32,11 @@ class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
     val isCompressing: LiveData<Boolean> get() = _isCompressing
 
 
-    fun uploadToServer(file: File, description: String) {
+    fun uploadToServer(file: File, description: String, latLng: LatLng?) {
         viewModelScope.launch {
             _posting.postValue(Async.Loading)
             try {
-                val response = repository.addStory(file, description)
+                val response = repository.addStory(file, description, latLng)
                 if (response.isSuccessful) {
                     _posting.postValue(Async.Success(response))
                     repository.refreshRepositoryData()

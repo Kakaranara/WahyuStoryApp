@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -17,6 +19,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Starting"
         tools:targetApi="31">
+
+        <!--
+             Tidak apa2 kan api key nya tidak saya sembunyikan?
+             Takutnya reviewernya gabisa cek.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBI8hzIFKfqOkNs3tUsEIgAA5Ivd6NQMeg" />
+
         <receiver
             android:name=".widget.StoryWidget"
             android:exported="false">
@@ -29,8 +40,9 @@
                 android:resource="@xml/story_widget_info" />
         </receiver>
 
-        <service android:name=".widget.StackWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <service
+            android:name=".widget.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <activity
             android:name=".MainActivity"

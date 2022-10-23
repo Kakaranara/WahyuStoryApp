@@ -34,7 +34,7 @@ object DataDummy {
         )
     }
 
-    fun provideStoryList(size: Int? = null): List<Story> {
+    fun provideStoryDataInDatabase(size: Int? = null): List<Story> {
         return List(size ?: 10) {
             Story(
                 0,

@@ -4,19 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wahyustoryapp.data.repository.StoryRepository
+import androidx.paging.cachedIn
+import com.example.wahyustoryapp.data.story.repository.StoryRepository
 import com.example.wahyustoryapp.helper.Async
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
-    val story = repository.getStoryData()
+    val story = repository.getStoryData().cachedIn(viewModelScope)
 
     private val _refreshDb: MutableLiveData<Async<Boolean>> = MutableLiveData()
     val refreshDb: LiveData<Async<Boolean>> = _refreshDb
-
-    init {
-        refreshDatabase(size = 40)
-    }
 
     fun clearDatabase() {
         viewModelScope.launch {

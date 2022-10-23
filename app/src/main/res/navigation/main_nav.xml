@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -61,6 +64,9 @@
         <action
             android:id="@+id/action_addStoryFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_addStoryFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
@@ -74,11 +80,20 @@
         tools:layout="@layout/fragment_credit" />
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.wahyustoryapp.ui.main.DetailFragment"
+        android:name="com.example.wahyustoryapp.ui.main.home.detail.DetailFragment"
         android:label="Detail"
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="dataStory"
             app:argType="com.example.wahyustoryapp.data.database.Story" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.wahyustoryapp.ui.main.maps.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+        <argument
+            android:name="types"
+            app:argType="com.example.wahyustoryapp.constant.MapArgs" />
     </fragment>
 </navigation>
