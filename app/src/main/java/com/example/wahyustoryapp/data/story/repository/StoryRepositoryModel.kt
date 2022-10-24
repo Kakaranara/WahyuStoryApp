@@ -9,9 +9,14 @@ import retrofit2.Response
 import java.io.File
 
 interface StoryRepositoryModel {
+    /**
+     * size = 5
+     * is for collaborating with paging3.
+     * better not changing the size
+     */
     suspend fun refreshRepositoryData(
         page: Int? = null,
-        size: Int? = null,
+        size: Int = 5,
         withLocation: Boolean = false
     )
 

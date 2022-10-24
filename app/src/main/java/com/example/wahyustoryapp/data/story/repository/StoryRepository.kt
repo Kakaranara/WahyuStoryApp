@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
+import com.example.wahyustoryapp.data.database.RemoteKeys
 import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiService
 import com.example.wahyustoryapp.data.network.response.NormalResponse
@@ -33,15 +34,13 @@ class StoryRepository(
             initialLoadSize = 10,
             prefetchDistance = 0,
 
-        ),
+            ),
         remoteMediator = StoryRemoteMediator(service, database, token),
         pagingSourceFactory = {
             database.storyDao().getAllStories()
         }).liveData
 
-    override suspend fun refreshRepositoryData(
-        page: Int?, size: Int?, withLocation: Boolean
-    ) {
+    override suspend fun refreshRepositoryData(page: Int?, size: Int, withLocation: Boolean) {
         val location = when (withLocation) {
             false -> 0
             true -> 1
@@ -52,9 +51,14 @@ class StoryRepository(
             )
             if (networkData.isSuccessful) {
                 database.storyDao().deleteAll()
+                database.remoteKeysDao().deleteRemoteKeys()
                 networkData.body()?.let { response ->
                     val result = response.listStory.toEntity()
+                    val remoteKeys = result.map {
+                        RemoteKeys(it.id, 1) //? because we refreshed it, so always come with 1
+                    }
                     database.storyDao().insertAll(result)
+                    database.remoteKeysDao().inserAll(remoteKeys)
                 }
             }
         }
