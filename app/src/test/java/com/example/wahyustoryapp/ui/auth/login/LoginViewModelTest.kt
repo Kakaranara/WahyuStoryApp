@@ -3,7 +3,7 @@ package com.example.wahyustoryapp.ui.auth.login
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.example.wahyustoryapp.MainDispatcherRule
-import com.example.wahyustoryapp.data.auth.LoginRepository
+import com.example.wahyustoryapp.data.repository.LoginRepository
 import com.example.wahyustoryapp.data.network.LoginForm
 import com.example.wahyustoryapp.data.network.response.LoginResponse
 import com.example.wahyustoryapp.data.network.response.LoginResult

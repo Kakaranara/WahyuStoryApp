@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.data.story.paging
+package com.example.wahyustoryapp.data.repository
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType

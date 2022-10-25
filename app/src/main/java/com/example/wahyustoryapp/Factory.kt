@@ -4,9 +4,9 @@ package com.example.wahyustoryapp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.wahyustoryapp.data.auth.LoginRepository
-import com.example.wahyustoryapp.data.story.repository.MapsRepository
-import com.example.wahyustoryapp.data.story.repository.StoryRepository
+import com.example.wahyustoryapp.data.repository.LoginRepository
+import com.example.wahyustoryapp.data.repository.MapsRepository
+import com.example.wahyustoryapp.data.repository.StoryRepository
 import com.example.wahyustoryapp.preferences.SettingPreferences
 import com.example.wahyustoryapp.ui.auth.login.LoginViewModel
 import com.example.wahyustoryapp.ui.main.addStory.AddStoryViewModel

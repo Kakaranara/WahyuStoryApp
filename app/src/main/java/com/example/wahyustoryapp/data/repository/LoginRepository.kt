@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.data.auth
+package com.example.wahyustoryapp.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
@@ -17,7 +17,7 @@ class LoginRepository(
     fun login(loginForm: LoginForm): LiveData<Async<LoginResponse>> = liveData {
         emit((Async.Loading))
         try {
-            val response = ApiConfig.getApiService().getLoginData(loginForm)
+            val response = apiService.getLoginData(loginForm)
             if (response.isSuccessful) {
                 val body = response.body()
                 body?.let {
