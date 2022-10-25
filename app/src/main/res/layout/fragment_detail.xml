@@ -1,78 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.main.home.detail.DetailFragment">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/detailImage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/image_story"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        android:transitionName="imageTarget"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="481dp" />
+        tools:context=".ui.main.home.detail.DetailFragment">
 
-    <TextView
-        android:id="@+id/detailName"
-        style="@style/TextAppearance.Material3.TitleLarge"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:transitionName="titleTarget"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        tools:text="Supriadi Suparman" />
+        <ImageView
+            android:id="@+id/detailImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/image_story"
+            android:scaleType="fitXY"
+            android:transitionName="imageTarget"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/detailDate"
-        style="@style/TextAppearance.Material3.LabelMedium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:textAlignment="textEnd"
-        android:transitionName="dateTarget"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Created at 25 September 2000, 12 PM in Western Indonesian TIME oh yeah time" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="481dp" />
 
-    <TextView
-        android:id="@+id/detailDesc"
-        style="@style/TextAppearance.Material3.BodyMedium"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ellipsize="end"
-        android:transitionName="descTarget"
-        app:layout_constraintBottom_toTopOf="@+id/detailDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailName"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="I love my dog, He always be with me and this will be 3 lines if u prefere not to care whattam doing right now, and yeah you should not say anyhing about me because what im doing is just typing lorem ipsum until you dead" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/view2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/android"
+            android:transitionName="profileImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailImage">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        </de.hdodenhof.circleimageview.CircleImageView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/view2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/view2"
+            app:layout_constraintTop_toTopOf="@id/view2">
+
+
+            <TextView
+                android:id="@+id/detailName"
+                style="@style/TextAppearance.Material3.TitleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:transitionName="titleTarget"
+                tools:text="Supriadi Suparman" />
+
+            <TextView
+                android:id="@+id/detailDate"
+                style="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:transitionName="dateTarget"
+                tools:text="25 September 2000, 12 PM " />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/detailDesc"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:transitionName="descTarget"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2"
+            tools:text="I love my dog, He always be with me and this will be 3 lines if u prefere not to care whattam doing right now, and yeah you should not say anyhing about me because what im doing is just typing lorem ipsum until you dead" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

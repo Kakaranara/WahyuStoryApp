@@ -15,20 +15,18 @@ import java.util.*
 class HomeAdapter() :
     PagingDataAdapter<Story, HomeAdapter.ListViewHolder>(DIFF_CALLBACK) {
     inner class ListViewHolder(val binding: ListItem2Binding) : ViewHolder(binding.root) {
-        fun bind(data: Story) {
+        fun bind(data: Story, position: Int) {
             binding.apply {
                 /**
-                 * untuk nama transisi yang memiliki kencendrungan mirip
-                 * diberikan random uuid agar transition name view selalu berbeda
+                 * apply shared element
                  */
                 itemTitle2.apply {
-                    transitionName = UUID.randomUUID().toString()
+                    transitionName = data.name + position
                     text = data.name
                 }
-                itemDescription2.apply {
-                    transitionName = UUID.randomUUID().toString()
-                    text = data.description
-                }
+
+                circleImageView2.transitionName = "profile $position"
+
                 itemDate2.apply {
                     transitionName = data.createdAt
                     itemDate2.text =
@@ -47,8 +45,8 @@ class HomeAdapter() :
                         data,
                         storyImage2,
                         itemTitle2,
-                        itemDescription2,
-                        itemDate2
+                        itemDate2,
+                        circleImageView2
                     )
                 }
             }
@@ -69,14 +67,14 @@ class HomeAdapter() :
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val data = getItem(position)
         if (data != null) {
-            holder.bind(data)
+            holder.bind(data, position)
         }
 
     }
 
 
     interface OnItemCallbackListener {
-        fun setButtonClickListener(data: Story, image: View, name: View, desc: View, date: View)
+        fun setButtonClickListener(data: Story, image: View, name: View, date: View, profileImage : View)
     }
 
     companion object {

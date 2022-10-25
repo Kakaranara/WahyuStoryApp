@@ -56,14 +56,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 data: Story,
                 image: View,
                 name: View,
-                desc: View,
-                date: View
+                date: View,
+                profileImage: View
             ) {
                 val extras = FragmentNavigatorExtras(
                     image to "imageTarget",
                     name to "titleTarget",
-                    desc to "descTarget",
-                    date to "dateTarget"
+                    date to "dateTarget",
+                    profileImage to "profileImage"
                 )
                 val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
                 findNavController().navigate(go, extras)

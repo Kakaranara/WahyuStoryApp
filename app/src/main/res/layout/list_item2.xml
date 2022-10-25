@@ -5,75 +5,76 @@
     style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="2dp"
-    android:layout_margin="12dp">
+    android:layout_margin="12dp"
+    app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:contentDescription="@string/detail_image"
             android:id="@+id/storyImage2"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:contentDescription="@string/detail_image"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/item_title2"
-            style="@style/TextAppearance.Material3.TitleLarge"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/android"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/storyImage2"
-            tools:text="Supardi Supratman" />
+            app:layout_constraintTop_toBottomOf="@+id/storyImage2" />
 
-        <TextView
-            android:id="@+id/item_date2"
-            style="@style/TextAppearance.Material3.LabelMedium"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/item_title2"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/item_title2"
-            app:layout_constraintTop_toBottomOf="@+id/item_title2"
-            tools:text="Created at 5 September 20000" />
-
-        <TextView
-            android:id="@+id/item_description2"
-            style="@style/TextAppearance.Material3.BodyMedium"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:ellipsize="end"
-            android:maxLines="2"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/circleImageView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_date2"
-            tools:text="Hello, My name is supardi, and im here for you. just for you, not the others. And you know what? im tired. i dont " />
+            app:layout_constraintStart_toEndOf="@id/circleImageView2"
+            app:layout_constraintTop_toTopOf="@id/circleImageView2">
+
+            <TextView
+                android:id="@+id/item_title2"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                tools:text="Supardi Supratman" />
+
+            <TextView
+                android:id="@+id/item_date2"
+                style="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Created at 5 September 20000" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
             android:text="@string/detail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_description2" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.wahyustoryapp.DataDummy
 import com.example.wahyustoryapp.MainDispatcherRule
 import com.example.wahyustoryapp.data.database.StoryDao
-import com.example.wahyustoryapp.data.fake.FakeApiStory
 import com.example.wahyustoryapp.data.fake.FakeDaoStory
 import com.example.wahyustoryapp.data.network.ApiService
 import com.example.wahyustoryapp.data.story.repository.StoryRepository
