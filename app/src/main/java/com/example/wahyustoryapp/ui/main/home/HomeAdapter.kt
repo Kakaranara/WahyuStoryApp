@@ -25,10 +25,10 @@ class HomeAdapter() :
                     transitionName = UUID.randomUUID().toString()
                     text = data.name
                 }
-                itemDescription2.apply {
-                    transitionName = UUID.randomUUID().toString()
-                    text = data.description
-                }
+//                itemDescription2.apply {
+//                    transitionName = UUID.randomUUID().toString()
+//                    text = data.description
+//                }
                 itemDate2.apply {
                     transitionName = data.createdAt
                     itemDate2.text =
@@ -47,7 +47,7 @@ class HomeAdapter() :
                         data,
                         storyImage2,
                         itemTitle2,
-                        itemDescription2,
+//                        itemDescription2,
                         itemDate2
                     )
                 }
@@ -76,7 +76,7 @@ class HomeAdapter() :
 
 
     interface OnItemCallbackListener {
-        fun setButtonClickListener(data: Story, image: View, name: View, desc: View, date: View)
+        fun setButtonClickListener(data: Story, image: View, name: View, date: View)
     }
 
     companion object {

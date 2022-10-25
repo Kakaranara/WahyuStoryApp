@@ -52,17 +52,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         binding.rvHome.adapter = adapter.withLoadStateFooter(LoadingStateAdapter())
         adapter.setOnclick(object : HomeAdapter.OnItemCallbackListener {
-            override fun setButtonClickListener(
-                data: Story,
-                image: View,
-                name: View,
-                desc: View,
-                date: View
-            ) {
+            override fun setButtonClickListener(data: Story, image: View, name: View, date: View) {
                 val extras = FragmentNavigatorExtras(
                     image to "imageTarget",
                     name to "titleTarget",
-                    desc to "descTarget",
                     date to "dateTarget"
                 )
                 val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
