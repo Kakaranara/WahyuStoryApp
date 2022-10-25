@@ -119,7 +119,7 @@ fun String.formatDate(): String {
     inputFormat.timeZone = TimeZone.getTimeZone("UTC")
     val date = inputFormat.parse(this) as Date
 
-    val result = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL).format(date)
+    val result = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(date)
 
     return result
 }
