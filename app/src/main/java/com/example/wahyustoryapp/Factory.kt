@@ -4,9 +4,9 @@ package com.example.wahyustoryapp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.wahyustoryapp.data.auth.LoginRepository
 import com.example.wahyustoryapp.data.story.repository.MapsRepository
 import com.example.wahyustoryapp.data.story.repository.StoryRepository
-import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.preferences.SettingPreferences
 import com.example.wahyustoryapp.ui.auth.login.LoginViewModel
 import com.example.wahyustoryapp.ui.main.addStory.AddStoryViewModel
@@ -60,21 +60,21 @@ class MapsViewModelFactory(private val repository: MapsRepository) : ViewModelPr
 }
 
 
-class AuthViewModelFactory private constructor(private val prefs: AuthPreference) :
+class AuthViewModelFactory private constructor(private val repository: LoginRepository) :
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(prefs) as T
+            return LoginViewModel(repository) as T
         }
         return super.create(modelClass)
     }
 
     companion object {
         private var INSTANCE: AuthViewModelFactory? = null
-        fun getInstance(prefs: AuthPreference): AuthViewModelFactory {
+        fun getInstance(repository: LoginRepository): AuthViewModelFactory {
             return INSTANCE ?: synchronized(this) {
-                val instance = AuthViewModelFactory(prefs)
+                val instance = AuthViewModelFactory(repository)
                 INSTANCE = instance
                 instance
             }

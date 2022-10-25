@@ -2,6 +2,7 @@ package com.example.wahyustoryapp.di
 
 import android.content.Context
 import com.example.wahyustoryapp.authDataStore
+import com.example.wahyustoryapp.data.auth.LoginRepository
 import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiConfig
 import com.example.wahyustoryapp.data.network.ApiService
@@ -26,5 +27,11 @@ object Injection {
             AuthPreference.getInstance(context.authDataStore).getToken().first()
         }
         return MapsRepository(token, ApiConfig.getApiService())
+    }
+
+    fun provideLoginRepository(context: Context): LoginRepository {
+        val preference = AuthPreference.getInstance(context.authDataStore)
+
+        return LoginRepository(ApiConfig.getApiService(), preference)
     }
 }

@@ -14,6 +14,7 @@ import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.data.network.LoginForm
 import com.example.wahyustoryapp.databinding.FragmentLoginBinding
+import com.example.wahyustoryapp.di.Injection
 import com.example.wahyustoryapp.helper.Async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -30,7 +31,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
 
     private val viewModel by viewModels<LoginViewModel> {
         AuthViewModelFactory.getInstance(
-            AuthPreference.getInstance(requireActivity().authDataStore)
+            Injection.provideLoginRepository(requireActivity())
         )
     }
 
@@ -74,34 +75,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
 
     private fun setupObserver() {
 
-        viewModel.loginEvent.observe(viewLifecycleOwner) { event ->
-            when (event) {
-                is Async.Error -> {
-                    binding.btnLogin.hideOverlayWhileLoadingRef(
-                        requireActivity(),
-                        binding.root,
-                        binding.loginProgress
-                    )
-                    Toast.makeText(requireActivity(), event.error, Toast.LENGTH_SHORT).show()
-                }
-                is Async.Loading -> {
-                    binding.btnLogin.showOverlayWhileLoadingRef(
-                        requireActivity(),
-                        binding.root,
-                        binding.loginProgress
-                    )
-                }
-                is Async.Success -> {
-                    binding.btnLogin.hideOverlayWhileLoadingRef(
-                        requireActivity(),
-                        binding.root,
-                        binding.loginProgress
-                    )
-                    val toHome = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
-                    findNavController().navigate(toHome)
-                }
-            }
-        }
+
     }
 
     override fun onClick(v: View) {
@@ -116,7 +90,35 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
                     emailLayout.error = null
                     passwordLayout.error = null
                     val form = getLoginForm()
-                    viewModel.login(form)
+//                    viewModel.login(form)
+                    viewModel.loginEvent(form).observe(viewLifecycleOwner) { event ->
+                        when (event) {
+                            is Async.Error -> {
+                                binding.btnLogin.hideOverlayWhileLoadingRef(
+                                    requireActivity(),
+                                    binding.root,
+                                    binding.loginProgress
+                                )
+                                Toast.makeText(requireActivity(), event.error, Toast.LENGTH_SHORT).show()
+                            }
+                            is Async.Loading -> {
+                                binding.btnLogin.showOverlayWhileLoadingRef(
+                                    requireActivity(),
+                                    binding.root,
+                                    binding.loginProgress
+                                )
+                            }
+                            is Async.Success -> {
+                                binding.btnLogin.hideOverlayWhileLoadingRef(
+                                    requireActivity(),
+                                    binding.root,
+                                    binding.loginProgress
+                                )
+                                val toHome = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                                findNavController().navigate(toHome)
+                            }
+                        }
+                    }
                 } else {
                     emailLayout.error = etEmail.error
                     passwordLayout.error = etPassword.error
