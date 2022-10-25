@@ -55,7 +55,7 @@ class StoryRepository(
                 networkData.body()?.let { response ->
                     val result = response.listStory.toEntity()
                     val remoteKeys = result.map {
-                        RemoteKeys(it.id, 1) //? because we refreshed it, so always come with 1
+                        RemoteKeys(it.id, 2) //? because we refreshed it, so always come with 1
                     }
                     database.storyDao().insertAll(result)
                     database.remoteKeysDao().inserAll(remoteKeys)
