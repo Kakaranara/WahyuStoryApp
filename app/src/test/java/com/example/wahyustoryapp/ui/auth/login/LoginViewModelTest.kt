@@ -3,12 +3,11 @@ package com.example.wahyustoryapp.ui.auth.login
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.example.wahyustoryapp.MainDispatcherRule
-import com.example.wahyustoryapp.data.repository.AuthRepository
-import com.example.wahyustoryapp.data.network.LoginForm
 import com.example.wahyustoryapp.data.network.response.LoginResponse
-import com.example.wahyustoryapp.data.network.response.LoginResult
+import com.example.wahyustoryapp.data.repository.AuthRepository
 import com.example.wahyustoryapp.getOrAwaitValue
 import com.example.wahyustoryapp.helper.Async
+import com.example.wahyustoryapp.ui.auth.AuthDummy
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.*
 import org.junit.Before
@@ -32,8 +31,7 @@ class LoginViewModelTest {
     @Mock
     private lateinit var repository: AuthRepository
     private lateinit var viewModel: LoginViewModel
-    val dummyForm: LoginForm = LoginForm("a@gm.com", "123456")
-    val dummyResponse = LoginResponse(LoginResult("", "IDK412", "ABCD"), false, "ok")
+
 
     @Before
     fun setup() {
@@ -43,12 +41,12 @@ class LoginViewModelTest {
     @Test
     fun `if login success then return Success`() {
         val expectedLiveData = MutableLiveData<Async<LoginResponse>>()
-        expectedLiveData.value = Async.Success(dummyResponse)
+        expectedLiveData.value = Async.Success(AuthDummy.provideLoginResponse())
 
         val expected = expectedLiveData.getOrAwaitValue()
 
-        `when`(repository.login(dummyForm)).thenReturn(expectedLiveData)
-        val actual = viewModel.loginEvent(dummyForm).getOrAwaitValue()
+        `when`(repository.login(AuthDummy.provideLoginForm())).thenReturn(expectedLiveData)
+        val actual = viewModel.loginEvent(AuthDummy.provideLoginForm()).getOrAwaitValue()
 
         assertNotNull(actual)
         assertTrue(actual is Async.Success)
@@ -58,9 +56,9 @@ class LoginViewModelTest {
     @Test
     fun `if network error then return Async Error`() {
         val expectedLiveData = MutableLiveData<Async<LoginResponse>>(Async.Error("Dummy"))
-        `when`(repository.login(dummyForm)).thenReturn(expectedLiveData)
+        `when`(repository.login(AuthDummy.provideLoginForm())).thenReturn(expectedLiveData)
 
-        val actual = viewModel.loginEvent(dummyForm).getOrAwaitValue()
+        val actual = viewModel.loginEvent(AuthDummy.provideLoginForm()).getOrAwaitValue()
         assertTrue(actual is Async.Error)
         assertNotNull(actual)
     }

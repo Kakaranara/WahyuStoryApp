@@ -1,8 +1,22 @@
 Skenario Pengujian
 
-Pengujian Login View Model :
+1. Pengujian Login View Model :
 a. Ketika pengguna berhasil login
  - Memastikan bila login berhasil dan mengembalikan Async.Success
+ - Memastikan data tidak null
+b. Ketika pengguna mengalami masalah koneksi
+ - Memastikan live data akan mengembalikan Async.Error
+ - Memastikan data tidak null
+
+2. Pengujian Register ViewModel :
+== Skenario register hampir/atau bahkan sama dengan login view model.
+a. Ketika pengguna berhasil login
+ - Memastikan bila register berhasil dan mengembalikan Async.Success
+ - Memastikan data tidak null
+b. Ketika pengguna mengalami masalah koneksi
+ - Memastikan register akan mengembalikan Async.Error
+ - Memastikan data tidak null
+
 
 Pengujian Repository :
 - Story Repository
