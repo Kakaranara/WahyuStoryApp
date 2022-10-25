@@ -21,27 +21,5 @@ class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
         }
     }
 
-//    fun refreshDatabase(
-//        page: Int? = null,
-//        size: Int? = null,
-//        location: Boolean = false
-//    ) {
-//        _refreshDb.postValue(Async.Loading)
-//        viewModelScope.launch {
-//            try {
-//                repository.refreshRepositoryData(
-//                    page = page,
-//                    size = size,
-//                    withLocation = location
-//                )
-//                _refreshDb.postValue(Async.Success(true))
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                _refreshDb.postValue(Async.Error("Couldn't Refresh Data"))
-//            }
-//
-//        }
-//    }
-
 }
 
