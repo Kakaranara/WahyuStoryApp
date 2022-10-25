@@ -52,11 +52,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         binding.rvHome.adapter = adapter.withLoadStateFooter(LoadingStateAdapter())
         adapter.setOnclick(object : HomeAdapter.OnItemCallbackListener {
-            override fun setButtonClickListener(data: Story, image: View, name: View, date: View) {
+            override fun setButtonClickListener(
+                data: Story,
+                image: View,
+                name: View,
+                date: View,
+                profileImage: View
+            ) {
                 val extras = FragmentNavigatorExtras(
                     image to "imageTarget",
                     name to "titleTarget",
-                    date to "dateTarget"
+                    date to "dateTarget",
+                    profileImage to "profileImage"
                 )
                 val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
                 findNavController().navigate(go, extras)
