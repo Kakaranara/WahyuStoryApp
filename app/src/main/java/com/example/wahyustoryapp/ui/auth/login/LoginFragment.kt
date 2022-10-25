@@ -31,7 +31,7 @@ class LoginFragment : Fragment(R.layout.fragment_login), View.OnClickListener {
 
     private val viewModel by viewModels<LoginViewModel> {
         AuthViewModelFactory.getInstance(
-            Injection.provideLoginRepository(requireContext())
+            Injection.provideAuthRepository(requireContext())
         )
     }
 

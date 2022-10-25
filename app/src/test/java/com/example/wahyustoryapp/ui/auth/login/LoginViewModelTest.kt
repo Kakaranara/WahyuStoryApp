@@ -3,7 +3,7 @@ package com.example.wahyustoryapp.ui.auth.login
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.example.wahyustoryapp.MainDispatcherRule
-import com.example.wahyustoryapp.data.repository.LoginRepository
+import com.example.wahyustoryapp.data.repository.AuthRepository
 import com.example.wahyustoryapp.data.network.LoginForm
 import com.example.wahyustoryapp.data.network.response.LoginResponse
 import com.example.wahyustoryapp.data.network.response.LoginResult
@@ -30,7 +30,7 @@ class LoginViewModelTest {
     val disp = MainDispatcherRule()
 
     @Mock
-    private lateinit var repository: LoginRepository
+    private lateinit var repository: AuthRepository
     private lateinit var viewModel: LoginViewModel
     val dummyForm: LoginForm = LoginForm("a@gm.com", "123456")
     val dummyResponse = LoginResponse(LoginResult("", "IDK412", "ABCD"), false, "ok")
