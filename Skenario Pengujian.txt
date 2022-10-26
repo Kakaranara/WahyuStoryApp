@@ -9,14 +9,14 @@ b. Ketika pengguna mengalami masalah koneksi
  - Memastikan data tidak null
 
 2. Pengujian Register ViewModel :
-== Skenario register hampir/atau bahkan sama dengan login view model.
-a. Ketika pengguna berhasil login
- - Memastikan bila register berhasil dan mengembalikan Async.Success
- - Memastikan data tidak null
-b. Ketika pengguna mengalami masalah koneksi
- - Memastikan register akan mengembalikan Async.Error
- - Memastikan data tidak null
+== Skenario register hampir/atau bahkan sama dengan login viewModel.
 
+3. Pengujian Home ViewModel
+a. Pengujian live data story :
+ - Memastikan bahwa paging mengeluarkan data dengan benar.
+ - Memastikan data tidak null
+b. Pengujian fungsi clearDatabase
+ - Memastikan bahwa repository.clearDb() terpanggil.
 
 Pengujian Repository :
 - Story Repository
