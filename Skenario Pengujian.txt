@@ -18,6 +18,10 @@ a. Pengujian live data story :
 b. Pengujian fungsi clearDatabase
  - Memastikan bahwa repository.clearDb() terpanggil.
 
+4. Pengujian Maps View Model
+- Memastikan bahwa maps mengembalikan Async.Success
+- Memastikan bahwa maps mengembalikan data dengan benar (dengan lokasi latLng)
+
 Pengujian Repository :
 - Story Repository
 1. Saat database di refresh maka data akan kembali seperti semula
