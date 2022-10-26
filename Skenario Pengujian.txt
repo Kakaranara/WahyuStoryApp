@@ -22,6 +22,16 @@ b. Pengujian fungsi clearDatabase
 - Memastikan bahwa maps mengembalikan Async.Success
 - Memastikan bahwa maps mengembalikan data dengan benar (dengan lokasi latLng)
 
+5. Pengujian Setting View Model
+- Memastikan bahwa fungsi WriteTheme memanggil preference saveThemeSetting
+- Memastikan bahwa getTheme mengeluarkan live data yang benar.
+
+
+
+
+
+
+
 Pengujian Repository :
 - Story Repository
 1. Saat database di refresh maka data akan kembali seperti semula
