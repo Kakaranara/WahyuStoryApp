@@ -8,6 +8,6 @@ import com.example.wahyustoryapp.helper.Async
 
 class MapsViewModel(private val repository: MapsRepository) : ViewModel() {
 
-    val data: LiveData<Async<List<ListStoryItem>>> = repository.requestApisLocation()
+    fun data(): LiveData<Async<List<ListStoryItem>>> = repository.requestApisLocation()
 
 }

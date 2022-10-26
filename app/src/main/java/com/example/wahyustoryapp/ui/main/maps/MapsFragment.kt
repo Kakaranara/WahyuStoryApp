@@ -134,7 +134,7 @@ class MapsFragment : Fragment() {
             }
 
             MapArgs.CheckAllMaps -> {
-                viewModel.data.observe(viewLifecycleOwner) {
+                viewModel.data().observe(viewLifecycleOwner) {
                     when (it) {
                         is Async.Error -> {
                             binding.mapsProgressBar.visibility = View.GONE
