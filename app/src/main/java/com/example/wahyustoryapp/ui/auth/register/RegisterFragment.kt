@@ -61,7 +61,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                             binding.root,
                             binding.registerProgressBar
                         )
-                        Toast.makeText(it, event.data.message(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(it, event.data.message, Toast.LENGTH_SHORT).show()
                         val action = RegisterFragmentDirections.actionGlobalLoginFragment2()
                         findNavController().navigate(action)
                     }

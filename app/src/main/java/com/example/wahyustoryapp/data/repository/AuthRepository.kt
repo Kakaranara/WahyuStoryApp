@@ -10,7 +10,6 @@ import com.example.wahyustoryapp.data.network.response.NormalResponse
 import com.example.wahyustoryapp.helper.Async
 import com.example.wahyustoryapp.preferences.AuthPreference
 import org.json.JSONObject
-import retrofit2.Response
 
 class AuthRepository(
     private val apiService: ApiService,
@@ -39,12 +38,14 @@ class AuthRepository(
         }
     }
 
-    fun register(registerForm: RegisterForm): LiveData<Async<Response<NormalResponse>>> = liveData {
+    fun register(registerForm: RegisterForm): LiveData<Async<NormalResponse>> = liveData {
         emit((Async.Loading))
         try {
             val response = apiService.registerUser(registerForm)
             if (response.isSuccessful) {
-                emit(Async.Success(response))
+                response.body()?.let {
+                    emit(Async.Success(it))
+                }
             } else {
                 response.errorBody()?.let {
                     val error = JSONObject(it.string())
