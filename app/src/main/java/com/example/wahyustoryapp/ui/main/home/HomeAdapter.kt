@@ -1,5 +1,6 @@
 package com.example.wahyustoryapp.ui.main.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,11 +38,14 @@ class HomeAdapter() :
                     btnCheckLocation.apply {
                         visibility = View.VISIBLE
                         val latLng = LatLong(data.lat, data.lon)
+                        Log.d("adapter", "bind: ADAPTER POSITION : $position")
                         setOnClickListener {
                             listener.setDetailMapsClickListener(latLng)
                         }
 
                     }
+                } else{
+                    btnCheckLocation.visibility = View.GONE
                 }
 
                 storyImage2.apply {
