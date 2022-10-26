@@ -7,6 +7,7 @@ import com.example.wahyustoryapp.data.network.LoginForm
 import com.example.wahyustoryapp.data.network.RegisterForm
 import com.example.wahyustoryapp.data.network.response.LoginResponse
 import com.example.wahyustoryapp.data.network.response.NormalResponse
+import com.example.wahyustoryapp.data.repository.model.AuthRepositoryModel
 import com.example.wahyustoryapp.helper.Async
 import com.example.wahyustoryapp.preferences.AuthPreference
 import org.json.JSONObject
@@ -14,8 +15,8 @@ import org.json.JSONObject
 class AuthRepository(
     private val apiService: ApiService,
     private val pref: AuthPreference
-) {
-    fun login(loginForm: LoginForm): LiveData<Async<LoginResponse>> = liveData {
+) : AuthRepositoryModel {
+    override fun login(loginForm: LoginForm): LiveData<Async<LoginResponse>> = liveData {
         emit((Async.Loading))
         try {
             val response = apiService.getLoginData(loginForm)
@@ -38,7 +39,7 @@ class AuthRepository(
         }
     }
 
-    fun register(registerForm: RegisterForm): LiveData<Async<NormalResponse>> = liveData {
+    override fun register(registerForm: RegisterForm): LiveData<Async<NormalResponse>> = liveData {
         emit((Async.Loading))
         try {
             val response = apiService.registerUser(registerForm)
