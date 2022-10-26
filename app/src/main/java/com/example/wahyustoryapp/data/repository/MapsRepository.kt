@@ -1,17 +1,18 @@
-package com.example.wahyustoryapp.data.story.repository
+package com.example.wahyustoryapp.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.wahyustoryapp.data.network.ApiService
 import com.example.wahyustoryapp.data.network.response.ListStoryItem
+import com.example.wahyustoryapp.data.repository.model.MapsRepositoryModel
 import com.example.wahyustoryapp.helper.Async
 import org.json.JSONObject
 
 class MapsRepository(
     private val token: String,
     private val apiService: ApiService
-) {
-    fun requestApisLocation(): LiveData<Async<List<ListStoryItem>>> = liveData {
+) : MapsRepositoryModel {
+    override fun requestApisLocation(): LiveData<Async<List<ListStoryItem>>> = liveData {
         emit(Async.Loading)
         try {
             val response = apiService.getAllStory("Bearer $token", size = 150, location = 1)

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wahyustoryapp.data.network.response.NormalResponse
-import com.example.wahyustoryapp.data.story.repository.StoryRepository
+import com.example.wahyustoryapp.data.repository.StoryRepository
 import com.example.wahyustoryapp.decodeToBitmap
 import com.example.wahyustoryapp.helper.Async
 import com.example.wahyustoryapp.reduceFileImage
@@ -18,6 +18,12 @@ import retrofit2.Response
 import java.io.File
 
 class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
+
+    /**
+     * * This class can't be unit tested
+     * * Because the function need file and bitmap
+     * ? Might be refactored later -> with fragment result
+     */
 
     private val _posting: MutableLiveData<Async<Response<NormalResponse>>> = MutableLiveData()
     val posting: LiveData<Async<Response<NormalResponse>>> get() = _posting

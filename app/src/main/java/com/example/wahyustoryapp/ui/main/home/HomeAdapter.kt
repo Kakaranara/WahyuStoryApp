@@ -1,5 +1,6 @@
 package com.example.wahyustoryapp.ui.main.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.wahyustoryapp.R
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.ListItem2Binding
-import java.util.*
+import com.example.wahyustoryapp.helper.LatLong
 
 class HomeAdapter() :
     PagingDataAdapter<Story, HomeAdapter.ListViewHolder>(DIFF_CALLBACK) {
@@ -31,6 +32,20 @@ class HomeAdapter() :
                     transitionName = data.createdAt
                     itemDate2.text =
                         itemView.resources.getString(R.string.date_format, data.createdAt)
+                }
+
+                if (data.lat != null && data.lon != null) {
+                    btnCheckLocation.apply {
+                        visibility = View.VISIBLE
+                        val latLng = LatLong(data.lat, data.lon)
+                        Log.d("adapter", "bind: ADAPTER POSITION : $position")
+                        setOnClickListener {
+                            listener.setDetailMapsClickListener(latLng)
+                        }
+
+                    }
+                } else{
+                    btnCheckLocation.visibility = View.GONE
                 }
 
                 storyImage2.apply {
@@ -74,7 +89,17 @@ class HomeAdapter() :
 
 
     interface OnItemCallbackListener {
-        fun setButtonClickListener(data: Story, image: View, name: View, date: View, profileImage : View)
+        fun setButtonClickListener(
+            data: Story,
+            image: View,
+            name: View,
+            date: View,
+            profileImage: View
+        )
+
+        fun setDetailMapsClickListener(
+            data: LatLong
+        )
     }
 
     companion object {

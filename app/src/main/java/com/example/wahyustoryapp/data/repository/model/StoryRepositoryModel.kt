@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.data.story.repository
+package com.example.wahyustoryapp.data.repository.model
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingData

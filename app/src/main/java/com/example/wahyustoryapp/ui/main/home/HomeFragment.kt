@@ -19,11 +19,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.constant.MapArgs
-import com.example.wahyustoryapp.preferences.AuthPreference
 import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.databinding.FragmentHomeBinding
 import com.example.wahyustoryapp.di.Injection
 import com.example.wahyustoryapp.helper.Async
+import com.example.wahyustoryapp.helper.LatLong
+import com.example.wahyustoryapp.preferences.AuthPreference
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -67,6 +68,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 )
                 val go = HomeFragmentDirections.actionHomeFragmentToDetailFragment(data)
                 findNavController().navigate(go, extras)
+            }
+
+            override fun setDetailMapsClickListener(data: LatLong) {
+                val go =
+                    HomeFragmentDirections.actionHomeFragmentToMapsFragment(
+                        MapArgs.CheckDetailMaps,
+                        data
+                    )
+                findNavController().navigate(go)
             }
         })
 

@@ -76,6 +76,18 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             app:layout_constraintVertical_bias="0.0" />
 
+        <Button
+            android:id="@+id/btnCheckLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="?attr/colorSecondary"
+            android:text="@string/check_location"
+            android:textColor="?attr/colorOnSecondary"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/btnDetail"
+            app:layout_constraintTop_toTopOf="@+id/btnDetail" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

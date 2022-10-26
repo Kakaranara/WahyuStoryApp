@@ -1,4 +1,4 @@
-package com.example.wahyustoryapp.data.story.repository
+package com.example.wahyustoryapp.data.repository
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -8,7 +8,7 @@ import com.example.wahyustoryapp.data.database.RemoteKeys
 import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiService
 import com.example.wahyustoryapp.data.network.response.NormalResponse
-import com.example.wahyustoryapp.data.story.paging.StoryRemoteMediator
+import com.example.wahyustoryapp.data.repository.model.StoryRepositoryModel
 import com.example.wahyustoryapp.toEntity
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers

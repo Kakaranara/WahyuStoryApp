@@ -1,16 +1,18 @@
 package com.example.wahyustoryapp.ui.auth.register
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.wahyustoryapp.AuthViewModelFactory
 import com.example.wahyustoryapp.MainNavDirections
 import com.example.wahyustoryapp.data.network.RegisterForm
 import com.example.wahyustoryapp.databinding.FragmentRegisterBinding
+import com.example.wahyustoryapp.di.Injection
 import com.example.wahyustoryapp.helper.Async
 import com.example.wahyustoryapp.hideOverlayWhileLoadingRef
 import com.example.wahyustoryapp.showOverlayWhileLoadingRef
@@ -21,7 +23,9 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     private val binding get() = _binding!! //dari dokumentasinya begini, memakai double bang
     //( menghindari memory leaks )
 
-    private val viewModel by viewModels<RegisterViewModel>()
+    private val viewModel by viewModels<RegisterViewModel> {
+        AuthViewModelFactory.getInstance(Injection.provideAuthRepository(requireContext()))
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,12 +33,11 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
         binding.btnToLogin.setOnClickListener(this)
         binding.btnRegister.setOnClickListener(this)
-        setupObserver()
     }
 
-    private fun setupObserver() {
+    private fun registerUser(form: RegisterForm) {
 
-        viewModel.registerEvent.observe(viewLifecycleOwner) { event ->
+        viewModel.registerAccount(form).observe(viewLifecycleOwner) { event ->
             activity?.let {
                 when (event) {
                     is Async.Error -> {
@@ -58,7 +61,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                             binding.root,
                             binding.registerProgressBar
                         )
-                        Toast.makeText(it, event.data.message(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(it, event.data.message, Toast.LENGTH_SHORT).show()
                         val action = RegisterFragmentDirections.actionGlobalLoginFragment2()
                         findNavController().navigate(action)
                     }
@@ -80,7 +83,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                 if (etEmail.error == null && etPassword.error == null) {
                     if (etPassword.text.toString() == etConfirmPass.text.toString()) {
                         val form = getRegisterForm()
-                        viewModel.registerAccount(form)
+                        registerUser(form)
                     } else {
                         etConfirmPass.error = "Password tidak sama"
                     }

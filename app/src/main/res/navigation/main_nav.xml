@@ -95,5 +95,10 @@
         <argument
             android:name="types"
             app:argType="com.example.wahyustoryapp.constant.MapArgs" />
+        <argument
+            android:name="latLng"
+            app:argType="com.example.wahyustoryapp.helper.LatLong"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

@@ -1,8 +1,36 @@
 Skenario Pengujian
 
-Pengujian Login View Model :
+1. Pengujian Login View Model :
 a. Ketika pengguna berhasil login
  - Memastikan bila login berhasil dan mengembalikan Async.Success
+ - Memastikan data tidak null
+b. Ketika pengguna mengalami masalah koneksi
+ - Memastikan live data akan mengembalikan Async.Error
+ - Memastikan data tidak null
+
+2. Pengujian Register ViewModel :
+== Skenario register hampir/atau bahkan sama dengan login viewModel.
+
+3. Pengujian Home ViewModel
+a. Pengujian live data story :
+ - Memastikan bahwa paging mengeluarkan data dengan benar.
+ - Memastikan data tidak null
+b. Pengujian fungsi clearDatabase
+ - Memastikan bahwa repository.clearDb() terpanggil.
+
+4. Pengujian Maps View Model
+- Memastikan bahwa maps mengembalikan Async.Success
+- Memastikan bahwa maps mengembalikan data dengan benar (dengan lokasi latLng)
+
+5. Pengujian Setting View Model
+- Memastikan bahwa fungsi WriteTheme memanggil preference saveThemeSetting
+- Memastikan bahwa getTheme mengeluarkan live data yang benar.
+
+
+
+
+
+
 
 Pengujian Repository :
 - Story Repository

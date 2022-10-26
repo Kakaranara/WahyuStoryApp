@@ -2,12 +2,12 @@ package com.example.wahyustoryapp.di
 
 import android.content.Context
 import com.example.wahyustoryapp.authDataStore
-import com.example.wahyustoryapp.data.auth.LoginRepository
+import com.example.wahyustoryapp.data.repository.AuthRepository
 import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiConfig
 import com.example.wahyustoryapp.data.network.ApiService
-import com.example.wahyustoryapp.data.story.repository.MapsRepository
-import com.example.wahyustoryapp.data.story.repository.StoryRepository
+import com.example.wahyustoryapp.data.repository.MapsRepository
+import com.example.wahyustoryapp.data.repository.StoryRepository
 import com.example.wahyustoryapp.preferences.AuthPreference
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -29,9 +29,9 @@ object Injection {
         return MapsRepository(token, ApiConfig.getApiService())
     }
 
-    fun provideLoginRepository(context: Context): LoginRepository {
+    fun provideAuthRepository(context: Context): AuthRepository {
         val preference = AuthPreference.getInstance(context.authDataStore)
 
-        return LoginRepository(ApiConfig.getApiService(), preference)
+        return AuthRepository(ApiConfig.getApiService(), preference)
     }
 }
