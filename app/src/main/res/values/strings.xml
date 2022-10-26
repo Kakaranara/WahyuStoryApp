@@ -42,4 +42,5 @@
     <string name="add_location">Add location</string>
     <string name="submit_location">Submit Location</string>
     <string name="profile_icon" translatable="false">profile icon</string>
+    <string name="check_location">Check Location</string>
 </resources>

@@ -119,6 +119,7 @@ class MapsFragment : Fragment() {
          */
 
         when (args.types) {
+
             MapArgs.CheckMyLocation -> {
                 binding.btnSubmitLocation.visibility = View.VISIBLE
                 googleMap.moveCamera(
@@ -131,6 +132,7 @@ class MapsFragment : Fragment() {
                 )
 
             }
+
             MapArgs.CheckAllMaps -> {
                 viewModel.data.observe(viewLifecycleOwner) {
                     when (it) {
@@ -146,6 +148,18 @@ class MapsFragment : Fragment() {
                             showAllStoryMarker(it.data, googleMap)
                         }
                     }
+                }
+            }
+
+            MapArgs.CheckDetailMaps -> {
+                args.latLng?.let {
+                    val latLng = LatLng(it.lat, it.lon)
+                    val city = getCityName(it.lat, it.lon)
+                    val address = getAddressName(it.lat, it.lon)
+                    googleMap.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(latLng, 8f)
+                    )
+                    googleMap.addMarker(MarkerOptions().position(latLng).title(city).snippet(address))
                 }
             }
         }
@@ -168,7 +182,7 @@ class MapsFragment : Fragment() {
         list.forEach { item ->
             item.takeIf { it.lat != null || it.lon != null }?.let {
                 val latLng = LatLng(it.lat!!, it.lon!!) //? i have checked it in takeIf, don't worry
-                val city = getAddressName(it.lat, it.lon)
+                val city = getCityName(it.lat, it.lon)
                 gmaps.addMarker(
                     MarkerOptions().position(latLng).title(it.name).snippet(city)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
@@ -182,13 +196,33 @@ class MapsFragment : Fragment() {
      */
 
     @Suppress("DEPRECATION") //? only deprecated on api < 33
+    private fun getCityName(lat: Double, lon: Double): String? {
+        var cityName: String? = null
+        val geocoder = Geocoder(requireActivity(), Locale.getDefault())
+        try {
+            val list = geocoder.getFromLocation(lat, lon, 1)
+            list?.takeIf { it.isNotEmpty() }?.let {
+                cityName = it[0].locality
+                Log.d(TAG, "getAddressName: $cityName")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return cityName
+    }
+
+    @Suppress("DEPRECATION") //? only deprecated on api < 33
     private fun getAddressName(lat: Double, lon: Double): String? {
         var addressName: String? = null
         val geocoder = Geocoder(requireActivity(), Locale.getDefault())
         try {
             val list = geocoder.getFromLocation(lat, lon, 1)
             list?.takeIf { it.isNotEmpty() }?.let {
-                addressName = it[0].locality
+                val stringBuilder = StringBuilder()
+                for (i in 0 .. it[0].maxAddressLineIndex){
+                    stringBuilder.append(it[0].getAddressLine(i))
+                }
+                addressName = stringBuilder.toString()
                 Log.d(TAG, "getAddressName: $addressName")
             }
         } catch (e: Exception) {
@@ -215,7 +249,7 @@ class MapsFragment : Fragment() {
                 val latLng = it.position
                 val latitude = latLng.latitude
                 val longitude = latLng.longitude
-                val city = getAddressName(latitude, longitude)
+                val city = getCityName(latitude, longitude)
 
 
                 setFragmentResult(
