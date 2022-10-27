@@ -45,6 +45,8 @@ class HomeViewModelTest {
     @Before
     fun setup() {
 
+        //! Im doing this because it'll be an error if we not specify repo.getStoryData()
+
         val data: PagingData<Story> = PagingData.from(dummyStory)
         val liveData: LiveData<PagingData<Story>> = MutableLiveData(data)
         `when`(repository.getStoryData()).thenReturn(liveData)
