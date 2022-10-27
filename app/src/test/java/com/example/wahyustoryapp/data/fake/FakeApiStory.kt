@@ -27,7 +27,11 @@ class FakeApiStory : ApiService {
         size: Int?,
         location: Int?
     ): Response<StoryResponse> {
-        return Response.success(DataDummy.provideStoryResponse(size = size))
+        return if (location == 1) {
+            Response.success(DataDummy.provideStoryResponse(true, size = size))
+        } else
+            Response.success(DataDummy.provideStoryResponse(false, size = size))
+
     }
 
     override suspend fun uploadImage(

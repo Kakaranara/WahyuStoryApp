@@ -37,3 +37,8 @@ a. Ketika memanggil fungsi login, maka :
 - Memastikan fungsi Auth.login (preferences) berjalan
 - Memastikan fungsi Auth.WriteToken berjalan dan mengembalikan token dengan benar
 - Memastikan yang di emit adalah Async.Success
+
+2. Maps Repository
+a. Ketika memanggil fungsi RequestApiLocation :
+- Memastikan bahwa data mereturn Async.Success
+- Memastikan data lat/lon tidak null

@@ -10,7 +10,10 @@ object DataDummy {
         return NormalResponse(false, "ok")
     }
 
-    fun provideStoryResponse(token: String = "", page: Int = 1, size: Int? = 10): StoryResponse {
+    fun provideStoryResponse(withLocation : Boolean, page: Int = 1, size: Int? = 10): StoryResponse {
+        if(withLocation){
+            return provideStoryResponseWithLocation(size = size)
+        }
         return StoryResponse(
             List(size ?: 10) {
                 ListStoryItem(
@@ -27,7 +30,7 @@ object DataDummy {
             "false"
         )
     }
-    fun provideStoryResponseWithLocation(token: String = "", page: Int = 1, size: Int? = 10): StoryResponse {
+    private fun provideStoryResponseWithLocation(token: String = "", page: Int = 1, size: Int? = 10): StoryResponse {
         return StoryResponse(
             List(size ?: 10) {
                 ListStoryItem(
