@@ -11,7 +11,7 @@ class DummyPagingSource : PagingSource<Int, Story>() {
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Story> {
-        val response = DataDummy.provideStoryDataInDatabase()
+        val response = DataDummy.provideStoryList()
         return LoadResult.Page(response, null, null)
     }
 }

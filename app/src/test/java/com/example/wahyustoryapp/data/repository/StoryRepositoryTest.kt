@@ -13,7 +13,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class StoryRepositoryTest {
 
@@ -37,8 +36,8 @@ class StoryRepositoryTest {
         storyRepository = StoryRepository(database, api, token)
     }
 
-    @Test
-    fun `test`(){
-        storyRepository.getStoryData().getOrAwaitValue()
-    }
+//    @Test
+//    fun `test`(){
+//        storyRepository.getStoryData().getOrAwaitValue()
+//    }
 }

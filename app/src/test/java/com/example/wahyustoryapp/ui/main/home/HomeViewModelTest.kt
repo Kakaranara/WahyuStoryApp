@@ -38,7 +38,7 @@ class HomeViewModelTest {
     @Mock
     private lateinit var repository: StoryRepository
 
-    private val dummyStory = DataDummy.provideStoryDataInDatabase()
+    private val dummyStory = DataDummy.provideStoryList()
     private lateinit var viewModel: HomeViewModel
 
 
