@@ -4,13 +4,7 @@ import com.example.wahyustoryapp.data.database.Story
 import com.example.wahyustoryapp.data.network.response.*
 
 object DataDummy {
-    fun provideLoginResponse(): LoginResponse {
-        return LoginResponse(
-            LoginResult("me", "4214124X#X@T", "TOKEN"),
-            false,
-            "ok"
-        )
-    }
+
 
     fun provideNormalResponse(): NormalResponse {
         return NormalResponse(false, "ok")

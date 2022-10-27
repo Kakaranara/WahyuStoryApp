@@ -1,5 +1,7 @@
 Skenario Pengujian
 
+Pengujian ViewModel
+
 1. Pengujian Login View Model :
 a. Ketika pengguna berhasil login
  - Memastikan bila login berhasil dan mengembalikan Async.Success
@@ -26,17 +28,12 @@ b. Pengujian fungsi clearDatabase
 - Memastikan bahwa fungsi WriteTheme memanggil preference saveThemeSetting
 - Memastikan bahwa getTheme mengeluarkan live data yang benar.
 
+_____________________________________________________________________________________________
 
+Pengujian Repository
 
-
-
-
-
-Pengujian Repository :
-- Story Repository
-1. Saat database di refresh maka data akan kembali seperti semula
-2. Saat database di clear, maka list akan kosong
-
-Pengujian View Model :
-- Home View Model
-- Add Story View Model
+1. Auth Repository
+a. Ketika memanggil fungsi login, maka :
+- Memastikan fungsi Auth.login (preferences) berjalan
+- Memastikan fungsi Auth.WriteToken berjalan dan mengembalikan token dengan benar
+- Memastikan yang di emit adalah Async.Success
