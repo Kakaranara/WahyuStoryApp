@@ -10,7 +10,7 @@ object DataDummy {
         return NormalResponse(false, "ok")
     }
 
-    fun provideStoryResponse(withLocation : Boolean, page: Int = 1, size: Int? = 10): StoryResponse {
+    fun provideStoryResponse(withLocation : Boolean = false, page: Int = 1, size: Int? = 10): StoryResponse {
         if(withLocation){
             return provideStoryResponseWithLocation(size = size)
         }

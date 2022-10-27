@@ -42,3 +42,4 @@ a. Ketika memanggil fungsi login, maka :
 a. Ketika memanggil fungsi RequestApiLocation :
 - Memastikan bahwa data mereturn Async.Success
 - Memastikan data lat/lon tidak null
+

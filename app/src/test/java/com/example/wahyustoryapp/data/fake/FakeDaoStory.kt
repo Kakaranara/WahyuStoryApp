@@ -13,8 +13,9 @@ class FakeDaoStory : StoryDao {
     private val storyLiveData = MutableLiveData<List<Story>>()
 
     override fun getAllStories(): PagingSource<Int, Story> {
-        //TODO CHGANGE LATER
-        return "k" as PagingSource<Int, Story>
+
+        return DummyPagingSource()
+//        return "k" as PagingSource<Int, Story>
     }
 
     override fun insertAll(data: List<Story>) {
