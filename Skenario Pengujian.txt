@@ -43,3 +43,8 @@ a. Ketika memanggil fungsi RequestApiLocation :
 - Memastikan bahwa data mereturn Async.Success
 - Memastikan data lat/lon tidak null
 
+3. Story Repository
+=== DISCLAIMER
+Story Repository mempunyai database sebagai constructor,
+yang akan membuat testing repository menjadi instrumental test.
+Story repository dapat dilihat di androidTest.
