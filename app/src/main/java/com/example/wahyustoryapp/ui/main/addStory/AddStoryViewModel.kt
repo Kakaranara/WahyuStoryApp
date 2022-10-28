@@ -22,6 +22,7 @@ class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
     /**
      * * This class can't be unit tested
      * * Because the function need file and bitmap
+     * * Which is need context
      * ? Might be refactored later -> with fragment result
      */
 
