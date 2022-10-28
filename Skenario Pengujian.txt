@@ -47,4 +47,4 @@ a. Ketika memanggil fungsi RequestApiLocation :
 === DISCLAIMER
 Story Repository mempunyai database sebagai constructor,
 yang akan membuat testing repository menjadi instrumental test.
-Story repository dapat dilihat di androidTest.
+Sehingga tidak dapat dilakukan unit testing.
