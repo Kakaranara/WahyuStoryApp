@@ -9,6 +9,7 @@ import com.example.wahyustoryapp.data.network.response.NormalResponse
 object AuthDummy {
     fun provideLoginForm(): LoginForm = LoginForm("a@gmail.com", "123456")
 
+
     fun provideRegisterResponse() : NormalResponse = NormalResponse(false, "ok")
 
     fun provideRegisterForm(): RegisterForm =
