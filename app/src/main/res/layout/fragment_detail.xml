@@ -50,10 +50,10 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="@id/view2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/view2"
@@ -86,6 +86,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:alpha="0"
             android:ellipsize="end"
             android:transitionName="descTarget"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -93,6 +94,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2"
+            tools:alpha="1"
             tools:text="I love my dog, He always be with me and this will be 3 lines if u prefere not to care whattam doing right now, and yeah you should not say anyhing about me because what im doing is just typing lorem ipsum until you dead" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

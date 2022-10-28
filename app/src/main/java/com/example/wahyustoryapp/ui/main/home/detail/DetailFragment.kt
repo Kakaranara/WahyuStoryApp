@@ -1,5 +1,6 @@
 package com.example.wahyustoryapp.ui.main.home.detail
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
@@ -38,6 +39,10 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val arguments = args.dataStory
+
+        ObjectAnimator.ofFloat(binding.detailDesc, View.ALPHA, 1f).apply {
+            duration = 500L
+        }.start()
 
         binding.apply {
             detailName.text = arguments.name
