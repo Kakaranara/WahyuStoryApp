@@ -10,6 +10,8 @@ class FakeStoryDao : StoryDao {
     private val list = mutableListOf<Story>()
     private val storyLiveData = MutableLiveData<List<Story>>()
 
+    fun getList() = list
+
     override fun getAllStories(): PagingSource<Int, Story> {
 
         return DummyPagingSource()
