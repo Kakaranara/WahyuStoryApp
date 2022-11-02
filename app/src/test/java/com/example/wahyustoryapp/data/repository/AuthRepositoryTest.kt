@@ -47,7 +47,7 @@ class AuthRepositoryTest {
         val actual = repository.login(dummyForm)
 
         actual.observeForTesting {
-            Assert.assertTrue(actual.value is Async.Success)
+            Assert.assertTrue(actual.value is Async.Success && (api as FakeApiStory).isLoginTriggered)
             Mockito.verify(prefs).login()
             Mockito.verify(prefs).writeToken(dummyResponse.loginResult.token)
         }

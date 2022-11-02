@@ -16,8 +16,10 @@ class FakeApiStory : ApiService {
 
     var isUploadImageTriggered = false
     var isUploadImageWithLocationTriggered = false
+    var isLoginTriggered = false
 
     override suspend fun getLoginData(form: LoginForm): Response<LoginResponse> {
+        isLoginTriggered = true
         return Response.success(AuthDummy.provideLoginResponse())
     }
 
