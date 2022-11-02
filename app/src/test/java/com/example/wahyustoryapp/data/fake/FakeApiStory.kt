@@ -13,6 +13,10 @@ import okhttp3.RequestBody
 import retrofit2.Response
 
 class FakeApiStory : ApiService {
+
+    var isUploadImageTriggered = false
+    var isUploadImageWithLocationTriggered = false
+
     override suspend fun getLoginData(form: LoginForm): Response<LoginResponse> {
         return Response.success(AuthDummy.provideLoginResponse())
     }
@@ -39,6 +43,7 @@ class FakeApiStory : ApiService {
         file: MultipartBody.Part,
         description: RequestBody
     ): Response<NormalResponse> {
+        isUploadImageTriggered = true
         return Response.success(DataDummy.provideNormalResponse())
     }
 
@@ -49,6 +54,7 @@ class FakeApiStory : ApiService {
         lat: Double,
         lon: Double
     ): Response<NormalResponse> {
+        isUploadImageWithLocationTriggered = true
         return Response.success(DataDummy.provideNormalResponse())
     }
 }
