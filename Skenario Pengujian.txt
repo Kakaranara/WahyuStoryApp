@@ -1,3 +1,9 @@
+=== DISCLAIMER ===
+1. Add Story viewModel juga tidak dapat di unit testing,
+karena membutuhkan untuk pengecekan file dan image,
+serta ada fungsi yang membutuhkan application context.
+Kedua fitur tersebut hanya dapat dilakukan di instrumental testing.
+
 Skenario Pengujian
 
 Pengujian ViewModel
@@ -43,8 +49,18 @@ a. Ketika memanggil fungsi RequestApiLocation :
 - Memastikan bahwa data mereturn Async.Success
 - Memastikan data lat/lon tidak null
 
-3. Story Repository
-=== DISCLAIMER
-Story Repository mempunyai database sebagai constructor,
-yang akan membuat testing repository menjadi instrumental test.
-Sehingga tidak dapat dilakukan unit testing.
+3. StoryRepository
+a. Ketika memanggil fungsi clearDb
+    - Memastikan bahwa data list empty
+b. Ketika database di refresh
+    - Memastikan bahwa size story sama dengan Constant.SIZE_FOR_REFRESH
+    - Memastikan bahwa size story tidak null
+c. Ketika memanggil addStory
+    - Bila LatLng tidak null :
+        - Memastikan service yang dipanggil adalah uploadImageWithLocation
+    - Bila LatLng null :
+        - Memastikan service yang dipanggil adalah uploadImage
+
+
+//saya sebenarnya juga bingung, tolong berikan saya masukan terkait
+testing addStoryViewModel serta storyRepository.
