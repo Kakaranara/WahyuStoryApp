@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
+import com.example.wahyustoryapp.constant.Constant
 import com.example.wahyustoryapp.data.database.RemoteKeys
 import com.example.wahyustoryapp.data.database.StoryRoomDatabase
 import com.example.wahyustoryapp.data.network.ApiService
@@ -30,8 +31,8 @@ class StoryRepository(
     @OptIn(ExperimentalPagingApi::class)
     override fun getStoryData() = Pager(
         config = PagingConfig(
-            pageSize = 5,
-            initialLoadSize = 10,
+            pageSize = Constant.SIZE_FOR_REFRESH,
+            initialLoadSize = Constant.SIZE_FOR_REFRESH * 2,
             prefetchDistance = 0,
 
             ),
