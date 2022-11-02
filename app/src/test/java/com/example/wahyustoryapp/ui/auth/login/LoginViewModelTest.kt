@@ -15,6 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -48,6 +49,7 @@ class LoginViewModelTest {
         `when`(repository.login(AuthDummy.provideLoginForm())).thenReturn(expectedLiveData)
         val actual = viewModel.loginEvent(AuthDummy.provideLoginForm()).getOrAwaitValue()
 
+        Mockito.verify(repository).login(AuthDummy.provideLoginForm())
         assertNotNull(actual)
         assertTrue(actual is Async.Success)
         assertEquals(expected, actual)
@@ -59,6 +61,7 @@ class LoginViewModelTest {
         `when`(repository.login(AuthDummy.provideLoginForm())).thenReturn(expectedLiveData)
 
         val actual = viewModel.loginEvent(AuthDummy.provideLoginForm()).getOrAwaitValue()
+        Mockito.verify(repository).login(AuthDummy.provideLoginForm())
         assertTrue(actual is Async.Error)
         assertNotNull(actual)
     }
