@@ -17,6 +17,8 @@ val timeStamp: String = SimpleDateFormat(
     FILENAME_FORMAT, Locale.US
 ).format(System.currentTimeMillis())
 
+
+
 fun makeFile(application: Application): File {
     val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
         File(it, application.resources.getString(R.string.app_name)).apply { mkdirs() }

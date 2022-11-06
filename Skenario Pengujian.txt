@@ -34,6 +34,13 @@ b. Pengujian fungsi clearDatabase
 - Memastikan bahwa fungsi WriteTheme memanggil preference saveThemeSetting
 - Memastikan bahwa getTheme mengeluarkan live data yang benar.
 
+6. Pengujian Add Story View Model
+a. Bila upload to server di invoke, maka
+    - Memastikan bahwa repository.addStory terpanggil
+    - Memastikan bahwa repository.refresh terpanggil
+    - Memastikan bahwa posting live data memiliki Async.Success
+
+b.
 _____________________________________________________________________________________________
 
 Pengujian Repository
