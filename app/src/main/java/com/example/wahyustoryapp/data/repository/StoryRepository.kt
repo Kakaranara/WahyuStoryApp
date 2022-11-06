@@ -12,6 +12,7 @@ import com.example.wahyustoryapp.data.network.response.NormalResponse
 import com.example.wahyustoryapp.data.repository.model.StoryRepositoryModel
 import com.example.wahyustoryapp.toEntity
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
@@ -25,7 +26,8 @@ import java.io.File
 class StoryRepository(
     private val database: StoryRoomDatabase,
     private var service: ApiService,
-    private var token: String
+    private var token: String,
+    private val dispatcher : CoroutineDispatcher = Dispatchers.IO
 ) : StoryRepositoryModel {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -46,7 +48,7 @@ class StoryRepository(
             false -> 0
             true -> 1
         }
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             val networkData = service.getAllStory(
                 "Bearer $token", page = page, size = size, location = location
             )
@@ -85,7 +87,7 @@ class StoryRepository(
     }
 
     override suspend fun clearDb() {
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             database.storyDao().deleteAll()
         }
     }

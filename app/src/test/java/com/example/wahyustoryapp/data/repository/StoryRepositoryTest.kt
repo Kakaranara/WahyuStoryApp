@@ -13,6 +13,7 @@ import com.example.wahyustoryapp.data.fake.FakeStoryDao
 import com.example.wahyustoryapp.data.network.ApiService
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
@@ -48,7 +49,9 @@ class StoryRepositoryTest {
         api = FakeApiStory()
         dao = FakeStoryDao()
         remoteDao = FakeRemoteKeysDao()
-        repository = StoryRepository(database, api, token)
+
+        val testDispatcher = UnconfinedTestDispatcher()
+        repository = StoryRepository(database, api, token, testDispatcher)
 
         // * hal ini harus dilakukan, karena bila tidak database akan mengeluarkan :
         // ! null pointer exception! invoke suspend!
@@ -91,7 +94,7 @@ class StoryRepositoryTest {
     }
 
     @Test
-    fun `test clearing db`() = runTest {
+    fun `clearing database from repository should make storyDao empty`() = runTest {
         val dummy = DataDummy.provideStoryList()
         database.storyDao().insertAll(dummy)
         repository.clearDb()
