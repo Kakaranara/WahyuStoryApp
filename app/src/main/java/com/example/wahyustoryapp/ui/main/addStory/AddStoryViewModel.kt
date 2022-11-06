@@ -10,14 +10,18 @@ import com.example.wahyustoryapp.data.network.response.NormalResponse
 import com.example.wahyustoryapp.data.repository.StoryRepository
 import com.example.wahyustoryapp.decodeToBitmap
 import com.example.wahyustoryapp.helper.Async
-import com.example.wahyustoryapp.reduceFileImage
+import com.example.wahyustoryapp.utils.UtilityTest
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.File
 
-class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
+class AddStoryViewModel(
+    private val repository: StoryRepository,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) : ViewModel() {
 
     /**
      * * This class can't be unit tested
@@ -57,21 +61,25 @@ class AddStoryViewModel(private val repository: StoryRepository) : ViewModel() {
         }
     }
 
-    fun processGalleryFile(file: File) {
+    fun processGalleryFile(file: File, util: UtilityTest = UtilityTest) {
         _photo.value = file.decodeToBitmap()
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             _isCompressing.postValue(true)
-            val reduced = reduceFileImage(file)
+            val reduced = util.reduceFileImage(file)
             _file.postValue(reduced)
             _isCompressing.postValue(false)
         }
     }
 
-    fun processCameraFileFromBitmap(bitmap: Bitmap, application: Application) {
+    fun processCameraFileFromBitmap(
+        bitmap: Bitmap,
+        application: Application,
+        util: UtilityTest = UtilityTest
+    ) {
         _photo.value = bitmap
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             _isCompressing.postValue(true)
-            val file = reduceFileImage(bitmap, application)
+            val file = util.reduceFileImage(bitmap, application)
             _file.postValue(file)
             _isCompressing.postValue(false)
         }
