@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
-object UtilityTest {
+object FileUtilityProcessing {
     private fun findMaxQuality(bitmap: Bitmap): Int {
         var quality = 100
         var streamLength: Int

@@ -10,7 +10,7 @@ import com.example.wahyustoryapp.data.network.response.NormalResponse
 import com.example.wahyustoryapp.data.repository.StoryRepository
 import com.example.wahyustoryapp.decodeToBitmap
 import com.example.wahyustoryapp.helper.Async
-import com.example.wahyustoryapp.utils.UtilityTest
+import com.example.wahyustoryapp.utils.FileUtilityProcessing
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -61,7 +61,7 @@ class AddStoryViewModel(
         }
     }
 
-    fun processGalleryFile(file: File, util: UtilityTest = UtilityTest) {
+    fun processGalleryFile(file: File, util: FileUtilityProcessing = FileUtilityProcessing) {
         _photo.value = file.decodeToBitmap()
         viewModelScope.launch(dispatcher) {
             _isCompressing.postValue(true)
@@ -74,7 +74,7 @@ class AddStoryViewModel(
     fun processCameraFileFromBitmap(
         bitmap: Bitmap,
         application: Application,
-        util: UtilityTest = UtilityTest
+        util: FileUtilityProcessing = FileUtilityProcessing
     ) {
         _photo.value = bitmap
         viewModelScope.launch(dispatcher) {

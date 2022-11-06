@@ -7,7 +7,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.wahyustoryapp.*
 import com.example.wahyustoryapp.data.repository.StoryRepository
 import com.example.wahyustoryapp.helper.Async
-import com.example.wahyustoryapp.utils.UtilityTest
+import com.example.wahyustoryapp.utils.FileUtilityProcessing
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -62,7 +62,7 @@ class AddStoryViewModelTest {
         runTest {
             val file = mock(File::class.java)
             val bitmap = mock(Bitmap::class.java)
-            val utilityTest = mock(UtilityTest::class.java)
+            val utilityTest = mock(FileUtilityProcessing::class.java)
             mockStatic(BitmapFactory::class.java)
             `when`(BitmapFactory.decodeFile(file.path)).thenReturn(bitmap)
             `when`(utilityTest.reduceFileImage(file)).thenReturn(file)
@@ -83,7 +83,7 @@ class AddStoryViewModelTest {
             val bitmap = mock(Bitmap::class.java)
             val file = mock(File::class.java)
             val application = mock(Application::class.java)
-            val utilTest = mock(UtilityTest::class.java)
+            val utilTest = mock(FileUtilityProcessing::class.java)
 
             `when`(utilTest.reduceFileImage(bitmap, application)).thenReturn(file)
             viewModel.processCameraFileFromBitmap(bitmap, application, utilTest)
