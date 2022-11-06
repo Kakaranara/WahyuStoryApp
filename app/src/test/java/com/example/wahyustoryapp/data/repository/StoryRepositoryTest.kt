@@ -14,14 +14,11 @@ import com.example.wahyustoryapp.data.network.ApiService
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -62,22 +59,23 @@ class StoryRepositoryTest {
     }
 
     @Test
-    fun `refreshed db size should be the same with constant SIZE_FOR_REFRESH`() = runTest {
-        val dummy = DataDummy.provideStoryList()
-        repeat(3) { //? just to simulate db operating
-            database.storyDao().insertAll(dummy)
+    fun `AFTER Repository invoke refreshDb, db size should be the same with constant SIZE_FOR_REFRESH`() =
+        runTest {
+            val dummy = DataDummy.provideStoryList()
+            repeat(3) { //? just to simulate db operating
+                database.storyDao().insertAll(dummy)
+            }
+
+            repository.refreshRepositoryData()
+            Assert.assertNotNull(database.storyDao().getAllStoriesValues().size)
+            Assert.assertEquals(
+                database.storyDao().getAllStoriesValues().size,
+                Constant.SIZE_FOR_REFRESH
+            )
         }
 
-        repository.refreshRepositoryData()
-        Assert.assertNotNull(database.storyDao().getAllStoriesValues().size)
-        Assert.assertEquals(
-            database.storyDao().getAllStoriesValues().size,
-            Constant.SIZE_FOR_REFRESH
-        )
-    }
-
     @Test
-    fun `when latLng is null, api call uploadImage`()  = runTest{
+    fun `when latLng is null, api call uploadImage`() = runTest {
         val mockFile = mock(File::class.java)
         repository.addStory(mockFile, "", null)
 
@@ -85,9 +83,9 @@ class StoryRepositoryTest {
     }
 
     @Test
-    fun `when latLng is not null, api call uploadImageWithLocation`()  = runTest{
+    fun `when latLng is not null, api call uploadImageWithLocation`() = runTest {
         val mockFile = mock(File::class.java)
-        repository.addStory(mockFile, "", LatLng(1.0,1.0))
+        repository.addStory(mockFile, "", LatLng(1.0, 1.0))
 
         Assert.assertTrue((api as FakeApiStory).isUploadImageWithLocationTriggered)
     }
