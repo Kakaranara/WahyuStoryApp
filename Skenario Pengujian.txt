@@ -28,6 +28,19 @@ b. Pengujian fungsi clearDatabase
 - Memastikan bahwa fungsi WriteTheme memanggil preference saveThemeSetting
 - Memastikan bahwa getTheme mengeluarkan live data yang benar.
 
+6. Pengujian Add Story View Model
+a. Bila upload to server di invoke, maka :
+    - Memastikan bahwa repository.addStory terpanggil
+    - Memastikan bahwa repository.refresh terpanggil
+    - Memastikan bahwa posting live data memiliki Async.Success
+b. Bila fungsi process gallery file dipanggil, maka :
+    - Memastikan live data isCompress bernilai false di akhir
+    - Memastikan live data photo di set dan tidak null
+    - Memastikan live data file di set dan tidak null
+c. Bila fungsi process camera di panggil maka :
+    - Memastikan live data isCompress bernilai false di akhir
+    - Memastikan live data photo di set dan tidak null
+    - Memastikan live data file di set dan tidak null
 _____________________________________________________________________________________________
 
 Pengujian Repository
@@ -43,3 +56,18 @@ a. Ketika memanggil fungsi RequestApiLocation :
 - Memastikan bahwa data mereturn Async.Success
 - Memastikan data lat/lon tidak null
 
+3. StoryRepository
+a. Ketika memanggil fungsi clearDb
+    - Memastikan bahwa data list empty
+b. Ketika database di refresh
+    - Memastikan bahwa size story sama dengan Constant.SIZE_FOR_REFRESH
+    - Memastikan bahwa size story tidak null
+c. Ketika memanggil addStory
+    - Bila LatLng tidak null :
+        - Memastikan service yang dipanggil adalah uploadImageWithLocation
+    - Bila LatLng null :
+        - Memastikan service yang dipanggil adalah uploadImage
+
+
+//saya sebenarnya juga bingung, tolong berikan saya masukan terkait
+testing addStoryViewModel serta storyRepository.

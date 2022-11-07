@@ -3,11 +3,13 @@ package com.example.wahyustoryapp
 import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,6 +18,8 @@ private const val FILENAME_FORMAT = "dd-MMM-yyyy"
 val timeStamp: String = SimpleDateFormat(
     FILENAME_FORMAT, Locale.US
 ).format(System.currentTimeMillis())
+
+
 
 fun makeFile(application: Application): File {
     val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
@@ -45,43 +49,6 @@ fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = false): Bitmap {
     }
 }
 
-
-fun findMaxQuality(bitmap: Bitmap): Int {
-    var quality = 100
-    var streamLength: Int
-    do {
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos)
-        val byteArray = baos.toByteArray()
-        streamLength = byteArray.size
-        quality -= 5
-    } while (streamLength > 1000000)
-    return quality
-}
-
-fun reduceFileImage(file: File): File {
-    val bitmap = BitmapFactory.decodeFile(file.path)
-    val quality = findMaxQuality(bitmap)
-
-    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, FileOutputStream(file))
-    return file
-}
-
-fun reduceFileImage(bitmap: Bitmap, application: Application): File {
-    val quality = findMaxQuality(bitmap)
-    val file = makeFile(application)
-
-    val baos = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos)
-
-    val byteArray = baos.toByteArray()
-    val fos = FileOutputStream(file)
-    fos.write(byteArray)
-    fos.flush()
-    fos.close()
-
-    return file
-}
 
 fun uriToFile(selectedImg: Uri, context: Context): File {
     val contentResolver = context.contentResolver

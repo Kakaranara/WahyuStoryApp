@@ -8,6 +8,7 @@ import com.example.wahyustoryapp.data.repository.MapsRepository
 import com.example.wahyustoryapp.getOrAwaitValue
 import com.example.wahyustoryapp.helper.Async
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -43,10 +44,10 @@ class MapsViewModelTest {
         val actual = viewModel.data().getOrAwaitValue()
         assertTrue(actual is Async.Success)
 
-        if(actual is Async.Success){
-            assertNotNull(actual.data[0].lon)
-            assertNotNull(actual.data[0].lat)
-        }
+        val actualData = actual as Async.Success
+        assertNotNull(actualData.data[0].lon)
+        assertNotNull(actualData.data[0].lat)
+
     }
 
 }

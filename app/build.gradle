@@ -96,7 +96,9 @@ dependencies {
 
     //testing purpose
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     testImplementation "androidx.arch.core:core-testing:2.1.0" //executor rule
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0" //executor rule
 
     //gmaps
     implementation "com.google.android.gms:play-services-maps:18.1.0"
